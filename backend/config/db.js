@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb+srv://dhruv:Dhruv1234@cluster0.gbsuiaq.mongodb.net/propertyDB?retryWrites=true&w=majority", {
+    await mongoose.connect(process.env.MONGO_URI, {
       serverSelectionTimeoutMS: 30000,
       socketTimeoutMS: 30000,
       family: 4

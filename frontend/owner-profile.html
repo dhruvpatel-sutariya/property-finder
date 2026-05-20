@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Finder</title>
+    <link rel="stylesheet" href="tenant-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+        }
+
+        .dashboard-sidebar {
+            background-color: var(--surface-light);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            height: fit-content;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-role {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+            margin-top: 2rem;
+        }
+
+        .sidebar-link {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .dashboard-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--surface-light);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--surface-color);
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            background-color: var(--bg-dark);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: border-color 0.2s;
+            cursor: pointer;
+        }
+
+        .file-upload-wrapper:hover {
+            border-color: var(--primary-color);
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-icon {
+            display: block;
+            margin: 0 auto 1rem;
+            color: var(--primary-color);
+        }
+
+        .file-upload-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .file-upload-formats {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 0.5rem;
+        }
+
+        .selected-file-name {
+            display: block;
+            margin-top: 1rem;
+            color: #2ecc71;
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .selected-file-links {
+            margin-top: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            text-align: left;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .selected-file-links a {
+            color: #5dade2;
+            font-size: 0.82rem;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            float: right;
+            margin-top: 1rem;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand" style="text-decoration: none; color: inherit;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="brand-icon">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <h2>Property Finder</h2>
+        </a>
+        <div class="nav-links">
+            <a href="owner-dashboard.html" class="nav-link">Properties</a>
+            <a href="owner-chat.html" class="nav-link">Messages</a>
+            <a href="#" class="nav-link">Feedback and Review</a>
+        </div>
+        <div class="nav-auth">
+            <a href="owner-account.html" class="user-avatar"
+                style="display: block; width: 35px; height: 35px; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid var(--primary-color);">
+                <img id="nav-profile-image"
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+                    alt="Owner" style="width: 100%; height: 100%; object-fit: cover;">
+            </a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <a href="owner-account.html">
+                <img id="sidebar-profile-image"
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    alt="Owner Avatar" class="profile-avatar">
+            </a>
+            <h2 class="profile-name" id="display-name">Loading...</h2>
+            <div class="profile-role">Property Owner</div>
+
+            <div class="sidebar-links">
+                <a href="owner-dashboard.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="owner-profile.html" class="sidebar-link active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add Property
+                </a>
+                <a href="owner-tenants.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Bookings
+                </a>
+                <a href="owner-my-tenants.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    My Tenants
+                </a>
+                <a href="index.html" class="sidebar-link" style="color: #e74c3c; margin-top: 1rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Log Out
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content (Add Property) -->
+        <main class="dashboard-main">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Register New Property</h3>
+                </div>
+
+                <form id="add-property-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prop-title">Property Title</label>
+                            <input type="text" id="prop-title" placeholder="e.g. Modern Apartment in Downtown" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prop-type">Property Type</label>
+                            <select id="prop-type" required>
+                                <option value="">Select Type</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="house">House</option>
+                                <option value="villa">Villa</option>
+                                <option value="pg">PG</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prop-listing-type">Listing Type</label>
+                            <select id="prop-listing-type" required>
+                                <option value="">Select Option</option>
+                                <option value="rent">Rent</option>
+                                <option value="sell">Sell</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="prop-bedrooms">Number of Bedrooms</label>
+                            <input type="number" id="prop-bedrooms" min="1" placeholder="e.g. 2" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="prop-price" id="label-prop-price">Monthly Rent Price (₹)</label>
+                        <input type="number" id="prop-price" min="0" placeholder="e.g. 15000" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="prop-description">Property Description</label>
+                        <textarea id="prop-description" rows="3"
+                            placeholder="Describe the amenities, nearby places, etc." required></textarea>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                        <label for="prop-address">Full Address</label>
+                        <textarea id="prop-address" rows="3" placeholder="Enter complete property address"
+                            required></textarea>
+                    </div>
+
+                    <div class="card-header" style="margin-top: 2rem;">
+                        <h3>Mandatory Documents</h3>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Securely upload your
+                        proof of ownership and identification. Supported formats: JPEG, PNG.</p>
+
+                    <div class="form-row">
+                        <!-- ID Proof -->
+                        <div class="form-group">
+                            <label>Owner ID Proof (Aadhar Card)</label>
+                            <div class="file-upload-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" class="file-upload-icon">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <div class="file-upload-text">Drag & drop or click to choose file</div>
+                                <div class="file-upload-formats">JPEG, PNG only</div>
+                                <input type="file" id="aadhar-upload" accept="image/jpeg, image/png" required>
+                                <span class="selected-file-name" id="aadhar-name"></span>
+                            </div>
+                        </div>
+
+                        <!-- Electricity Bill -->
+                        <div class="form-group">
+                            <label>Property Electricity Bill (Recent)</label>
+                            <div class="file-upload-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" class="file-upload-icon">
+                                    <path
+                                        d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z">
+                                    </path>
+                                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                                </svg>
+                                <div class="file-upload-text">Drag & drop or click to choose file</div>
+                                <div class="file-upload-formats">JPEG, PNG only</div>
+                                <input type="file" id="electricity-upload" accept="image/jpeg, image/png" required>
+                                <span class="selected-file-name" id="electricity-name"></span>
+                            </div>
+                        </div>
+
+                        <!-- Tax Receipt -->
+                        <div class="form-group">
+                            <label>Property Tax Receipt</label>
+                            <div class="file-upload-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" class="file-upload-icon">
+                                    <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                                </svg>
+                                <div class="file-upload-text">Drag & drop or click to choose file</div>
+                                <div class="file-upload-formats">JPEG, PNG only</div>
+                                <input type="file" id="tax-upload" accept="image/jpeg, image/png" required>
+                                <span class="selected-file-name" id="tax-name"></span>
+                            </div>
+                        </div>
+
+                        <!-- Property Photos -->
+                        <div class="form-group">
+                            <label>Property Photos</label>
+                            <div class="file-upload-wrapper">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" class="file-upload-icon">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                                <div class="file-upload-text">Upload 1 property photo</div>
+                                <div class="file-upload-formats">JPEG, PNG only</div>
+                                <input type="file" id="photo-upload" accept="image/jpeg, image/png" required>
+                                <span class="selected-file-name" id="photo-name"></span>
+                                <div id="photo-link-container" class="selected-file-links"></div>
+                                <div id="photo-preview-container"
+                                    style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; justify-content: center;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="clear: both; overflow: hidden;">
+                        <button type="submit" class="btn-submit">Submit Property for Review</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Added Properties List -->
+            <div class="card" style="margin-top: 2rem;">
+                <div class="card-header">
+                    <h3>My Registered Properties</h3>
+                </div>
+                <div id="my-properties-list" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- Dynamically populated by JS -->
+                    <p id="no-properties-msg" style="color: var(--text-muted); text-align: center; padding: 2rem 0;">No
+                        properties added yet.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Load the owner's name from localStorage 
+        document.addEventListener('DOMContentLoaded', () => {
+            const displayName = localStorage.getItem('ownerName');
+            if (displayName) {
+                document.getElementById('display-name').innerText = displayName;
+            } else {
+                document.getElementById('display-name').innerText = "Vikas Patel";
+            }
+            const storedProfile = JSON.parse(localStorage.getItem('ownerProfile') || '{}');
+            if (storedProfile.profileImage) {
+                const navImg = document.getElementById('nav-profile-image');
+                if (navImg) navImg.src = storedProfile.profileImage;
+                const sideImg = document.getElementById('sidebar-profile-image');
+                if (sideImg) sideImg.src = storedProfile.profileImage;
+            }
+            renderProperties();
+        });
+
+        function renderProperties() {
+            const list = document.getElementById('my-properties-list');
+            const noMsg = document.getElementById('no-properties-msg');
+            const currentOwnerEmail = localStorage.getItem('ownerEmail') || 'oldOwner';
+            const allStored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+            const stored = allStored.filter(p => (p.ownerEmail || 'oldOwner') === currentOwnerEmail);
+
+            if (stored.length > 0) {
+                if (noMsg) noMsg.style.display = 'none';
+
+                // Keep only the "no properties msg" in the DOM and append others
+                list.innerHTML = '<p id="no-properties-msg" style="color: var(--text-muted); text-align: center; padding: 2rem 0; display: none;">No properties added yet.</p>';
+
+                stored.forEach(prop => {
+                    const el = document.createElement('div');
+                    el.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+                    el.style.borderRadius = '8px';
+                    el.style.padding = '1.2rem';
+                    el.style.display = 'flex';
+                    el.style.justifyContent = 'space-between';
+                    el.style.alignItems = 'center';
+                    el.style.backgroundColor = 'var(--surface-color)';
+
+                    const safeType = prop.type || 'Property';
+                    const typeCap = safeType.charAt(0).toUpperCase() + safeType.slice(1);
+                    const imagesArr = prop.images || (prop.image ? [prop.image] : ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80']);
+                    const imgSrc = imagesArr[0];
+                    const extraImagesHtml = imagesArr.slice(1).map(img => `<img src="${img}" alt="Property" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);">`).join('');
+
+                    el.innerHTML = `
+                        <div style="display: flex; gap: 1rem; align-items: center; max-width: 70%;">
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <img src="${imgSrc}" alt="Property" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+                                ${(imagesArr.length > 1) ? `<div style="display: flex; gap: 0.3rem;">${extraImagesHtml}</div>` : ''}
+                            </div>
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem 0; font-size: 1.1rem; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${prop.title || (prop.type ? prop.type.charAt(0).toUpperCase() + prop.type.slice(1) : 'Property')}</h4>
+                                <p style="margin: 0 0 0.5rem 0; color: var(--text-muted); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${prop.address || 'Address not provided'}</p>
+                                <span style="display: inline-block; background: rgba(52, 152, 219, 0.2); color: #3498db; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 500;">${typeCap}</span>
+                            </div>
+                        </div>
+                        <div style="color: #f1c40f; display: flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; font-weight: 500;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            Under Review
+                        </div>
+                    `;
+                    list.appendChild(el);
+                });
+            }
+        }
+
+        // Initialize file upload listeners to show selected file names
+        const fileInputs = [
+            { input: 'aadhar-upload', nameDisplay: 'aadhar-name' },
+            { input: 'electricity-upload', nameDisplay: 'electricity-name' },
+            { input: 'tax-upload', nameDisplay: 'tax-name' },
+            { input: 'photo-upload', nameDisplay: 'photo-name', isPhoto: true }
+        ];
+
+        fileInputs.forEach(item => {
+            const el = document.getElementById(item.input);
+            const displayEl = document.getElementById(item.nameDisplay);
+            if (el && displayEl) {
+                el.addEventListener('change', function (e) {
+                    if (this.files && this.files.length > 0) {
+                        if (this.files.length === 1) {
+                            displayEl.innerText = 'Selected: ' + this.files[0].name;
+                        } else {
+                            displayEl.innerText = 'Selected ' + this.files.length + ' files';
+                        }
+
+                        // Handle image preview
+                        if (item.isPhoto) {
+                            const previewContainer = document.getElementById('photo-preview-container');
+                            const linkContainer = document.getElementById('photo-link-container');
+                            if (previewContainer) {
+                                previewContainer.innerHTML = '';
+                                if (linkContainer) linkContainer.innerHTML = '';
+                                Array.from(this.files).forEach(file => {
+                                    if (linkContainer) {
+                                        const fileLink = document.createElement('a');
+                                        fileLink.href = URL.createObjectURL(file);
+                                        fileLink.target = '_blank';
+                                        fileLink.rel = 'noopener noreferrer';
+                                        fileLink.textContent = file.name;
+                                        linkContainer.appendChild(fileLink);
+                                    }
+                                    const reader = new FileReader();
+                                    reader.onload = function (e) {
+                                        const img = document.createElement('img');
+                                        img.src = e.target.result;
+                                        img.style.width = '60px';
+                                        img.style.height = '60px';
+                                        img.style.objectFit = 'cover';
+                                        img.style.borderRadius = '4px';
+                                        img.style.border = '1px solid rgba(255,255,255,0.2)';
+                                        previewContainer.appendChild(img);
+                                    }
+                                    reader.readAsDataURL(file);
+                                });
+                            }
+                        }
+                    } else {
+                        displayEl.innerText = '';
+                        if (item.isPhoto) {
+                            const previewContainer = document.getElementById('photo-preview-container');
+                            if (previewContainer) previewContainer.innerHTML = '';
+                            const linkContainer = document.getElementById('photo-link-container');
+                            if (linkContainer) linkContainer.innerHTML = '';
+                        }
+                    }
+                });
+            }
+        });
+
+        // Update rent/sell options dynamically
+        const propTypeSelect = document.getElementById('prop-type');
+        const listingTypeSelect = document.getElementById('prop-listing-type');
+        const priceLabel = document.getElementById('label-prop-price');
+        const priceInput = document.getElementById('prop-price');
+
+        propTypeSelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            listingTypeSelect.innerHTML = '<option value="">Select Option</option>';
+            if (val === 'house') {
+                listingTypeSelect.innerHTML += '<option value="sell" selected>Sell</option>';
+            } else if (val === 'pg') {
+                listingTypeSelect.innerHTML += '<option value="rent" selected>Rent</option>';
+            } else {
+                listingTypeSelect.innerHTML += '<option value="rent">Rent</option><option value="sell">Sell</option>';
+            }
+            listingTypeSelect.dispatchEvent(new Event('change'));
+        });
+
+        listingTypeSelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            if (val === 'sell') {
+                priceLabel.innerText = 'Selling Price (₹)';
+                priceInput.placeholder = 'e.g. 15000000';
+            } else if (val === 'rent') {
+                priceLabel.innerText = 'Monthly Rent Price (₹)';
+                priceInput.placeholder = 'e.g. 15000';
+            } else {
+                priceLabel.innerText = 'Price (₹)';
+            }
+        });
+
+        // Form submission behavior
+        document.getElementById('add-property-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const title = document.getElementById('prop-title').value;
+            const type = document.getElementById('prop-type').value;
+            const listingType = document.getElementById('prop-listing-type').value;
+            const address = document.getElementById('prop-address').value;
+            const bedrooms = document.getElementById('prop-bedrooms').value;
+            const price = document.getElementById('prop-price').value;
+            const description = document.getElementById('prop-description').value;
+
+            // Validate all photos are "uploaded" via checking their display text isn't empty
+            const photoEl = document.getElementById('photo-upload');
+            if (!photoEl.files || photoEl.files.length !== 1) {
+                alert("Please select exactly 1 Property Photo!");
+                return;
+            }
+
+            const btn = document.querySelector('.btn-submit');
+            btn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check" style="vertical-align: middle; margin-right: 5px;">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                Property Submitted!
+            `;
+            btn.style.backgroundColor = '#2ecc71';
+
+            const proceedSave = (imgUrls) => {
+                const currentOwnerEmail = localStorage.getItem('ownerEmail') || 'oldOwner';
+                const stored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+                const propertyId = 'OWN-' + Date.now();
+                stored.push({
+                    id: propertyId,
+                    title,
+                    type,
+                    listingType,
+                    address,
+                    bedrooms,
+                    price,
+                    description,
+                    images: imgUrls,
+                    date: new Date().toISOString(),
+                    ownerEmail: currentOwnerEmail,
+                    approvalStatus: 'pending',
+                    isApproved: false
+                });
+
+                try {
+                    localStorage.setItem('ownerProperties', JSON.stringify(stored));
+                } catch (err) {
+                    console.log('Local storage quota exceeded, creating property without image data URL.');
+                    alert('Images are too large. Property saved with default placeholder images.');
+                    stored.pop();
+                    stored.push({
+                        id: propertyId,
+                        title,
+                        type,
+                        listingType,
+                        address,
+                        bedrooms,
+                        price,
+                        description,
+                        images: ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'],
+                        date: new Date().toISOString(),
+                        ownerEmail: currentOwnerEmail,
+                        approvalStatus: 'pending',
+                        isApproved: false
+                    });
+                    localStorage.setItem('ownerProperties', JSON.stringify(stored));
+                }
+
+                setTimeout(() => {
+                    alert("Property details and documents have been securely uploaded for review!");
+                    this.reset();
+
+                    // Clear the selected file text
+                    fileInputs.forEach(item => {
+                        const displayEl = document.getElementById(item.nameDisplay);
+                        if (displayEl) displayEl.innerText = '';
+                    });
+
+                    const previewContainer = document.getElementById('photo-preview-container');
+                    if (previewContainer) previewContainer.innerHTML = '';
+                    const linkContainer = document.getElementById('photo-link-container');
+                    if (linkContainer) linkContainer.innerHTML = '';
+
+                    btn.innerHTML = 'Submit Property for Review';
+                    btn.style.backgroundColor = '';
+
+                    // Update UI right away
+                    renderProperties();
+                }, 1000);
+            };
+
+            const files = Array.from(photoEl.files);
+            const imgUrls = [];
+            let loadedCount = 0;
+
+            const resizeImage = (file, maxSize, callback) => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.onload = function () {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        if (width > height) {
+                            if (width > maxSize) {
+                                height *= maxSize / width;
+                                width = maxSize;
+                            }
+                        } else {
+                            if (height > maxSize) {
+                                width *= maxSize / height;
+                                height = maxSize;
+                            }
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        callback(canvas.toDataURL('image/jpeg', 0.6));
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            };
+
+            files.forEach(file => {
+                resizeImage(file, 800, function (compressedDataUrl) {
+                    imgUrls.push(compressedDataUrl);
+                    loadedCount++;
+                    if (loadedCount === files.length) {
+                        proceedSave(imgUrls);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

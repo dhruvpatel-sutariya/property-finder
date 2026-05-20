@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Finder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--bg-dark);
+        }
+
+        .auth-container {
+            background-color: var(--surface-light);
+            padding: 3rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .auth-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .auth-tab:hover:not(.active) {
+            color: var(--text-light);
+        }
+
+        .form-section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--surface-color);
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group input[type="file"] {
+            padding: 0.5rem;
+            background-color: var(--bg-dark);
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 0.4rem;
+            display: none;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            z-index: 20;
+        }
+
+        .back-link:hover {
+            color: var(--text-light);
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .step-dot.active {
+            background-color: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <a href="index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to roles
+    </a>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2>Property Finder</h2>
+            <p>Welcome to the property management portal</p>
+        </div>
+
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Log In</div>
+            <div class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="section-login" class="form-section active">
+            <form id="owner-login-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-submit">Log In</button>
+            </form>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="section-signup" class="form-section">
+            <form id="owner-signup-form">
+
+                <!-- Sign Up Step 1 -->
+                <div id="signup-step-1" class="form-section active">
+                    <div class="step-indicator">
+                        <div class="step-dot active"></div>
+                        <div class="step-dot"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-name">Full Name</label>
+                        <input type="text" id="reg-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <input type="email" id="reg-email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" placeholder="At least 8 characters" minlength="8"
+                            required>
+                        <div class="error-message" id="password-error">Password must be at least 8 characters long.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-confirm">Confirm Password</label>
+                        <input type="password" id="reg-confirm" placeholder="Confirm your password" required>
+                        <div class="error-message" id="confirm-error">Passwords do not match.</div>
+                    </div>
+                    <button type="button" class="btn-submit" onclick="nextStep()">Next Step</button>
+                </div>
+
+                <!-- Sign Up Step 2 -->
+                <div id="signup-step-2" class="form-section">
+                    <div class="step-indicator">
+                        <div class="step-dot"></div>
+                        <div class="step-dot active"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-occupation">Occupation</label>
+                        <input type="text" id="reg-occupation" placeholder="Your profession e.g., Engineer" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-address">Current Address</label>
+                        <textarea id="reg-address" placeholder="Your full residential address" rows="2"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-idproof">ID Proof Document (PDF/Image)</label>
+                        <input type="file" id="reg-idproof" accept=".pdf,image/jpeg,image/png" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-profileimg">Profile Image</label>
+                        <input type="file" id="reg-profileimg" accept="image/jpeg,image/png" required>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Sign Up</button>
+                    <button type="button" class="btn-submit btn-secondary" onclick="prevStep()">Back</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.getElementById('tab-login').classList.remove('active');
+            document.getElementById('tab-signup').classList.remove('active');
+            document.getElementById('section-login').classList.remove('active');
+            document.getElementById('section-signup').classList.remove('active');
+
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('section-' + tab).classList.add('active');
+        }
+
+        function nextStep() {
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const confirm = document.getElementById('reg-confirm').value;
+
+            let isValid = true;
+
+            if (!name || !email || !password) {
+                alert("Please fill all fields in step 1.");
+                return;
+            }
+
+            if (password.length < 8) {
+                document.getElementById('password-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('password-error').style.display = 'none';
+            }
+
+            if (password !== confirm) {
+                document.getElementById('confirm-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('confirm-error').style.display = 'none';
+            }
+
+            if (isValid) {
+                document.getElementById('signup-step-1').classList.remove('active');
+                document.getElementById('signup-step-2').classList.add('active');
+            }
+        }
+
+        function prevStep() {
+            document.getElementById('signup-step-2').classList.remove('active');
+            document.getElementById('signup-step-1').classList.add('active');
+        }
+
+        // Handle Signup
+        document.getElementById('owner-signup-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const occupation = document.getElementById('reg-occupation').value;
+            const address = document.getElementById('reg-address').value;
+
+            const profileImgFile = document.getElementById('reg-profileimg').files[0];
+
+            // Generate object URL for image to simulate upload
+            let profileImgUrl = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80'; // fallback
+
+            if (profileImgFile) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    profileImgUrl = evt.target.result;
+                    saveProfileAndRedirect(name, email, password, occupation, address, profileImgUrl);
+                };
+                reader.readAsDataURL(profileImgFile);
+            } else {
+                saveProfileAndRedirect(name, email, password, occupation, address, profileImgUrl);
+            }
+        });
+
+        function saveProfileAndRedirect(name, email, password, occupation, address, profileImgUrl) {
+            const ownerProfile = {
+                name: name,
+                email: email,
+                password: password,
+                occupation: occupation,
+                address: address,
+                profileImage: profileImgUrl
+            };
+
+            localStorage.setItem('ownerProfile', JSON.stringify(ownerProfile));
+            localStorage.setItem('ownerEmail', email);
+            localStorage.setItem('ownerName', name);
+
+            alert('Account created successfully! Please log in with your new credentials.');
+
+            // Reset form and go back to step 1
+            document.getElementById('owner-signup-form').reset();
+            prevStep();
+
+            // Switch to login tab and pre-fill email
+            switchTab('login');
+            document.getElementById('login-email').value = email;
+            document.getElementById('login-password').value = '';
+        }
+
+        // Handle Login
+        document.getElementById('owner-login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const storedProfileStr = localStorage.getItem('ownerProfile');
+
+            if (storedProfileStr) {
+                const storedProfile = JSON.parse(storedProfileStr);
+                if (storedProfile.email === email && storedProfile.password === password) {
+                    if (storedProfile.isBlocked) {
+                        alert('Your account has been blocked by the administrator. Contact support for more information.');
+                        return;
+                    }
+                    localStorage.setItem('ownerEmail', email);
+                    localStorage.setItem('ownerLoggedIn', 'true');
+                    window.location.href = 'owner-dashboard.html';
+                } else {
+                    alert('Invalid email or password. Please try again.');
+                }
+            } else {
+                alert('No account found. Please sign up first.');
+            }
+        });
+
+    </script>
+</body>
+
+</html>

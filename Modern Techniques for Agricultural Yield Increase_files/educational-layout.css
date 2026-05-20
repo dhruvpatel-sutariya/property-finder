@@ -1,0 +1,647 @@
+/* ========================================
+   ROOT CSS VARIABLES - Layout Controls
+   ======================================== */
+:root {
+  /* ========================================
+       LAYOUT MARGINS & SPACING
+       ======================================== */
+  /* Start - Primary Layout Margins - Small */
+  --layout-primary-margin-left-small: var(--dt-spacing-40);
+  --layout-primary-margin-right-small: var(--dt-spacing-40);
+  --layout-primary-margin-top-small: var(--dt-spacing-40);
+  --layout-primary-margin-bottom-small: var(--dt-spacing-40);
+  /* Start - Primary Layout Margins - Medium */
+  --layout-primary-margin-left-medium: var(--dt-spacing-64);
+  --layout-primary-margin-right-medium: var(--dt-spacing-64);
+  --layout-primary-margin-top-medium: var(--dt-spacing-64);
+  --layout-primary-margin-bottom-medium: var(--dt-spacing-64);
+  /* Start - Primary Layout Margins - Large */
+  --layout-primary-margin-left-large: var(--dt-spacing-100);
+  --layout-primary-margin-right-large: var(--dt-spacing-100);
+  --layout-primary-margin-top-large: var(--dt-spacing-100);
+  --layout-primary-margin-bottom-large: var(--dt-spacing-100);
+  /* Start - Primary Layout Margins */
+  --layout-primary-margin: var(--dt-spacing-80);
+  --layout-primary-margin-top: var(--dt-spacing-120);
+  --layout-primary-margin-bottom: var(--dt-spacing-80);
+  --layout-primary-margin-right: var(--dt-spacing-80);
+  --layout-primary-margin-left: var(--dt-spacing-80);
+  /* End - Primary Layout Margins */
+  /* Start - Secondary Layout Margins */
+  --layout-secondary-margin: var(--dt-spacing-128);
+  --layout-secondary-margin-left: var(--dt-spacing-128);
+  --layout-secondary-margin-right: var(--dt-spacing-128);
+  --layout-secondary-margin-bottom: var(--dt-spacing-128);
+  --layout-secondary-margin-top: var(--dt-spacing-128);
+  /* End - Secondary Layout Margins */
+}
+
+/* ========================================
+     GAP CONTROLS - Left/Right Layouts
+     ======================================== */
+.cf-layout-left-right-title-presenter-gap {
+  gap: var(--dt-spacing-64);
+}
+
+.cf-layout-left-right-placeholder-title-gap {
+  gap: var(--dt-spacing-28);
+}
+
+.cf-layout-left-right-label-title-cta-button-gap {
+  gap: var(--dt-spacing-36);
+}
+
+.cf-layout-left-right-label-title-gap {
+  gap: var(--dt-spacing-36);
+}
+
+.cf-layout-left-right-title-cta-button-gap {
+  gap: var(--dt-spacing-36);
+}
+
+.cf-layout-left-right-title-subtitle-gap {
+  gap: var(--dt-spacing-36);
+}
+
+.cf-layout-left-right-subtitle-cta-button-gap {
+  gap: var(--dt-spacing-36);
+}
+
+.cf-layout-vertical-gap {
+  gap: var(--dt-spacing-80);
+}
+
+.cf-layout-horizontal-gap {
+  gap: var(--dt-spacing-80);
+}
+
+/* ========================================
+       GAP CONTROLS - Top/Bottom Layouts
+       ======================================== */
+.cf-layout-top-bottom-title-presenter-gap {
+  gap: var(--dt-spacing-64);
+}
+
+.cf-layout-top-bottom-placeholder-title-gap {
+  gap: var(--dt-spacing-28);
+}
+
+.cf-layout-top-bottom-label-title-cta-button-gap {
+  gap: var(--dt-spacing-24);
+}
+
+.cf-layout-top-bottom-label-title-gap {
+  gap: var(--dt-spacing-24);
+}
+
+.cf-layout-top-bottom-title-cta-button-gap {
+  gap: var(--dt-spacing-48);
+}
+
+/* Start - Primary Layout Margins - Top, Bottom, Left, Right */
+.ci-title-container {
+  overflow: var(--dt-overflow-hidden);
+}
+
+/*  Target Classes Gap */
+.ci-layout-arrangement-vertical .ci-title-container .ci-title-group .cf-layout-top-bottom-title-subtitle-gap {
+  gap: var(--dt-spacing-10) !important;
+}
+
+.ci-layout-arrangement-horizontal .ci-title-container .ci-title-group .cf-layout-top-bottom-title-subtitle-gap {
+  gap: var(--dt-spacing-10) !important;
+}
+
+.ci-layout-arrangement-horizontal .ci-layout-arrangement-vertical .ci-title-container .ci-title-group .cf-layout-top-bottom-title-subtitle-gap {
+  gap: var(--dt-spacing-10) !important;
+}
+
+.ci-layout-arrangement-vertical .ci-layout-arrangement-horizontal .ci-title-container .ci-title-group .cf-layout-top-bottom-title-subtitle-gap {
+  gap: var(--dt-spacing-10) !important;
+}
+
+.ci-layout-arrangement-horizontal .ci-layout-arrangement-vertical .ci-title-container .cf-layout-top-bottom-title-cta-button-gap,
+.ci-layout-arrangement-vertical .ci-layout-arrangement-horizontal .ci-title-container .cf-layout-top-bottom-title-cta-button-gap,
+.ci-layout-arrangement-vertical .ci-title-container .cf-layout-top-bottom-title-cta-button-gap {
+  gap: var(--dt-spacing-24) !important;
+}
+
+/* End - Target Classes Gap */
+.cf-special-margin-top {
+  padding-top: var(--dt-spacing-8);
+}
+
+.cf-special-margin-bottom {
+  padding-bottom: var(--dt-spacing-8);
+}
+
+.cf-special-margin-right {
+  padding-right: var(--dt-spacing-8);
+}
+
+.cf-special-margin-left {
+  padding-left: var(--dt-spacing-8);
+}
+
+.cf-primary-margin-fg-top {
+  padding-top: calc(var(--layout-primary-margin-top) - var(--dt-spacing-10));
+}
+
+.cf-primary-margin-fg-right {
+  padding-right: calc(var(--layout-primary-margin-right) - 0px);
+}
+
+.cf-primary-margin-fg-bottom {
+  padding-bottom: calc(var(--layout-primary-margin-bottom) - 0px);
+}
+
+.cf-primary-margin-fg-left {
+  padding-left: calc(var(--layout-primary-margin-left) - 0px);
+}
+
+/* Layout Container Properties - Flexible - Two Stack */
+/* cover layout horizontal left-right */
+/* End - cover layout horizontal  */
+/* Three -Layout */
+/* End-Three -Layout */
+/* End - Layout Container Properties - Flexible - Two Stack */
+/* ========================================
+     SECONDARY LAYOUT MARGINS - Top, Bottom, Left, Right
+     ======================================== */
+.cs-title-container-left {
+  width: var(--dt-size-auto);
+  min-width: var(--dt-size-0);
+  max-width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  overflow: var(--dt-overflow-hidden);
+}
+
+.cs-placeholder-group {
+  width: var(--dt-size-auto);
+  max-width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  max-height: var(--dt-size-50p);
+  box-sizing: var(--dt-box-sizing-border);
+  position: var(--dt-position-relative);
+}
+
+.cs-title-group {
+  width: var(--dt-size-100p);
+  flex: 1 1 auto;
+  min-height: var(--dt-size-0);
+  overflow-y: var(--dt-overflow-auto);
+  display: var(--dt-display-flex);
+  overflow: var(--dt-overflow-hidden);
+  flex-direction: var(--dt-flex-col);
+  z-index: var(--dt-z-1);
+}
+
+.cs-title-subtitle-group {
+  width: var(--dt-size-100p);
+  min-height: var(--dt-size-0);
+  overflow-y: var(--dt-overflow-auto);
+  overflow: var(--dt-overflow-hidden);
+}
+
+.cs-placeholder-title-group {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-70p);
+  flex: 1 1 var(--dt-keyword-auto);
+  overflow: var(--dt-overflow-hidden);
+  display: var(--dt-display-flex);
+  box-sizing: var(--dt-box-sizing-border);
+  position: var(--dt-position-relative);
+  flex-direction: var(--dt-flex-col);
+}
+
+.cs-title-group-top {
+  width: var(--dt-size-auto);
+  flex: 0 0 70%;
+  min-width: var(--dt-size-0);
+}
+
+.cs-cta-title-group-top {
+  width: var(--dt-size-50p);
+  height: var(--dt-size-auto);
+  overflow: var(--dt-overflow-hidden);
+}
+
+.cs-title {
+  padding-bottom: var(--dt-spacing-6);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  color: rgba(var(--th-slide-contrast), 1);
+  overflow: var(--dt-overflow-hidden);
+  box-sizing: var(--dt-box-sizing-border);
+}
+
+.cs-subtitle {
+  width: var(--dt-size-100p);
+  height: var(--dt-keyword-auto);
+  color: rgba(var(--th-slide-contrast), 0.6);
+  overflow: var(--dt-overflow-hidden);
+  box-sizing: var(--dt-box-sizing-border);
+}
+
+.ci-two-vertical-flexible-cover .cs-subtitle,
+.ci-two-vertical-flexible-cover .cs-element-designation {
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+.h1.cs-title {
+  padding-bottom: var(--dt-spacing-16);
+}
+
+.cf-container-padding-left {
+  padding-left: var(--layout-primary-margin-left);
+}
+
+.cf-container-padding-right {
+  padding-right: var(--layout-primary-margin-right);
+}
+
+.cf-container-padding-top {
+  padding-top: var(--layout-primary-margin-top);
+}
+
+.cf-container-padding-bottom {
+  padding-bottom: var(--layout-primary-margin-bottom);
+}
+
+.cf-container-title-padding-left {
+  padding-left: var(--dt-spacing-80);
+}
+
+.cf-container-title-padding-right {
+  padding-right: 560px;
+}
+
+.cf-container-title-padding-top {
+  padding-top: var(--dt-spacing-120);
+}
+
+.cf-container-title-padding-bottom {
+  padding-bottom: var(--dt-spacing-120);
+}
+
+/* End - Secondary Layout Margins - Top, Bottom, Left, Right */
+.ci-bleed-enabled.cf-bleed-top-cover {
+  padding-top: var(--layout-primary-margin-top);
+}
+
+.ci-bleed-enabled.cf-bleed-bottom-cover {
+  padding-bottom: var(--layout-primary-margin-bottom);
+}
+
+.ci-bleed-enabled.cf-bleed-right-cover {
+  padding-right: var(--layout-primary-margin-right);
+}
+
+.ci-bleed-enabled.cf-bleed-left-cover {
+  padding-left: var(--layout-primary-margin-left);
+}
+
+.ci-bleed-enabled.cf-bleed-top-split,
+.cf-primary-margin-top-split {
+  padding-top: calc(var(--layout-primary-margin-top) / 1.12);
+}
+
+.ci-bleed-enabled.cf-bleed-bottom-split,
+.cf-primary-margin-bottom-split {
+  padding-bottom: var(--layout-primary-margin-bottom);
+}
+
+.ci-bleed-enabled.cf-bleed-right-split,
+.cf-primary-margin-right-split {
+  padding-right: var(--layout-primary-margin-right);
+}
+
+.ci-bleed-enabled.cf-bleed-left-split,
+.cf-primary-margin-left-split {
+  padding-left: var(--layout-primary-margin-left);
+}
+
+/* Start - Full Image Layout */
+.ci-bleed-enabled.cf-bleed-top-split,
+.cf-primary-margin-top-split-full-image {
+  padding-top: calc(var(--layout-primary-margin-top) / 2.25);
+}
+
+.ci-bleed-enabled.cf-bleed-bottom-split,
+.cf-primary-margin-bottom-split-full-image {
+  padding-bottom: var(--layout-primary-margin-bottom);
+}
+
+.ci-bleed-enabled.cf-bleed-right-split,
+.cf-primary-margin-right-split-full-image {
+  padding-right: calc(var(--layout-primary-margin-right) * 2);
+}
+
+.ci-bleed-enabled.cf-bleed-left-split,
+.cf-primary-margin-left-split-full-image {
+  padding-left: calc(var(--layout-primary-margin-left) * 2);
+}
+
+#two-split-vertical-full-image .ci-placeholder-title-group.cf-layout-top-bottom-placeholder-title-gap {
+  gap: var(--dt-spacing-128);
+}
+
+.cf-layout-container-a-two-split-vertical .ci-title-container .ci-title-group .cf-layout-top-bottom-title-subtitle-gap {
+  gap: var(--dt-spacing-32) !important;
+}
+
+/* End - Full Image Layout */
+/* Flex Direction Utilities */
+.cs-flex-direction-row {
+  flex-direction: var(--dt-flex-row);
+  display: var(--dt-display-flex);
+}
+
+.cs-flex-direction-column {
+  flex-direction: var(--dt-flex-col);
+  display: var(--dt-display-flex);
+}
+
+/* .cf-layout-container-b-two-vertical-flexible-cover .presenter-align {
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+} */
+.subtitle-holder-align-center {
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  text-align: var(--dt-text-center);
+}
+
+.presenter-holder-align-center {
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+}
+
+/* Start - Full Graphic Layout */
+.ci-two-vertical-flexible-cover .cs-element-logogrid-holder .ci-logogrid-container {
+  justify-content: var(--dt-justify-center);
+}
+
+/* End - Full Graphic Layout */
+/* CTA Layout */
+.cf-layout-vertical-gap-split,
+.cf-layout-horizontal-gap-split {
+  gap: var(--dt-spacing-48);
+}
+
+.cf-layout-left-right-title-subtitle-gap-cta {
+  gap: var(--dt-spacing-80);
+}
+
+/* End - CTA Layout */
+/* section break layout */
+.cf-layout-vertical-gap-section-break {
+  gap: var(--dt-spacing-288);
+}
+
+/* End - section break layout */
+.ci-four-cover-focus-top .ci-title-container .ci-title-group .title,
+.ci-four-cover-focus-top .ci-title-container .ci-title-group .subtitle,
+.ci-two-vertical-flexible .ci-title-container .ci-title-group .title,
+.ci-three-vertical-focus-center .ci-title-container .ci-title-group .title,
+.ci-two-vertical-diagram .ci-title-container .ci-title-group .title,
+.ci-two-vertical-flexible .ci-title-container .ci-title-group .subtitle,
+.ci-three-vertical-focus-center .ci-title-container .ci-title-group .subtitle,
+.ci-two-vertical-diagram .ci-title-container .ci-title-group .subtitle,
+.ci-three-split-vertical-full-image .ci-title-container .ci-title-group .title,
+.ci-two-split-vertical .ci-title-container .ci-title-group .title,
+.ci-two-split-horizontal-bottom .ci-title-container .ci-title-group .title,
+.ci-two-split-horizontal-bottom .ci-title-container .ci-title-group .subtitle {
+  width: var(--dt-size-70p);
+}
+
+.slide-background-overlay {
+  opacity: var(--dt-opacity-0);
+}
+
+.ci-two-split-vertical-full-image .cs-subtitle {
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* cover title subtitle alignment */
+.ci-three-split-vertical-full-image .ci-title-container .ci-title-group .ci-title-subtitle-group .subtitle,
+.ci-two-split-vertical .ci-title-container .ci-title-group .ci-title-subtitle-group .subtitle {
+  text-align: var(--dt-text-right);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-end);
+  text-align: var(--dt-text-right);
+}
+
+.ci-two-split-vertical .ci-containerB .ci-title-subtitle-group {
+  flex-direction: var(--dt-flex-col);
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-end);
+}
+
+.ci-two-split-vertical-full-image .ci-title-container .ci-title-group .subtitle,
+.ci-two-split-vertical .ci-title-container .ci-title-group .subtitle {
+  width: var(--dt-size-50p);
+}
+
+/* End - cover title subtitle alignment */
+/* ========================================
+     FOOTER CLASSES
+     ======================================== */
+/* Footer Logo */
+.cs-footer-container {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  display: var(--dt-display-flex);
+  flex-direction: var(--dt-flex-col);
+  box-sizing: var(--dt-box-sizing-border);
+  justify-content: var(--dt-justify-between);
+  align-items: var(--dt-items-end);
+  position: var(--dt-position-absolute);
+  /* bottom: var(--dt-position-0); */
+  left: var(--dt-position-0);
+  top: var(--dt-position-0);
+  pointer-events: var(--dt-pointer-events-none);
+  padding: var(--dt-spacing-0) calc(var(--layout-primary-margin-right) * 0.5) var(--dt-spacing-0) calc(var(--layout-primary-margin-left) * 0.5);
+}
+
+.cs-footer-text-container {
+  display: var(--dt-display-flex);
+  flex-direction: var(--dt-flex-row);
+  align-items: var(--dt-items-center);
+  gap: var(--dt-spacing-16);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-80);
+}
+
+.cs-text-logo-container {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-80);
+  display: var(--dt-display-flex);
+  gap: var(--dt-spacing-24);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-end);
+  flex-direction: var(--dt-flex-row);
+  box-sizing: var(--dt-box-sizing-border);
+  pointer-events: var(--dt-pointer-events-none);
+}
+
+.cs-secondary-text-number-container {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-80);
+  display: var(--dt-display-flex);
+  gap: var(--dt-spacing-24);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-between);
+  flex-direction: var(--dt-flex-row);
+  box-sizing: var(--dt-box-sizing-border);
+  pointer-events: var(--dt-pointer-events-none);
+}
+
+.cs-footer-logo {
+  transform-origin: right;
+  width: var(--dt-size-auto);
+  max-width: var(--dt-size-50p);
+  height: 38%;
+  pointer-events: var(--dt-pointer-events-none);
+}
+
+.cs-footer-text {
+  background-color: var(--dt-keyword-unset);
+  border-radius: var(--dt-keyword-unset);
+  padding: var(--dt-keyword-unset);
+  color: rgba(var(--th-slide-contrast), 1);
+  pointer-events: var(--dt-pointer-events-none);
+}
+
+.mood.educational .cs-footer-text,
+.mood.educational .cs-footer-secondary-text {
+  text-transform: uppercase;
+  line-height: var(--dt-size-18) !important;
+  letter-spacing: 1px !important;
+}
+
+.cs-footer-number {
+  color: rgba(var(--th-slide-contrast), 1);
+  pointer-events: var(--dt-pointer-events-none);
+  width: var(--dt-size-100p);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-end);
+  display: var(--dt-display-flex);
+  font-weight: bold !important;
+}
+
+.cs-footer-secondary-text {
+  color: rgba(var(--th-slide-tertiary), 1);
+  pointer-events: var(--dt-pointer-events-none);
+  padding-left: var(--dt-spacing-16);
+  border-left: 2px solid rgba(var(--th-slide-contrast), 1);
+}
+
+.slide-container .slide-element .ci-footer-container .ci-footer-logo .img {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+/* Ensure footer image fills logo container height */
+.cs-footer-logo img,
+.footer-logo {
+  height: var(--dt-size-100p);
+  width: var(--dt-size-auto);
+  object-fit: var(--dt-object-fit-contain);
+  display: var(--dt-display-block);
+}
+
+[data-footer-message="true"][data-footer-secondary-text="true"][data-footer-logo="false"] .cs-secondary-text-number-container.cs-footer-number {
+  position: absolute;
+  align-items: var(--dt-items-center);
+}
+
+/* ========================================
+     COVER-CTA-SECTION BREAK -  LAYOUT PROPS
+     ======================================== */
+/* single-title - Label Layout */
+[data-slide-menu-name="cfg-cover-logo"] [graphic-menu-name="cfg-logo-single"] .ci-template-container {
+  display: var(--dt-display-flex);
+  /* make it flex */
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  /* vertical centering */
+}
+
+[data-slide-menu-name="cfg-cover-logo"] [graphic-menu-name="cfg-logo-single"] .cs-element-logogrid-holder .ci-logo-item {
+  height: var(--dt-size-152);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+}
+
+/* End - single-title - Label Layout */
+/* section break layout */
+.cf-layout-content-group-three-cover-focus-right [graphic-menu-name="cfg-section-break-horizontal-sequence"] .ci-template-container {
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-end);
+}
+
+[data-slide-menu-name="cfg-cta-logo-title-subtitle"] .ci-containerA.ci-layout-container {
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  align-content: var(--dt-content-center);
+}
+
+/* End - section break layout */
+/* End - COVER-CTA-SECTION BREAK -  LAYOUT PROPS */
+.cf-layout-content-group-two-vertical-flexible .column-list.ci-template-container {
+  justify-content: var(--dt-justify-start);
+}
+
+.cf-layout-content-group-two-vertical-flexible .ci-template-container {
+  justify-content: var(--dt-justify-center);
+}
+
+.cf-layout-container-c-three-focus-right .ci-template-container,
+.cf-layout-content-group-two-horizontal .ci-template-container {
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+}
+
+.ci-two-horizontal .ci-template-container {
+  justify-content: var(--dt-justify-end);
+}
+
+.ci-three-focus-split-top-left .cs-node-align {
+  justify-content: var(--dt-justify-end);
+}
+
+/* Background Shapes */
+/* End - Background Shapes */
+/* H Series */
+.cf-cta-element-padding {
+  padding-top: var(--dt-spacing-80);
+  padding-left: calc(var(--dt-spacing-80) * 7);
+  padding-right: var(--dt-spacing-80);
+}
+
+.ci-single-title [graphic-menu-name="cfg-logo-single"] .cs-element-logogrid-holder .ci-logo-item {
+  height: var(--dt-size-auto);
+}
+
+/* Text Element Style - Start */
+.cs-text-element {}
+
+/* Text Element Style - End */
+.ci-three-cover-focus-top .ci-arrangement-horizontal {
+  justify-content: var(--dt-justify-end);
+  align-items: var(--dt-items-end);
+}
+
+.cf-layout-container-b-two-half-title-graphic-vertical-top-bottom {
+  background-color: rgba(var(--th-slide-secondary), 0.1);
+}
+
+.cf-unique-layout-horizontal-gap {
+  gap: var(--dt-spacing-144);
+}

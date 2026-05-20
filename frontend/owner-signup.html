@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Finder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--bg-dark);
+            padding: 2rem 0;
+        }
+
+        .auth-container {
+            background-color: var(--surface-light);
+            padding: 3rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .auth-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .step-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: background-color 0.3s;
+        }
+
+        .step-dot.active {
+            background-color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--surface-color);
+            color: var(--text-light);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-group button {
+            flex: 1;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .login-link a:hover {
+            color: var(--primary-hover);
+        }
+
+        .back-link {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            z-index: 20;
+        }
+
+        .back-link:hover {
+            color: var(--text-light);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 0.4rem;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <a href="index.html" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to roles
+    </a>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <h2>Owner Sign Up</h2>
+            <p>Create your account in just 2 steps</p>
+        </div>
+
+        <div class="step-indicator">
+            <div class="step-dot active" id="dot-1"></div>
+            <div class="step-dot" id="dot-2"></div>
+        </div>
+
+        <form id="owner-signup-form">
+            <!-- Step 1 -->
+            <div id="step-1">
+                <div class="form-group">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" placeholder="john@example.com" required>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" placeholder="Min 8 chars" minlength="8" required>
+                        <div class="error-message" id="password-error">Password must be at least 8 chars.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-confirm">Confirm Password</label>
+                        <input type="password" id="reg-confirm" placeholder="Confirm" required>
+                        <div class="error-message" id="confirm-error">Passwords do not match.</div>
+                    </div>
+                </div>
+
+                <button type="button" id="btn-next-1" class="btn-submit">Next Step</button>
+            </div>
+
+            <!-- Step 2 -->
+            <div id="step-2" class="hidden">
+                <div class="form-group">
+                    <label for="reg-occupation">Occupation</label>
+                    <input type="text" id="reg-occupation" placeholder="Your profession e.g., Property Manager"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-address">Current Address</label>
+                    <textarea id="reg-address" placeholder="Your full residential address" rows="2" required></textarea>
+                </div>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label for="reg-idproof">ID Proof Document (PDF/Image)</label>
+                        <input type="file" id="reg-idproof" accept=".pdf,image/jpeg,image/png" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-profileimg">Profile Image</label>
+                        <input type="file" id="reg-profileimg" accept="image/jpeg,image/png" required>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" id="btn-prev-2" class="btn-submit btn-outline">Back</button>
+                    <button type="submit" class="btn-submit">Sign Up</button>
+                </div>
+            </div>
+
+            <div class="login-link">
+                Already have an account? <a href="owner-login.html">Log In</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+
+        const dot1 = document.getElementById('dot-1');
+        const dot2 = document.getElementById('dot-2');
+
+        const form = document.getElementById('owner-signup-form');
+
+        // Nav functions
+        document.getElementById('btn-next-1').addEventListener('click', () => {
+            // Validate step 1 fields
+            const inputs = step1.querySelectorAll('input');
+            let valid = true;
+            inputs.forEach(i => {
+                if (!i.checkValidity()) {
+                    i.reportValidity();
+                    valid = false;
+                }
+            });
+
+            const pass = document.getElementById('reg-password').value;
+            const conf = document.getElementById('reg-confirm').value;
+
+            if (pass !== conf) {
+                document.getElementById('confirm-error').style.display = 'block';
+                valid = false;
+            } else {
+                document.getElementById('confirm-error').style.display = 'none';
+            }
+
+            if (valid) {
+                step1.classList.add('hidden');
+                step2.classList.remove('hidden');
+                dot1.classList.remove('active');
+                dot2.classList.add('active');
+            }
+        });
+
+        document.getElementById('btn-prev-2').addEventListener('click', () => {
+            step2.classList.add('hidden');
+            step1.classList.remove('hidden');
+            dot2.classList.remove('active');
+            dot1.classList.add('active');
+        });
+
+        // Live validation for password match
+        document.getElementById('reg-confirm').addEventListener('input', function () {
+            if (this.value === document.getElementById('reg-password').value) {
+                document.getElementById('confirm-error').style.display = 'none';
+            }
+        });
+
+        // Handle Signup
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const occupation = document.getElementById('reg-occupation').value;
+            const address = document.getElementById('reg-address').value;
+
+            const profileImgFile = document.getElementById('reg-profileimg').files[0];
+
+            let profileImgUrl = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80';
+
+            if (profileImgFile) {
+                const reader = new FileReader();
+                reader.onload = function (evt) {
+                    profileImgUrl = evt.target.result;
+                    saveProfileAndRedirect(name, email, password, occupation, address, profileImgUrl);
+                };
+                reader.readAsDataURL(profileImgFile);
+            } else {
+                saveProfileAndRedirect(name, email, password, occupation, address, profileImgUrl);
+            }
+        });
+
+        function saveProfileAndRedirect(name, email, password, occupation, address, profileImgUrl) {
+            const ownerProfile = {
+                name: name,
+                email: email,
+                password: password,
+                occupation: occupation,
+                address: address,
+                profileImage: profileImgUrl
+            };
+
+            fetch('http://localhost:5000/api/owner/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ownerProfile)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.message && data.message !== 'Owner registered successfully') {
+                    alert(data.message); return;
+                }
+                window.location.href = 'owner-login.html?registered=true';
+            })
+            .catch(() => alert('Could not connect to server. Please try again.'));
+        }
+
+    </script>
+</body>
+
+</html>

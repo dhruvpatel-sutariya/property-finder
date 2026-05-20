@@ -1,0 +1,3047 @@
+/* ============== Mood Level Variables ============== */
+:root {
+  --mood-card-border-radius: var(--dt-radius-40);
+  --mood-image-holder-border-radius: var(--dt-radius-40);
+  --mood-icon-holder-border-radius: var(--dt-radius-40);
+  --mood-data-driven-holder-border-radius: var(--dt-radius-40);
+  --mood-secondary-holder-top-margin: var(--dt-spacing-32);
+  --node-card-padding: var(--dt-spacing-40);
+  --vertical-card-style-padding: var(--dt-spacing-24) var(--dt-spacing-32);
+  --grid-card-style-padding: var(--dt-spacing-32);
+  --svg-connector-gap-left-right: var(--dt-spacing-24);
+  --svg-connector-gap-top-bottom: var(--dt-spacing-24);
+  --node-name-designation-gap: var(--dt-spacing-2);
+  --node-portrait-name-designation-gap: var(--dt-spacing-8);
+  --node-horizontal-image-text-gap: var(--dt-spacing-12);
+  /* ============== Mood Level Label Gap Variables ============== */
+  --cs-horizontal-label-bottom-gap: var(--dt-spacing-20);
+  --cs-vertical-label-bottom-gap: var(--dt-spacing-24);
+  --cs-grid-label-bottom-gap: var(--dt-spacing-24);
+  /* ============== Mood Level Placeholder Gap ============== */
+  --cs-horizontal-placeholder-gap: var(--dt-spacing-56);
+  --cs-vertical-placeholder-gap: var(--dt-spacing-40);
+  --cs-grid-placeholder-gap: var(--dt-spacing-28);
+  --node-horizontal-image-text-gap: var(--dt-spacing-4);
+  --element-bullet-size: 16px;
+  --element-sequence-size: 36px;
+  --element-checkbox-size: 36px;
+  --element-paragraph-size: 0px;
+  /* ========================================
+    Logo Size variable
+    ======================================== */
+  --logo-square-cover-size: var(--dt-size-80);
+  --logo-square-single-size: var(--dt-size-224);
+  --logo-square-node-size: var(--dt-size-56);
+  --logo-square-secondary-size: var(--dt-size-32);
+}
+
+.ci-node-wrapper,
+.ci-react-diagram-container {
+  --cs-node-horizontal-gap: var(--dt-spacing-32);
+  --cs-node-vertical-gap: var(--dt-spacing-16);
+  --cs-node-grid-gap: var(--dt-spacing-24);
+  --cs-node-column-list-gap: var(--dt-spacing-24) var(--dt-spacing-80);
+  --ci-connector-color: rgba(var(--th-slide-secondary), 1);
+  --cs-node-horizontal-secondary-placeholder-gap: var(--dt-spacing-32);
+  --cs-node-vertical-secondary-placeholder-gap: var(--dt-spacing-28);
+  --cs-node-grid-secondary-placeholder-gap: var(--dt-spacing-28);
+  --dt-icon-size-tiny: var(--dt-size-64);
+  --dt-icon-size-nano: var(--dt-size-48);
+}
+
+/* ====== Mood Level Changeable Classes ====== */
+/* Element Classes - Start */
+/* Heading Element Classes - Start */
+.cf-element-heading,
+.cs-element-heading {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* Heading Element Classes - End */
+/* Block Heading Element Classes - Start */
+.cs-element-block-heading {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  color: rgba(var(--th-slide-contrast), 0.3);
+  background-color: rgba(var(--th-slide-contrast), 0.15);
+  padding: var(--node-card-padding);
+  border-radius: var(--mood-card-border-radius) var(--mood-card-border-radius) var(--dt-radius-0) var(--dt-radius-0);
+}
+
+/* Block Heading Element Classes - End */
+/* Block Heading Element Classes - Start */
+.cs-element-logo-heading {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  padding: var(--dt-spacing-40) var(--dt-spacing-0);
+  border-bottom: var(--dt-border-2) var(--dt-border-solid) rgba(var(--th-slide-secondary), 0.6);
+  border-radius: var(--mood-card-border-radius) var(--mood-card-border-radius) var(--dt-radius-0) var(--dt-radius-0);
+}
+
+/* Block Heading Element Classes - End */
+/* Body Element Classes - Start */
+.cf-element-body,
+.cs-element-body {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  color: rgba(var(--th-slide-contrast), 0.85);
+}
+
+/* Body Element Classes - End */
+/* Subheading Element Classes - Start */
+.cf-element-subheading,
+.cs-element-subheading {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  color: rgba(var(--th-slide-secondary), 1);
+}
+
+/* Subheading Element Classes - End */
+/* Name Element Classes - Start */
+.cs-element-name {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  color: rgba(var(--th-slide-contrast), 1);
+  font-weight: bold !important;
+}
+
+/* Name Element Classes - End */
+/* Designation Element Classes - Start */
+.cs-element-designation {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  color: rgba(var(--th-slide-secondary), 1);
+}
+
+.ci-template-container .cs-container-node-presenter-card .cs-element-designation .ci-text-content {
+  font-style: italic;
+}
+
+/* Designation Element Classes - End */
+/* Data Driven Element Classes - Start */
+.cs-element-data-driven,
+.cf-element-data-driven {
+  min-width: var(--dt-size-120);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  position: var(--dt-position-relative);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+.cf-element-large-data-driven .cs-element-data-driven {
+  font-size: var(--dt-size-512);
+}
+
+.cs-element-secondary-data-driven {
+  width: var(--dt-size-auto);
+  height: var(--dt-size-auto);
+  position: var(--dt-position-relative);
+  color: rgba(var(--th-slide-secondary), 1);
+}
+
+.cs-key-single-number-text {
+  justify-content: var(--dt-justify-end);
+  display: var(--dt-display-flex);
+}
+
+/* Data Driven Element Classes - End */
+/* Data Driven Prefix/Suffix/Main Style - Start */
+.ci-prefix-style {
+  font-size: 75%;
+  line-height: 1;
+  vertical-align: top;
+  top: -0.5em;
+  opacity: var(--dt-opacity-100);
+  /* Testing For Exporting To Powerpoint */
+  max-width: var(--dt-size-40p);
+  text-overflow: var(--dt-text-overflow-ellipsis);
+  overflow: var(--dt-overflow-hidden);
+}
+
+.ci-suffix-style {}
+
+.ci-main-style {}
+
+/* Data Driven Prefix/Suffix/Main Style - End */
+/* Sequence Element Classes - Start */
+.cf-element-sequence,
+.cs-element-sequence {
+  white-space: var(--dt-whitespace-nowrap);
+  overflow: var(--dt-overflow-hidden);
+  text-overflow: var(--dt-text-overflow-ellipsis);
+  width: var(--dt-size-auto);
+  height: var(--dt-size-auto);
+  min-height: var(--dt-size-100p);
+  border-radius: var(--dt-radius-8);
+  /* pointer-events: var(--dt-pointer-events-none); */
+  text-align: var(--dt-text-left);
+  flex-shrink: var(--dt-flex-shrink-0);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* For single digits (1-9) - add leading zero */
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content[data-index="1"]::before,
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content[data-index="2"]::before,
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content[data-index="3"]::before,
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content[data-index="4"]::before,
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content[data-index="5"]::before,
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content[data-index="6"]::before,
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content[data-index="7"]::before,
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content[data-index="8"]::before,
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content[data-index="9"]::before {
+  content: "0" attr(data-index) "" !important;
+}
+
+.cf-element-sequence .ci-text-content::before,
+.cs-element-sequence .ci-text-content::before {
+  content: attr(data-index) ".";
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-start);
+  align-items: var(--dt-items-start);
+  position: var(--dt-position-relative);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+/* Sequence Element Classes - End */
+/* Non-Linear Sequence Element Classes - Start */
+.cs-element-non-linear-sequence {
+  white-space: var(--dt-whitespace-nowrap);
+  overflow: var(--dt-overflow-hidden);
+  text-overflow: var(--dt-text-overflow-ellipsis);
+  width: var(--dt-size-40);
+  height: var(--dt-size-40);
+  min-height: var(--dt-size-100p);
+  pointer-events: var(--dt-pointer-events-none);
+  text-align: var(--dt-text-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  color: rgba(var(--th-slide-contrast), 1);
+  background-color: rgba(var(--th-slide-tertiary), 0.2);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  font-size: 22px !important;
+  line-height: 22px !important;
+}
+
+/* For single digits (1-9) - add leading zero */
+/* .cs-element-non-linear-sequence .ci-text-content[data-index="1"]::before,
+.cs-element-non-linear-sequence .ci-text-content[data-index="2"]::before,
+.cs-element-non-linear-sequence .ci-text-content[data-index="3"]::before,
+.cs-element-non-linear-sequence .ci-text-content[data-index="4"]::before,
+.cs-element-non-linear-sequence .ci-text-content[data-index="5"]::before,
+.cs-element-non-linear-sequence .ci-text-content[data-index="6"]::before,
+.cs-element-non-linear-sequence .ci-text-content[data-index="7"]::before,
+.cs-element-non-linear-sequence .ci-text-content[data-index="8"]::before,
+.cs-element-non-linear-sequence .ci-text-content[data-index="9"]::before {
+  content: "0" attr(data-index) !important;
+} */
+.cs-element-non-linear-sequence .ci-text-content::before {
+  content: attr(data-index);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  position: var(--dt-position-relative);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+/* Non-Linear Sequence Element Classes - End */
+/* Non-Linear Plain Sequence Element Classes - Start */
+.cs-element-non-linear-plain-sequence {
+  line-height: 1 !important;
+  white-space: var(--dt-whitespace-nowrap);
+  overflow: var(--dt-overflow-hidden);
+  text-overflow: var(--dt-text-overflow-ellipsis);
+  width: var(--dt-size-auto);
+  height: var(--dt-size-auto);
+  /* min-width: var(--dt-size-28); */
+  min-height: var(--dt-size-100p);
+  pointer-events: var(--dt-pointer-events-all);
+  text-align: var(--dt-text-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  color: rgba(var(--th-slide-contrast), 1);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+}
+
+/* For single digits (1-9) - add leading zero */
+/* .cs-element-non-linear-plain-sequence .ci-text-content[data-index="1"]::before,
+.cs-element-non-linear-plain-sequence .ci-text-content[data-index="2"]::before,
+.cs-element-non-linear-plain-sequence .ci-text-content[data-index="3"]::before,
+.cs-element-non-linear-plain-sequence .ci-text-content[data-index="4"]::before,
+.cs-element-non-linear-plain-sequence .ci-text-content[data-index="5"]::before,
+.cs-element-non-linear-plain-sequence .ci-text-content[data-index="6"]::before,
+.cs-element-non-linear-plain-sequence .ci-text-content[data-index="7"]::before,
+.cs-element-non-linear-plain-sequence .ci-text-content[data-index="8"]::before,
+.cs-element-non-linear-plain-sequence .ci-text-content[data-index="9"]::before {
+  content: "0" attr(data-index) !important;
+} */
+.cs-element-non-linear-plain-sequence .ci-text-content::before {
+  content: attr(data-index);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  position: var(--dt-position-relative);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+/* Non-Linear Plain Sequence Element Classes - End */
+/* Agenda Sequence Element Classes - Start */
+.cs-element-agenda-sequence {
+  --element-sequence-size: 70px;
+  white-space: var(--dt-whitespace-nowrap);
+  overflow: var(--dt-overflow-hidden);
+  text-overflow: var(--dt-text-overflow-ellipsis);
+  min-width: var(--dt-size-28);
+  pointer-events: var(--dt-pointer-events-none);
+  text-align: var(--dt-text-right);
+  flex-shrink: var(--dt-flex-shrink-0);
+  color: rgba(var(--th-slide-secondary), 1);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-start);
+  align-self: var(--dt-self-center);
+  /* margin-top: calc(
+    (var(--live-single-line-height) - var(--element-sequence-size)) / 2
+  ); */
+}
+
+.cs-element-list-item-sequence {
+  --element-sequence-size: 70px;
+  white-space: var(--dt-whitespace-nowrap);
+  overflow: var(--dt-overflow-hidden);
+  text-overflow: var(--dt-text-overflow-ellipsis);
+  width: var(--dt-size-auto);
+  height: var(--dt-size-auto);
+  min-width: var(--dt-size-28);
+  pointer-events: var(--dt-pointer-events-none);
+  text-align: var(--dt-text-right);
+  flex-shrink: var(--dt-flex-shrink-0);
+  color: rgba(var(--th-slide-secondary), 1);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-start);
+  align-self: var(--dt-items-start);
+  /* top: -8px;
+  bottom: unset;
+  position: var(--dt-position-absolute);
+  margin-top: -18px;
+  padding-top: var(--dt-position-40); */
+}
+
+/* For single digits (1-9) - add leading zero */
+.cs-element-agenda-sequence .ci-text-content[data-index="1"]::before,
+.cs-element-agenda-sequence .ci-text-content[data-index="2"]::before,
+.cs-element-agenda-sequence .ci-text-content[data-index="3"]::before,
+.cs-element-agenda-sequence .ci-text-content[data-index="4"]::before,
+.cs-element-agenda-sequence .ci-text-content[data-index="5"]::before,
+.cs-element-agenda-sequence .ci-text-content[data-index="6"]::before,
+.cs-element-agenda-sequence .ci-text-content[data-index="7"]::before,
+.cs-element-agenda-sequence .ci-text-content[data-index="8"]::before,
+.cs-element-agenda-sequence .ci-text-content[data-index="9"]::before {
+  content: "0" attr(data-index) !important;
+}
+
+.cs-gradient-number-text .ci-text-content::before {
+  content: attr(data-index);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  position: var(--dt-position-relative);
+  flex-shrink: var(--dt-flex-shrink-0);
+  background: linear-gradient(180deg,
+      rgba(var(--th-section-color1), 0.7) 0%,
+      rgba(var(--th-section-color1), 0) 71.09%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cs-gradient-top-number-text .ci-text-content::before {
+  content: attr(data-index);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  position: var(--dt-position-relative);
+  flex-shrink: var(--dt-flex-shrink-0);
+  background: linear-gradient(180deg,
+      rgba(var(--th-section-contrast), 1) 0%,
+      rgba(var(--th-section-contrast), 0.5) 40%,
+      rgba(var(--th-section-contrast), 0) 70%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cs-element-agenda-sequence .ci-text-content::before {
+  content: attr(data-index);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  position: var(--dt-position-relative);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+/* Agenda Sequence Element Classes - End */
+/* Single Quote Text Element Classes - Start */
+.cs-element-single-quote-holder {
+  width: var(--dt-size-55p);
+  height: var(--dt-size-100p);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* Single Quote Text Element Classes - End */
+/* Plain Icon Holder Element Classes - Start */
+.cs-element-plain-icon-holder,
+.cf-element-plain-icon-holder {
+  width: var(--dt-icon-size-tiny);
+  height: var(--dt-icon-size-tiny);
+  border-radius: var(--dt-keyword-unset);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  position: var(--dt-position-relative);
+}
+
+.cs-element-plain-icon-holder .ci-element-icon,
+.cf-element-plain-icon-holder .ci-element-icon {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+.cs-element-plain-icon-holder .ci-element-icon use,
+.cf-element-plain-icon-holder .ci-element-icon use {
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  --icon-color-rgb: rgba(var(--th-section-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+  --start-color: rgba(var(--th-section-color1), 1);
+  --stop-color: rgba(var(--th-section-color2), 1);
+}
+
+/* Plain Icon Holder Element Classes - End */
+.cs-body-padding-left {
+  padding-left: var(--dt-spacing-24);
+}
+
+.cs-body-padding-right {
+  padding-right: var(--dt-spacing-24);
+}
+
+/* Icon Holder Element Classes - Start */
+.cs-element-icon-holder,
+.cf-element-icon-holder {
+  width: var(--dt-icon-size-small);
+  height: var(--dt-icon-size-small);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  position: var(--dt-position-relative);
+}
+
+.cs-element-big-icon-holder {
+  width: 300px;
+  height: 300px;
+  border-radius: var(--mood-icon-holder-border-radius);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  position: var(--dt-position-relative);
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+.cs-element-big-icon-holder .ci-element-icon {
+  width: var(--dt-size-33p);
+  height: var(--dt-size-33p);
+}
+
+.cs-element-icon-holder .ci-element-icon,
+.cf-element-icon-holder .ci-element-icon {
+  width: var(--dt-size-60p);
+  height: var(--dt-size-60p);
+}
+
+.cf-element-medium-plain-icon-holder .ci-element-icon {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+.cs-element-icon-holder .ci-element-icon use,
+.cf-element-medium-plain-icon-holder .ci-element-icon use,
+.cs-element-medium-icon-holder .ci-element-icon use,
+.cf-element-moderate-icon-holder .ci-element-icon use,
+.cs-element-big-icon-holder .ci-element-icon use,
+.cf-element-icon-holder .ci-element-icon use {
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  --icon-color-rgb: rgba(var(--th-section-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+/* 100% Icon Holder Classes */
+.cs-element-icon-100p-holder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  background-color: rgba(var(--th-slide-primary), 1);
+  border-radius: var(--dt-keyword-unset);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+.cs-element-icon-100p-holder .ci-element-icon {
+  width: var(--dt-size-60p);
+  height: var(--dt-size-60p);
+}
+
+.cs-element-icon-100p-holder .ci-element-icon use {
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  --icon-color-rgb: rgba(var(--th-section-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+/* Data Driven Block Header */
+.cs-data-driven-block-header,
+.cs-icon-block-header {
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+/* 100% Plain Icon Holder Classes */
+.cs-element-plain-icon-100p-holder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--dt-keyword-unset);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  position: var(--dt-position-relative);
+}
+
+.cs-element-plain-icon-100p-holder .ci-element-icon {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+.cs-element-plain-icon-100p-holder .ci-element-icon use {
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  --icon-color-rgb: rgba(var(--th-section-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+/* Large Plain Icon Holder Classes */
+.cs-element-plain-icon-large-holder {
+  width: var(--dt-size-224);
+  height: var(--dt-size-224);
+  border-radius: var(--dt-keyword-unset);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+.cs-element-plain-icon-large-holder .ci-element-icon {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+.cs-element-plain-icon-large-holder .ci-element-icon use {
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  --icon-color-rgb: rgba(var(--th-section-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+/* Icon Holder Element Classes - End */
+/* Common Point Icon Holder Element Classes - Start */
+.cf-element-common-point-icon-holder {
+  width: var(--dt-size-75p);
+  height: var(--dt-size-75p);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  position: var(--dt-position-relative);
+}
+
+.cf-element-common-point-icon-holder .ci-element-icon {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+.cf-element-common-point-icon-holder .ci-element-icon use {
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  --icon-color-rgb: rgba(var(--th-section-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+/* Common Point Icon Holder Element Classes - End */
+/* Common Point Image Holder Element Classes - Start */
+.cf-element-common-point-image-holder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  object-fit: var(--dt-object-fit-cover);
+  border-radius: var(--dt-size-50p);
+}
+
+.cf-element-common-point-image-holder .cs-image-placeholder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+/* Common Point Image Holder Element Classes - End */
+/* Non-Linear Icon Holder Element Classes - Start */
+.cs-element-non-linear-icon-holder {
+  width: var(--dt-icon-size-tiny);
+  height: var(--dt-icon-size-tiny);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  position: var(--dt-position-relative);
+}
+
+.cs-element-non-linear-icon-holder .ci-element-icon {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+.cs-element-non-linear-icon-holder .ci-element-icon use {
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  --icon-color-rgb: rgba(var(--th-section-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+/* Non-Linear Icon Holder Element Classes - End */
+/* Label Element Classes - Start */
+.cs-element-label,
+.cf-element-label {
+  width: var(--dt-size-fit);
+  height: var(--dt-size-auto);
+  color: rgba(var(--th-slide-contrast), 1);
+  background: linear-gradient(0deg,
+      rgba(var(--th-slide-primary), 0) 0%,
+      rgba(var(--th-slide-color2), 0.3) 100%);
+  padding: var(--dt-spacing-8) var(--dt-spacing-24);
+  border-radius: var(--dt-radius-40);
+  border: var(--dt-border-1) var(--dt-border-solid) rgba(var(--th-slide-contrast), 0.05);
+  text-transform: uppercase !important;
+}
+
+.mood.educational .cf-element-label,
+.mood.educational .cs-element-label {
+  font-weight: bold;
+  line-height: 22px;
+  letter-spacing: 2px;
+}
+
+.cf-element-label {
+  color: rgba(var(--th-slide-primary), 1);
+  background-color: rgba(var(--th-slide-primary), 0.16);
+}
+
+/* Label Element Classes - End */
+/* Button Element Classes - Start */
+.cs-element-button,
+.cf-element-button {
+  width: var(--dt-size-fit);
+  height: var(--dt-size-auto);
+  padding: var(--dt-spacing-12) var(--dt-spacing-28);
+  background-color: var(--dt-keyword-unset);
+  color: rgba(var(--th-slide-contrast), 1);
+  border: var(--dt-border-1) var(--dt-border-solid) rgba(var(--th-slide-tertiary), 1);
+  border-radius: var(--dt-radius-full);
+  cursor: var(--dt-cursor-pointer);
+  position: var(--dt-position-relative);
+  font-weight: bold;
+  /* align-self: var(--dt-self-start); Have commented it out for vertical team template aligment issue by Ezhil*/
+}
+
+.cs-element-button:hover,
+.cf-element-button:hover {
+  background-color: rgba(var(--th-slide-contrast), 1);
+  border-color: rgba(var(--th-slide-contrast), 1);
+  color: rgba(var(--th-slide-primary), 1);
+}
+
+.cs-element-button:active,
+.cf-element-button:active {
+  background-color: rgba(var(--th-slide-contrast), 0.9);
+  border-color: rgba(var(--th-slide-contrast), 1);
+  color: rgba(var(--th-slide-primary), 1);
+}
+
+/* Button Element Classes - End */
+/* Section Level Button Element Classes - Start */
+.cs-element-section-button,
+.cf-element-section-button {
+  width: var(--dt-size-auto);
+  height: var(--dt-size-auto);
+  padding: var(--dt-spacing-12) var(--dt-spacing-28);
+  background-color: var(--dt-keyword-unset);
+  color: rgba(var(--th-section-contrast), 1);
+  border: var(--dt-border-1) var(--dt-border-solid) rgba(var(--th-section-contrast), 1);
+  border-radius: var(--dt-radius-full);
+  cursor: var(--dt-cursor-pointer);
+  position: var(--dt-position-relative);
+  font-weight: bold;
+  align-self: var(--dt-self-start);
+}
+
+.cs-element-section-button:hover,
+.cf-element-section-button:hover {
+  background-color: rgba(var(--th-section-contrast), 1);
+  border-color: rgba(var(--th-section-contrast), 1);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+.cs-element-section-button:active,
+.cf-element-section-button:active {
+  background-color: rgba(var(--th-section-contrast), 0.9);
+  border-color: rgba(var(--th-section-contrast), 1);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* Section Level Button Element Classes - End */
+/* Primary Image Holder classes - Start */
+.cs-element-image-holder-alternate {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  min-width: var(--dt-size-208);
+  object-fit: var(--dt-object-fit-cover);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+.ci-node-parent:nth-child(even) .cs-element-image-holder-alternate {
+  width: var(--dt-size-100p);
+  max-height: var(--dt-size-50p);
+}
+
+.ci-node-parent:nth-child(odd) .cs-element-image-holder-alternate {
+  width: var(--dt-size-100p);
+  max-height: var(--dt-size-80p);
+}
+
+.cs-element-image-holder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  min-width: var(--dt-size-208);
+  object-fit: var(--dt-object-fit-cover);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+.cs-element-image-holder .cs-image-placeholder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+.cs-single-element-large-image-holder-standalone {
+  width: var(--dt-size-90p);
+  height: 95%;
+  min-width: var(--dt-size-208);
+  min-height: var(--dt-size-208);
+  object-fit: var(--dt-object-fit-cover);
+  border-radius: var(--mood-image-holder-border-radius);
+  justify-content: end;
+  display: var(--dt-display-flex);
+  justify-content: normal;
+  bottom: var(--dt-position-0);
+  position: var(--dt-position-absolute);
+}
+
+/* Primary Image Holder classes - End */
+/* Node Full background image classes - Start */
+.cs-full-background-image-holder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  padding: var(--dt-spacing-40);
+  justify-content: var(--dt-justify-end);
+}
+
+.cs-full-background-image-holder .cs-image-placeholder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+.cs-full-background-image-holder-split {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  padding: var(--dt-spacing-32);
+  justify-content: var(--dt-justify-between);
+  background-color: rgba(var(--th-slide-alternate-primary), 1);
+}
+
+.cs-full-background-image-holder-split .cs-image-placeholder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+/* Node Full background image classes - End */
+/* Person Image Holder Vertical classes - Start */
+.cs-element-person-image-holder {
+  width: var(--dt-size-30p);
+  height: var(--dt-size-100p);
+  min-width: var(--dt-size-208);
+  min-height: var(--dt-size-144);
+  object-fit: var(--dt-object-fit-cover);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+.cs-element-person-image-holder .cs-image-placeholder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+/* Person Image Holder Vertical classes - End */
+/* Single Node Large Image Holder classes - Start */
+.cs-element-image-large-holder {
+  width: var(--dt-size-640);
+  height: var(--dt-size-448);
+  justify-content: var(--dt-justify-end);
+  background-color: rgba(var(--th-slide-alternate-primary), 1);
+}
+
+.cs-element-image-large-holder .cs-image-placeholder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+/* Single Node Large Image Holder classes - End */
+/* Secondary Image Holder classes - Start */
+.cs-element-secondary-image-holder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-120);
+}
+
+.cs-element-secondary-image-holder .cs-image-placeholder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--mood-image-holder-border-radius);
+}
+
+/* Secondary Image Holder classes - End */
+/* Image Overlay classes - Start  */
+/* Dark */
+/* Slide Image Overlay */
+.cf-overlay-cover .ci-element-image.ci-overlay-enabled .cf-element-image-overlay-style-dark.ci-element-image-overlay1,
+.slide-background-container .ci-slide-image.ci-overlay-enabled .cf-element-image-overlay-style-dark.ci-element-image-overlay1 {
+  position: var(--dt-position-absolute);
+  background: rgb(0 0 0 / 40%);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+/* Cover Image Overlay */
+.cf-overlay-cover.ci-element-image.ci-overlay-enabled .cf-element-image-overlay-style-dark.ci-element-image-overlay1 {
+  position: var(--dt-position-absolute);
+  background: unset;
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+/* Full Bleed Image Overlay */
+.cf-overlay-full-bleed-image.ci-element-image.ci-overlay-enabled .cf-element-image-overlay-style-dark.ci-element-image-overlay1 {
+  position: var(--dt-position-absolute);
+  background: rgb(0 0 0 / 40%);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+/* Separate Image Overlay */
+.cf-overlay-separate.ci-element-image.ci-overlay-enabled .cf-element-image-overlay-style-dark.ci-element-image-overlay1 {
+  background: unset;
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+}
+
+/* Text on Image Overlay */
+.cf-overlay-text-on-image.ci-element-image.ci-overlay-enabled .cf-element-image-overlay-style-dark.ci-element-image-overlay1 {
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  background: linear-gradient(180deg,
+      rgba(252, 108, 29, 0) 21.68%,
+      rgba(var(--th-section-primary), 1) 77.42%);
+}
+
+/* Person Overlay */
+.cf-overlay-person.ci-element-image.ci-overlay-enabled img {
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  background: unset;
+}
+
+/* Text on Person Overlay */
+.cf-overlay-text-on-person.ci-element-image.ci-overlay-enabled img {
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  background: unset;
+}
+
+.cf-overlay-text-on-person.ci-element-image.ci-overlay-enabled .cf-element-image-overlay-style-dark.ci-element-person-overlay1 {
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  background: linear-gradient(180deg,
+      rgba(252, 108, 29, 0) 21.68%,
+      rgba(var(--th-section-primary), 1) 77.42%);
+}
+
+/* Device Overlay */
+.cs-device-overlay-bg .ci-element-device-overlay1 {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 300px;
+  background-image: linear-gradient(182deg,
+      rgba(var(--th-slide-primary), 0.04) 14%,
+      rgba(var(--th-slide-primary), 1) 88%);
+}
+
+.cs-device-overlay-bg-alternate:nth-child(even) .cs-device-overlay-position {
+  position: var(--dt-position-absolute);
+  top: var(--dt-position-0);
+}
+
+.cs-device-overlay-bg-alternate:nth-child(odd) .cs-device-overlay-position {
+  position: var(--dt-position-absolute);
+  bottom: var(--dt-position-0);
+}
+
+.cs-device-overlay-bg-alternate:nth-child(even) .ci-node {
+  flex-direction: column-reverse;
+}
+
+.cs-device-overlay-bg-alternate:nth-child(odd) .ci-element-device-overlay1 {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 500px;
+  background-image: linear-gradient(180deg,
+      rgba(var(--th-slide-primary), 0) 0%,
+      rgba(var(--th-slide-primary), 1) 60%);
+}
+
+.cs-device-overlay-bg-alternate:nth-child(even) .ci-element-device-overlay1 {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  height: 500px;
+  background-image: linear-gradient(0deg,
+      rgba(var(--th-slide-primary), 0) 0%,
+      rgba(var(--th-slide-primary), 1) 60%);
+}
+
+.cs-device-overlay-bg .cs-device-overlay-position {
+  bottom: var(--dt-position-0);
+  position: var(--dt-position-absolute);
+  z-index: var(--dt-size-2);
+}
+
+/* Image Overlay classes - End */
+.cf-responsive-image-320-height .ci-element-image {
+  min-height: var(--dt-size-320);
+}
+
+.cs-full-background-image-split .ci-element-image-overlay {
+  background: rgba(0, 0, 0, 0.3);
+  background-image: unset;
+}
+
+.ci-element-image-overlay {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  position: var(--dt-position-relative);
+  background: linear-gradient(180deg,
+      rgba(252, 108, 29, 0) 21.68%,
+      rgba(var(--th-section-primary), 1) 77.42%);
+}
+
+/* KPI Block Circle Holder */
+/* Logogrid Holder Classes - Start */
+.cs-element-logogrid-holder,
+.cf-element-logogrid-holder {
+  --logo-size: var(--logo-square-node-size);
+  width: var(--dt-size-auto);
+  min-width: var(--dt-size-120);
+  height: var(--dt-size-auto);
+  position: var(--dt-position-relative);
+}
+
+.cs-element-logogrid-holder .ci-logogrid-container,
+.cf-element-logogrid-holder .ci-logogrid-container {
+  display: var(--dt-display-flex);
+  flex-wrap: var(--dt-flex-wrap);
+  gap: var(--dt-spacing-24);
+  justify-content: var(--dt-justify-start);
+}
+
+.cs-element-logogrid-holder .ci-logo-item,
+.cf-element-logogrid-holder .ci-logo-item {
+  height: var(--logo-size);
+  min-width: var(--logo-size);
+  min-height: var(--logo-size);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+/* Logogrid Holder Classes - End */
+/* Center Aligned Logogrid Holder Classes - Start */
+.cf-element-center-aligned-logogrid-holder {
+  --logo-size: var(--dt-size-56);
+  width: var(--dt-size-auto);
+  min-width: var(--dt-size-120);
+  height: var(--dt-size-auto);
+  position: var(--dt-position-relative);
+}
+
+.cf-element-center-aligned-logogrid-holder .ci-logogrid-container {
+  display: var(--dt-display-flex);
+  flex-wrap: var(--dt-flex-wrap);
+  gap: var(--dt-spacing-56);
+  justify-content: var(--dt-justify-center);
+}
+
+.cf-element-center-aligned-logogrid-holder .ci-logo-item {
+  height: var(--logo-size);
+  min-width: var(--logo-size);
+  min-height: var(--logo-size);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+/* Center Aligned Logogrid Holder Classes - End */
+/* Large Logo Holder Classes - Start */
+.cf-title-large-logo {
+  --logo-size: var(--dt-size-224);
+  width: var(--dt-size-auto);
+  min-width: var(--dt-size-120);
+  height: var(--dt-size-auto);
+  position: var(--dt-position-relative);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+.cf-title-large-logo .ci-logogrid-container {
+  display: var(--dt-display-flex);
+  flex-wrap: var(--dt-flex-wrap);
+  gap: var(--dt-spacing-24);
+  justify-content: var(--dt-justify-start);
+}
+
+.cf-title-large-logo .ci-logo-item {
+  width: var(--logo-size);
+  height: var(--logo-size);
+  min-width: var(--logo-size);
+  min-height: var(--logo-size);
+}
+
+/* Large Logogrid Holder Classes - End */
+/* Logogrid Secondary Holder Classes - Start */
+.cs-element-secondary-logogrid-holder,
+.cf-element-secondary-logogrid-holder {
+  --logo-size: var(--logo-square-secondary-size);
+  width: var(--dt-size-auto);
+  min-width: var(--dt-size-120);
+  height: var(--dt-size-auto);
+  position: var(--dt-position-relative);
+}
+
+.cs-element-secondary-logogrid-holder .ci-logogrid-container,
+.cf-element-secondary-logogrid-holder .ci-logogrid-container {
+  display: var(--dt-display-flex);
+  flex-wrap: var(--dt-flex-wrap);
+  gap: var(--dt-spacing-24);
+  justify-content: var(--dt-justify-start);
+}
+
+.cs-element-secondary-logogrid-holder .ci-logo-item,
+.cf-element-secondary-logogrid-holder .ci-logo-item {
+  height: var(--logo-size);
+  min-width: var(--logo-size);
+  min-height: var(--logo-size);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+/* Logogrid Secondary Holder Classes - End */
+/* Quote Style Classes - Start */
+.cs-element-quote {
+  width: var(--dt-size-48);
+  height: var(--dt-size-48);
+  min-width: var(--dt-size-48);
+  min-height: var(--dt-size-48);
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+}
+
+.cs-element-large-quote {
+  width: var(--dt-size-208);
+  height: var(--dt-size-160);
+  min-width: var(--dt-size-208);
+  min-height: var(--dt-size-160);
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+}
+
+.cs-single-element-large-quote-standalone {
+  width: var(--dt-size-208);
+  height: var(--dt-size-160);
+  min-width: var(--dt-size-208);
+  min-height: var(--dt-size-160);
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  top: var(--dt-position-0);
+  right: var(--dt-position-0);
+  position: var(--dt-position-absolute);
+}
+
+/* Qoute Style Classes - End */
+/* Element Classes - End */
+/* Node styles - Start */
+/* Card Style Padding - Start */
+.cf-card-style-padding {
+  padding: var(--node-card-padding);
+}
+
+.cf-vertical-card-style-padding {
+  padding: var(--vertical-card-style-padding);
+}
+
+.cf-grid-vertical-card-style-padding {
+  padding: var(--grid-card-style-padding);
+}
+
+.cf-profile-node-padding {
+  padding: var(--dt-spacing-56);
+}
+
+/* Card Style Padding - End */
+/* Card Style - Secondary Elements Margin - Start */
+.cf-card-style-secondary-elements-margin {
+  margin: var(--dt-spacing-0) var(--node-card-padding) var(--node-card-padding) var(--node-card-padding);
+}
+
+/* Card Style - Secondary Elements Margin - End */
+/* Icon Node Card - Start */
+.cs-icon-node-card-secondary {
+  --card-style: true;
+  border-radius: var(--mood-card-border-radius);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background: linear-gradient(180deg,
+      rgba(var(--th-section-primary), 0.7) 0%,
+      rgba(var(--th-section-primary), 0.03) 60%);
+}
+
+.cs-icon-node-card-tertiary {
+  --card-style: true;
+  border-radius: calc(var(--mood-card-border-radius) * 0.5);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background-color: unset !important;
+  background: linear-gradient(180deg,
+      rgba(var(--th-section-primary), 0.3) 0%,
+      rgba(var(--th-section-primary), 0.03) 60%);
+}
+
+.cs-icon-node-card-vertical-secondary {
+  --card-style: true;
+  border-radius: var(--mood-card-border-radius);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background: linear-gradient(90deg,
+      rgba(var(--th-section-primary), 0.7) 0%,
+      rgba(var(--th-section-primary), 0.03) 60%);
+}
+
+.cs-icon-node-card-vertical-tertiary {
+  --card-style: true;
+  border-radius: var(--mood-card-border-radius);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background: linear-gradient(180deg,
+      rgba(var(--th-section-color1), 0.7) 0%,
+      rgba(var(--th-section-color1), 0.03) 60%);
+}
+
+.cs-icon-node-card .cs-heading-highlight-text-style {
+  font-weight: bold;
+}
+
+.cs-icon-node-card {
+  --card-style: true;
+  border-radius: var(--mood-card-border-radius);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+.cs-icon-node-card .cs-heading-highlight-text-style {
+  font-weight: bold;
+}
+
+.cs-icon-node-card-secondary .cf-element-heading,
+.cs-icon-node-card-tertiary .cf-element-heading,
+.cs-icon-node-card-secondary .ci-heading,
+.cs-icon-node-card-tertiary .ci-heading,
+.cs-icon-node-card-secondary .ci-microchart-text,
+.cs-icon-node-card-tertiary .ci-microchart-text,
+.cs-icon-node-card-secondary .cs-element-heading,
+.cs-icon-node-card-tertiary .cs-element-heading,
+.cs-icon-node-card-secondary .cs-element-name,
+.cs-icon-node-card-tertiary .cs-element-name,
+.cs-icon-node-card-secondary .ci-name,
+.cs-icon-node-card-tertiary .ci-name,
+.cs-icon-node-card-secondary .ci-designation,
+.cs-icon-node-card-tertiary .ci-designation {
+  color: rgba(var(--th-slide-contrast), 1) !important;
+}
+
+.cs-icon-node-card .cs-element-label,
+.cs-icon-node-card .cf-element-label {
+  background: linear-gradient(0deg,
+      rgba(var(--th-section-contrast), 0) 0%,
+      rgba(var(--th-section-contrast), 0.3) 100%);
+}
+
+.cs-icon-node-card .cs-element-button,
+.cs-icon-node-card .cf-element-button {
+  border: var(--dt-border-1) var(--dt-border-solid) rgba(var(--th-section-contrast), 1);
+}
+
+.cs-icon-node-card .cf-element-heading,
+.cs-icon-node-card-flip .cf-element-heading,
+.cs-icon-node-card .ci-heading,
+.cs-icon-node-card-flip .ci-heading,
+.cs-icon-node-card .ci-microchart-text,
+.cs-icon-node-card .cs-element-heading,
+.cs-icon-node-card .cs-element-subheading,
+.cs-icon-node-card .cf-element-subheading,
+.cs-icon-node-card .cs-element-name,
+.cs-icon-node-card .cs-element-button,
+.cs-icon-node-card .ci-name,
+.cs-icon-node-card .ci-designation,
+.cs-icon-node-card-alternate .cf-element-heading,
+.cs-icon-node-card-alternate .ci-heading,
+.cs-icon-node-card-alternate .cs-element-heading {
+  color: rgba(var(--th-section-contrast), 1);
+}
+
+.cs-icon-node-card .ci-body {
+  color: rgba(var(--th-section-contrast), 1);
+}
+
+.cs-icon-node-card .ci-container-donut .ci-microchart-progress,
+.cs-icon-node-card .ci-container-semidonut .ci-microchart-progress {
+  stroke: rgba(var(--th-section-contrast), 1);
+}
+
+.cs-icon-node-card .ci-container-donut .ci-microchart-background {
+  stroke: rgba(var(--th-section-contrast), 0.3);
+}
+
+.cs-icon-node-card .ci-sequence {
+  color: rgba(var(--th-section-contrast), 0.3);
+}
+
+.cs-icon-node-card .ci-microchart-background {
+  background-color: rgba(var(--th-section-contrast), 0.2);
+}
+
+.cs-icon-node-card .cs-heading-highlight-text-style-disabled,
+.cs-icon-node-card-alternate .cs-heading-highlight-text-style-disabled {}
+
+.cs-icon-node-card .ci-data-driven {
+  color: rgba(var(--th-section-contrast), 1);
+}
+
+.cs-icon-node-card .ci-rating-progress {
+  fill: rgba(var(--th-section-contrast), 1);
+}
+
+.cs-icon-node-card .ci-rating-background {
+  fill: rgba(var(--th-section-primary), 0.3);
+}
+
+.cs-icon-node-card .ci-element-icon use,
+.cs-icon-node-card-flip .ci-element-icon use,
+.cs-element-big-icon-holder .ci-element-icon use {
+  fill: rgba(var(--th-section-contrast), 1);
+  stroke: rgba(var(--th-section-contrast), 1);
+  --icon-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-section-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-section-tertiary), 1);
+}
+
+.cs-icon-node-card .cf-element-body,
+.cs-icon-node-card .cs-element-body,
+.cs-icon-node-card-flip .cs-element-body,
+.cs-icon-node-card-alternate.cf-element-body,
+.cs-icon-node-card-alternate .cs-element-body {
+  color: rgba(var(--th-section-contrast), 1);
+}
+
+.cs-timeline-alternate:nth-child(odd) .cs-icon-node-card-alternate {
+  --card-style: true;
+  border-radius: var(--mood-card-border-radius);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+.cs-timeline-alternate:nth-child(even) .cs-icon-node-card-alternate {
+  --card-style: true;
+  border-radius: var(--mood-card-border-radius);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+.cs-icon-node-card-flip {
+  --card-style: true;
+  border-radius: var(--mood-card-border-radius);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background-color: rgba(var(--th-section-primary), 1);
+  border-bottom: unset;
+}
+
+.cs-secondary-node-card {
+  --card-style: true;
+  border-radius: var(--mood-card-border-radius);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background-color: rgba(var(--th-slide-primary), 0.5);
+}
+
+/* Icon Node Card - End */
+.cf-primary-icon-style {
+  border-radius: 36px;
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+.cf-primary-icon-style .ci-element-icon {
+  width: var(--dt-size-46p);
+  height: var(--dt-size-46p);
+}
+
+.cf-primary-icon-style .ci-element-icon use {
+  fill: rgba(var(--th-section-contrast), 1);
+  stroke: rgba(var(--th-section-contrast), 1);
+  --icon-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-section-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-section-tertiary), 1);
+}
+
+/* Multi Column List - Start */
+.cs-multicolumn-list {
+  --card-style: true;
+  border-radius: var(--mood-card-border-radius);
+  content: "";
+  position: var(--dt-position-relative);
+  width: var(--dt-size-100p);
+  background: linear-gradient(180deg,
+      rgba(var(--th-section-color1), 0.7) 0%,
+      rgba(var(--th-section-color1), 0.03) 60%);
+}
+
+.cs-multicolumn-list .cf-element-heading,
+.cs-multicolumn-list .ci-heading,
+.cs-multicolumn-list .cs-element-heading,
+.cs-multicolumn-list .ci-sequence,
+.cs-multicolumn-list .cf-element-body,
+.cs-multicolumn-list .cs-element-body,
+.cs-multicolumn-list .ci-body {
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+.cs-multicolumn-list .ci-element-icon use {
+  fill: rgba(var(--th-slide-contrast), 1);
+  stroke: rgba(var(--th-slide-contrast), 1);
+  --icon-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 0.5);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+/* Multi Column List - End */
+/* Image Node Card - Start */
+/* .cs-image-node-card */
+/* Image Node Card - End */
+/* Special Node Card - Start */
+.cf-image-polaroid-card {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--mood-card-border-radius);
+  padding: var(--dt-spacing-24);
+  gap: var(--dt-spacing-24);
+  min-height: var(--dt-size-512);
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.cf-color-fixed-black {
+  color: #000000;
+}
+
+.cf-color-fixed-black .ci-element-icon use {
+  fill: #000000;
+  stroke: #000000;
+  --icon-color-rgb: #000000;
+  --iconsec-color-rgb: #000000;
+  --iconter-color-rgb: #494949;
+  --iconquad-color-rgb: #646464;
+}
+
+/* Special Node Card - End */
+/* Node Styles - End */
+/* Node Placeholder Classes */
+/* Mood Level Changeable Classes */
+/* Gap between Graphic Holder & Text */
+.cs-holder-text-horizontal-gap {
+  gap: var(--dt-spacing-16);
+}
+
+.cs-icon-text-holder-gap {
+  gap: var(--dt-spacing-24);
+}
+
+.cs-holder-text-vertical-gap {
+  gap: var(--dt-spacing-32);
+}
+
+.cs-holder-quote-vertical-gap {
+  gap: var(--dt-spacing-32);
+}
+
+.cs-horizontal-node-gap {
+  gap: var(--dt-spacing-36);
+}
+
+.cs-label-additional-bottom-gap {
+  margin-bottom: var(--dt-spacing-20);
+}
+
+.cs-holder-horizontal-gap {
+  gap: var(--dt-spacing-56);
+}
+
+/* Gap between Heading & Body */
+.cs-text-horizontal-gap {
+  gap: var(--dt-spacing-12);
+}
+
+.cs-text-vertical-gap {
+  gap: var(--dt-spacing-8);
+}
+
+.cs-name-designation-vertical-gap {
+  gap: var(--node-name-designation-gap);
+}
+
+.cs-portrait-name-designation-vertical-gap {
+  gap: var(--node-portrait-name-designation-gap);
+}
+
+/* Gap between Sequence & Heading Horizontal */
+/* Gap between Sequence & Heading Horizontal */
+.cs-text-horizontal-gap-sequence {
+  gap: var(--dt-spacing-8);
+}
+
+.cs-text-data-driven-gap {
+  gap: var(--dt-spacing-4);
+}
+
+/* Node Text Alignment Classes */
+.cs-node-align {
+  text-align: var(--dt-text-left);
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-start);
+}
+
+.cf-fixed-node-align-center .cs-node-align {
+  text-align: var(--dt-text-center);
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-center);
+}
+
+/* ============= OLD CLASSES ============= */
+.cs-utils-separator {
+  width: var(--dt-border-1);
+  height: var(--dt-size-100p);
+  background-color: rgba(var(--th-section-tertiary), 1);
+  margin: 0 var(--dt-spacing-16);
+  flex-shrink: var(--dt-flex-shrink-0);
+  transition: background-color var(--dt-duration-300) ease;
+}
+
+.cs-element-sec-image-holder {
+  object-fit: var(--dt-object-fit-cover);
+  border-radius: var(--mood-image-holder-border-radius);
+  background-color: rgba(var(--th-section-secondary), 1);
+}
+
+.cs-element-person {
+  width: var(--dt-size-80);
+  height: var(--dt-size-80);
+  min-width: var(--dt-size-80);
+  min-height: var(--dt-size-80);
+  border-radius: var(--dt-radius-full);
+}
+
+.cs-adjacent-profile {
+  width: var(--dt-size-128);
+  height: var(--dt-size-128);
+  min-width: var(--dt-size-128);
+  min-height: var(--dt-size-128);
+  border-radius: var(--dt-radius-full);
+}
+
+.cs-element-big-person {
+  width: var(--dt-size-96);
+  height: var(--dt-size-96);
+  min-width: var(--dt-size-96);
+  min-height: var(--dt-size-96);
+}
+
+.cs-element-large-person {
+  width: var(--dt-size-120);
+  height: var(--dt-size-120);
+  min-width: var(--dt-size-120);
+  min-height: var(--dt-size-120);
+}
+
+.cs-container-node-presenter-card {
+  width: var(--dt-size-auto);
+  height: var(--dt-size-auto);
+  display: var(--dt-display-flex);
+  /* justify-content: var(--dt-justify-center); */
+  /* Removed reason alignment classes should ber used in node pattern level not from classes */
+  align-items: var(--dt-items-center);
+  min-height: var(--dt-size-112);
+}
+
+/* MicrochartElement Base Styles */
+.cs-microchart-donut-element {
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-center);
+  min-width: 138px;
+  width: 138px;
+  height: 138px;
+  max-width: 138px;
+  max-height: 138px;
+}
+
+.cs-micro-donut-icon-pos-abolute {
+  left: var(--dt-position-0);
+  top: var(--dt-position-0);
+  right: var(--dt-position-0);
+  bottom: var(--dt-position-0);
+  margin: var(--dt-size-auto);
+}
+
+.ci-microchart-text-overlay-relative {
+  position: var(--dt-position-relative);
+}
+
+/* Donut Microchart & Pie Element Styles - Start */
+.ci-microchart-element.ci-style-pie,
+.ci-microchart-element.ci-style-donut {
+  min-width: var(--dt-size-176);
+  width: var(--dt-size-176);
+  height: var(--dt-size-176);
+  max-width: var(--dt-size-176);
+  max-height: var(--dt-size-176);
+}
+
+/* Donut Microchart & Pie Element Styles - End */
+.cs-microchart-semi-donut-element {
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-center);
+  min-width: var(--dt-size-144);
+  width: 240px;
+  height: 240px;
+  max-width: 240px;
+}
+
+.ci-pie-microchart-element {
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-center);
+  min-width: var(--dt-size-144);
+  width: 240px;
+  height: 240px;
+  max-width: 240px;
+}
+
+.ci-text-display-pie {
+  color: rgba(var(--th-section-contrast), 1);
+  -webkit-text-stroke: var(--dt-keyword-unset);
+  stroke: var(--dt-keyword-unset);
+}
+
+/* Microchart Styles - Color Mapping - Start */
+.ci-container-donut .ci-microchart-progress,
+.ci-container-semidonut .ci-microchart-progress {
+  stroke: rgba(var(--th-section-primary), 1);
+  stroke-width: var(--dt-size-8);
+  r: 110px;
+}
+
+.ci-container-pie .ci-microchart-background {
+  r: 100px;
+}
+
+.ci-container-donut .ci-microchart-background,
+.ci-container-semidonut .ci-microchart-background {
+  stroke: rgba(var(--th-slide-contrast), 0.2);
+  stroke-width: var(--dt-size-8);
+  r: 110px;
+}
+
+.ci-container-pie .ci-microchart-background,
+.ci-container-line .ci-microchart-background {
+  fill: rgba(var(--th-slide-tertiary), 1);
+}
+
+.ci-container-pie .ci-microchart-progress,
+.ci-container-line .ci-microchart-progress {
+  fill: rgba(var(--th-section-primary), 1);
+}
+
+/* Microchart Styles - Color Mapping - End */
+/* Rating Styles - Start */
+.ci-rating-background {
+  fill: rgba(var(--th-slide-contrast), 0.2);
+}
+
+.ci-rating-progress {
+  fill: rgba(var(--th-section-primary), 1);
+}
+
+/* Rating Styles - End */
+/* start rating styles - start */
+.cs-element-rating-holder .ci-rating-element {
+  width: var(--dt-size-24);
+  height: var(--dt-size-24);
+}
+
+.cs-element-large-rating-holder .ci-rating-element {
+  width: var(--dt-size-40);
+  height: var(--dt-size-40);
+}
+
+/* start rating styles - end */
+/* margin classes */
+.cs-secondary-holder-top-margin {
+  margin-top: var(--mood-secondary-holder-top-margin);
+}
+
+/* Timeline Year Text Styles - Start */
+.cs-timeline-year-text {
+  width: var(--dt-size-fit);
+  height: var(--dt-size-auto);
+  color: rgba(var(--th-slide-contrast), 1);
+  background: linear-gradient(0deg,
+      rgba(var(--th-slide-primary), 0) 0%,
+      rgba(var(--th-slide-color4), 0.5) 100%);
+  padding: var(--dt-spacing-8) var(--dt-spacing-24);
+  border-radius: var(--dt-radius-40);
+  border: var(--dt-border-1) var(--dt-border-solid) rgba(var(--th-slide-contrast), 0.05);
+  padding: var(--dt-spacing-6) var(--dt-spacing-12);
+  min-width: var(--dt-size-32);
+  text-transform: uppercase !important;
+  font-weight: bold !important;
+  line-height: 22px !important;
+  letter-spacing: 2px !important;
+}
+
+/* Timeline Year Text Styles - End */
+/* ============= Fixed Color classes Both Internal & External Uses (Important for color override - dont delete) - START ============= */
+.cf-color-section-primary {
+  color: rgba(var(--th-section-primary), 1);
+}
+
+.cf-background-color-section-primary {
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+.cf-color-section-primary .ci-element-icon use {
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  --icon-color-rgb: rgba(var(--th-section-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-section-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-section-tertiary), 1);
+}
+
+.cf-background-color-section-contrast {
+  background-color: rgba(var(--th-section-contrast), 1);
+}
+
+.cf-color-section-contrast .ci-element-icon use {
+  fill: rgba(var(--th-section-contrast), 1);
+  stroke: rgba(var(--th-section-contrast), 1);
+  --icon-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-section-contrast), 0.5);
+  --iconter-color-rgb: rgba(var(--th-section-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-section-tertiary), 1);
+}
+
+.cf-color-section-secondary {
+  color: rgba(var(--th-section-secondary), 1);
+}
+
+.cf-background-color-section-secondary {
+  background-color: rgba(var(--th-section-secondary), 1);
+}
+
+.cf-color-section-secondary .ci-element-icon use {
+  fill: rgba(var(--th-section-secondary), 1);
+  stroke: rgba(var(--th-section-secondary), 1);
+  --icon-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-section-contrast), 0.5);
+  --iconter-color-rgb: rgba(var(--th-section-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-section-tertiary), 1);
+}
+
+.cf-color-section-tertiary {
+  color: rgba(var(--th-section-tertiary), 1);
+}
+
+.cf-background-color-section-tertiary {
+  background-color: rgba(var(--th-section-tertiary), 1);
+}
+
+.cf-color-section-tertiary .ci-element-icon use {
+  fill: rgba(var(--th-section-tertiary), 1);
+  stroke: rgba(var(--th-section-tertiary), 1);
+  --icon-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-section-contrast), 0.5);
+  --iconter-color-rgb: rgba(var(--th-section-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-section-tertiary), 1);
+}
+
+.cf-color-slide-primary {
+  color: rgba(var(--th-slide-primary), 1);
+}
+
+.cf-background-color-slide-primary {
+  background-color: rgba(var(--th-slide-primary), 1);
+}
+
+.cf-color-slide-primary .ci-element-icon use {
+  fill: rgba(var(--th-slide-primary), 1);
+  stroke: rgba(var(--th-slide-primary), 1);
+  --icon-color-rgb: rgba(var(--th-slide-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+.cf-color-slide-contrast {
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+.cf-background-color-slide-contrast {
+  background-color: rgba(var(--th-slide-contrast), 1);
+}
+
+.cf-color-slide-contrast .ci-element-icon use {
+  fill: rgba(var(--th-slide-contrast), 1);
+  stroke: rgba(var(--th-slide-contrast), 1);
+  --icon-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 0.5);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+.cf-color-slide-secondary {
+  color: rgba(var(--th-slide-secondary), 1);
+}
+
+.cf-background-color-slide-secondary {
+  background-color: rgba(var(--th-slide-secondary), 1);
+}
+
+.cf-color-slide-secondary .ci-element-icon use {
+  fill: rgba(var(--th-slide-secondary), 1);
+  stroke: rgba(var(--th-slide-secondary), 1);
+  --icon-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 0.5);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+.cf-color-slide-tertiary {
+  color: rgba(var(--th-slide-tertiary), 1);
+}
+
+.cf-background-color-slide-tertiary {
+  background-color: rgba(var(--th-slide-tertiary), 1);
+}
+
+.cf-color-slide-tertiary .ci-element-icon use {
+  fill: rgba(var(--th-slide-tertiary), 1);
+  stroke: rgba(var(--th-slide-tertiary), 1);
+  --icon-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 0.5);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+.cf-color-slide-alternate-primary {
+  color: rgba(var(--th-slide-alternate-primary), 1);
+}
+
+.cf-background-color-slide-alternate-primary {
+  background-color: rgba(var(--th-slide-alternate-primary), 1);
+}
+
+.cf-color-slide-alternate-primary .ci-element-icon use {
+  fill: rgba(var(--th-slide-alternate-primary), 1);
+  stroke: rgba(var(--th-slide-alternate-primary), 1);
+  --icon-color-rgb: rgba(var(--th-slide-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+.cf-element-color-positive {
+  color: green;
+  stroke: green;
+}
+
+.cf-element-color-negative {
+  color: red;
+  stroke: red;
+}
+
+/* ============= Fixed Color classes - END ============= */
+/* classe has to be reviewed */
+.cs-element-data-driven-block {
+  font-size: var(--dt-size-64);
+  color: rgba(var(--th-section-contrast), 1);
+  min-width: var(--dt-size-100p);
+  min-height: var(--dt-size-320);
+  background-color: rgba(var(--th-section-primary), 1);
+  border-radius: var(--mood-data-driven-holder-border-radius);
+  justify-content: var(--dt-justify-start);
+  align-items: var(--dt-items-start);
+  display: var(--dt-display-flex);
+}
+
+/* Padding Classes */
+.cs-padding-unset {
+  padding: var(--dt-keyword-unset);
+}
+
+/* ============= Chart Classes - START ============= */
+/* Chart Sequence Number Style Classes - Start */
+.cs-chart-sequence-style {
+  font-size: var(--dt-size-24) !important;
+  /* Discussed with sankar and ezhil it needs important to override the default font size */
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* Chart Sequence Number Style Classes - End */
+/* Chart Radius Classes - Start */
+.cs-column-chart-radius-positive {
+  border-radius: var(--dt-radius-48) var(--dt-radius-48) var(--dt-radius-0) var(--dt-radius-0);
+}
+
+.cs-column-chart-radius-negative {
+  border-radius: var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-48) var(--dt-radius-48);
+}
+
+.cs-bar-chart-radius-positive {
+  border-radius: var(--dt-radius-0) var(--dt-radius-48) var(--dt-radius-48) var(--dt-radius-0);
+}
+
+.cs-bar-chart-radius-negative {
+  border-radius: var(--dt-radius-48) var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-48);
+}
+
+/* Chart Radius Classes - End */
+/* Chart Padding Classes - Start */
+.cs-chart-element-padding-top {
+  padding-top: var(--dt-spacing-16);
+}
+
+.cs-chart-element-padding-bottom {
+  padding-bottom: var(--dt-spacing-16);
+}
+
+.cs-chart-element-padding-left {
+  padding-left: var(--dt-spacing-16);
+}
+
+.cs-chart-element-padding-right {
+  padding-right: var(--dt-spacing-16);
+}
+
+/* Fixed Padding */
+.cs-chart-top-label-bottom-padding {
+  padding-bottom: var(--dt-spacing-4);
+}
+
+/* Chart Padding Classes - End */
+/* Chart Line & Area Style Classes - Start */
+.cs-chart-line-style {
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-width: var(--dt-size-4);
+}
+
+.cs-chart-line-shape-style {
+  width: var(--dt-size-16);
+  height: var(--dt-size-16);
+  stroke-width: 6px;
+  stroke: rgba(var(--th-slide-primary), 1);
+  fill: rgba(var(--th-section-primary), 1);
+}
+
+.cs-chart-line-highlight-shape-style {
+  r: 32px;
+}
+
+/* Chart Line & Area Style Classes - End */
+/* Chart Legend Style Classes - Start */
+.cs-chart-legend-style {
+  .cs-legend-shape {
+    width: var(--dt-size-28);
+    min-width: var(--dt-size-28);
+    /* var(--bulletsize) */
+    height: var(--dt-size-20);
+    /* var(--bulletsize) */
+    -webkit-mask-size: var(--dt-size-100p);
+    mask-size: var(--dt-size-100p);
+    align-self: var(--dt-self-center);
+    background-color: rgba(var(--th-section-primary), 1);
+    border-radius: var(--dt-radius-20);
+  }
+}
+
+/* Chart Legend Style Classes - End */
+/* Chart Axis & Grid Style Classes - Start */
+.cs-chart-x-axis-style {
+  border-bottom-width: var(--dt-border-3);
+  border-style: var(--dt-border-solid);
+  border-color: rgba(var(--th-slide-secondary), 1);
+}
+
+.cs-chart-y-axis-style {
+  border-left-width: var(--dt-border-3);
+  border-style: var(--dt-border-solid);
+  border-color: rgba(var(--th-slide-secondary), 1);
+}
+
+.cs-chart-grid-style {
+  border-width: var(--dt-border-3);
+  border-style: var(--dt-border-dashed);
+  border-color: rgba(var(--th-slide-tertiary), 0.75);
+}
+
+.cs-grid-value-style {
+  color: rgba(var(--th-slide-tertiary), 1);
+}
+
+/* Chart Axis & Grid Style Classes - End */
+/* Chart Border Style Class - Start */
+.cs-chart-border-style {
+  outline: 3px solid rgba(var(--th-slide-secondary), 1);
+}
+
+/* Chart Border Style Class - End */
+/* Chart Grid Marker Stlye Classes - Start */
+.column .cs-value-tick-mark .cs-grid-marker-style,
+.line .cs-value-tick-mark .cs-grid-marker-style {
+  height: 3px;
+  background-color: rgba(var(--th-slide-secondary), 1);
+}
+
+.column .cs-label-tick-mark .cs-grid-marker-style,
+.line .cs-label-tick-mark .cs-grid-marker-style {
+  width: 3px;
+  background-color: rgba(var(--th-slide-secondary), 1);
+}
+
+.bar .cs-value-tick-mark .cs-grid-marker-style {
+  width: 3px;
+  background-color: rgba(var(--th-slide-secondary), 1);
+}
+
+.bar .cs-label-tick-mark .cs-grid-marker-style {
+  height: 3px;
+  background-color: rgba(var(--th-slide-secondary), 1);
+}
+
+/* Chart Grid Marker Style Classes - End */
+/* Chart Box Shadow Style Classes - Start */
+/* .cs-chart-box-shadow {
+  box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.1);
+} */
+/* Chart Box Shadow Style Classes - End */
+/* Chart Shape Style Classes - Start */
+/* .cs-chart-svg-shadow {
+  filter: drop-shadow(0px 4px 16px 0px rgba(0, 0, 0, 0.1));
+} */
+/* Chart Shape Style Classes - End */
+/* Baseline Style Classes - Start */
+.cs-baseline-style {
+  display: var(--dt-display-flex);
+  position: var(--dt-position-absolute);
+}
+
+.cs-baseline-style::after {
+  content: "";
+  position: var(--dt-position-absolute);
+  bottom: var(--dt-position-0);
+  left: var(--dt-position-0);
+  width: var(--dt-size-100p);
+  height: 3px;
+  background: repeating-linear-gradient(to right,
+      rgba(var(--th-slide-secondary), 1) 0 24px,
+      transparent 24px 32px);
+}
+
+.cs-baseline-value-style {
+  color: rgba(var(--th-slide-contrast), 1);
+  font-size: var(--dt-size-16);
+}
+
+.cs-baseline-label-style {
+  color: rgba(var(--th-slide-contrast), 1);
+  background-color: rgba(var(--th-slide-primary), 0.8);
+  padding: var(--dt-spacing-6) var(--dt-spacing-12);
+}
+
+/* Baseline Style Classes - End */
+/* ============= Trend Line Arrow Style Class - Start ============= */
+.line,
+.column,
+.bar,
+.cs-chart-trend-arrow-style {
+  .cs-chart-arrow-head {
+    -webkit-mask-image: url(/docs/htmlAssets/assets/resources/genericassets/shapes/uparrow.svg);
+    -webkit-mask-size: var(--dt-size-100p);
+    transform: rotate(44deg);
+    mask-size: var(--dt-size-100p);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    width: 22px;
+    height: var(--dt-size-24);
+  }
+}
+
+/* ============= Trend Line Arrow Style Class - End ============= */
+/* ============= CAGR Container Style Class - Start ============= */
+.cs-cagr-base-container {
+  background-color: rgba(var(--th-slide-contrast), 0.15);
+}
+
+.cs-cagr-header-style .cagrHeaderLabel {
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+.cs-cagr-body-style .cagrBodyLabel {
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* CAGR Container Style Class - End */
+/* Grouped Columns label stylec classes - start */
+/* .cs-group-label-style {
+
+} */
+/* Grouped Columns label stylec classes - end */
+/* .cs-chart-main-graphic {
+    Target Class
+} */
+/* ============= Source Text Style Class - Start ============= */
+.cs-graphic-source-text-parent {
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-end);
+}
+
+.cs-graphic-source-text-child {
+  display: var(--dt-display-flex);
+  text-align: var(--dt-text-right);
+  color: rgba(var(--th-slide-contrast), 0.5);
+  font-style: italic !important;
+}
+
+/* ============= Source Text Style Class - End ============= */
+/* ============= Graphic Title Style Class - Start ============= */
+.cs-graphic-title-text-parent {
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+.cs-graphic-title-text-child {
+  display: var(--dt-display-flex);
+  text-align: var(--dt-text-center);
+}
+
+/* ============= Graphic Title Style Class - End ============= */
+/* ============= Chart Trend Line Style Class - Start ============= */
+.cs-chart-trend-line-style {
+  stroke-width: var(--dt-size-4);
+  stroke-opacity: 1;
+  stroke: rgba(var(--th-section-primary), 1);
+  stroke-dasharray: 24px 12px;
+}
+
+.cs-chart-trend-callout-style {
+  transform: rotate(var(--trendline-callout-angle));
+  background-color: rgba(var(--th-slide-primary), 1);
+  padding: var(--dt-spacing-6) var(--dt-spacing-24);
+  color: rgba(var(--th-section-primary), 1);
+  border-radius: var(--dt-radius-16);
+  border: var(--dt-border-3) var(--dt-border-solid) rgba(var(--th-section-primary), 1);
+}
+
+.cs-chart-trend-text-style {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* ============= Chart Trend Line Style Class - End ============= */
+/* ============= Series Item Highlight Style Class - Start ============= */
+/* Enabled */
+.cs-series-item-highlight-enabled {
+
+  /* shape */
+  .clsLegendShape,
+  .cs-chart-main-graphic {
+    mask: repeating-linear-gradient(45deg,
+        transparent,
+        transparent 3px,
+        black 3px,
+        black 6px) !important;
+    background-color: rgba(var(--th-slide-secondary), 1);
+  }
+
+  .clsValueInnerText {
+    background-color: rgba(var(--th-section-primary), 1);
+    width: var(--dt-size-fit) !important;
+    padding: var(--dt-spacing-0) var(--dt-spacing-6);
+  }
+}
+
+/* Disabled */
+/* .cs-series-item-highlight-disabled {} */
+/* ============= Series Item Highlight Style Class - End ============= */
+/* ============= Chart Emphasis Style Class - Start ============= */
+/* .cs-chart-emphasis-enabled {
+    .cs-chart-main-graphic {}
+    .cs-value-text {}
+    .cs-label-text {}
+} */
+.cs-chart-emphasis-disabled {
+
+  /* shape */
+  .cs-chart-main-graphic {
+    background-color: unset;
+    border: var(--dt-border-2) var(--dt-border-solid) rgba(var(--th-slide-contrast), 1);
+  }
+
+  /* Value
+      .cs-value-text {
+      }
+      Label
+      .cs-label-text {
+      } */
+  /* Image placeholder */
+  [data-nodetype="imageHolder"] {
+    filter: grayscale(1);
+  }
+
+  /* Logo placeholder */
+  [data-nodetype="logoHolder"] {
+    filter: grayscale(1);
+  }
+}
+
+/* .cs-chart-emphasis-image-enabled {
+} */
+.cs-chart-emphasis-image-disabled {
+  opacity: var(--dt-opacity-75);
+  filter: grayscale(1);
+}
+
+/* .cs-chart-emphasis-svg-enabled {
+} */
+.cs-chart-emphasis-svg-disabled {
+  filter: grayscale(1);
+}
+
+/* ============= Chart Emphasis Style Class - End ============= */
+/* .cs-inner-text-color - use this class for Inner Text colors
+.cs-inner-text-color.cs-value-text {}
+.cs-inner-text-color.cs-label-text {}
+ */
+/* ============= Chart Projection Style Class - Start ============= */
+/* .cs-chart-projection-enabled {
+} */
+.cs-chart-projection-disabled {
+
+  /* shape */
+  .cs-chart-main-graphic {
+    background-color: unset;
+    border: var(--dt-border-2) var(--dt-border-solid) rgba(var(--th-slide-contrast), 1);
+  }
+
+  /* Value
+    .cs-value-text {
+    }
+    Label
+    .cs-label-text {
+    } */
+  /* Image placeholder */
+  [data-nodetype="imageHolder"] {
+    filter: grayscale(1);
+  }
+
+  /* Logo placeholder */
+  [data-nodetype="logoHolder"] {
+    filter: grayscale(1);
+  }
+}
+
+/* .cs-chart-projection-image-enabled {
+} */
+.cs-chart-projection-image-disabled {
+  filter: grayscale(1);
+}
+
+/* .cs-chart-projection-svg-enabled {
+} */
+.cs-chart-projection-svg-disabled {
+  filter: grayscale(1);
+}
+
+/* ============= Chart Projection Style Class - End ============= */
+/* .cs-inner-text-color - use this class for Inner Text colors
+.cs-inner-text-color.cs-value-text {}
+.cs-inner-text-color.cs-label-text {}
+ */
+/* ============= Chart Line & Area Projection style Class - Start ============= */
+.cs-line-area-projection-enabled {
+  stroke-dasharray: 10 14;
+  stroke: rgba(var(--th-slide-contrast), 1);
+}
+
+.cs-line-area-projection-enabled .cs-area-fill,
+.cs-line-area-projection-enabled .clsAreaStyle
+
+/*remove this once implemented in the chart*/
+  {
+  fill: rgba(var(--th-slide-contrast), 0.25);
+}
+
+/* .cs-line-area-projection-disabled {
+}
+
+.cs-line-area-shape-projection-enabled {
+}
+.cs-line-area-shape-projection-disabled {
+} */
+/* ============= Chart Line & Area Projection style Class - End ============= */
+/* ============= Projection Title Class - Start ============= */
+/* Bar */
+.bar .cs-projection-title-text-parent {
+  justify-content: var(--dt-justify-start);
+  align-items: var(--dt-items-center);
+}
+
+.bar .cs-projection-title-text-child {
+  text-align: var(--dt-text-center);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* Column, Line & Area */
+.column .cs-projection-title-text-parent,
+.line .cs-projection-title-text-parent {
+  justify-content: var(--dt-justify-center);
+}
+
+.column .cs-projection-title-text-child,
+.line .cs-projection-title-text-child {
+  text-align: var(--dt-text-center);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* ============= Projection Title Class - End ============= */
+/* Projection divider line style classes - start */
+.column .cs-chart-projection-divider-line,
+.line .cs-chart-projection-divider-line {
+  border-right: var(--dt-border-3) var(--dt-border-dashed) rgba(var(--th-slide-secondary), 1);
+}
+
+.bar .cs-chart-projection-divider-line {
+  border-bottom: var(--dt-border-3) var(--dt-border-dashed) rgba(var(--th-slide-secondary), 1);
+}
+
+/* Projection divider line style classes - end */
+/* ============= Chart Highlight Difference Classes - Start ============= */
+.cs-highlight-difference-line {
+  stroke-width: 3px;
+  stroke-linecap: square;
+  stroke-opacity: 1;
+  stroke-dasharray: 12 12;
+  stroke: rgba(var(--th-slide-secondary), 1);
+}
+
+.cs-highlight-difference-arrow {
+  width: var(--dt-size-20);
+  height: var(--dt-size-20);
+  fill: rgba(var(--th-slide-secondary), 1);
+}
+
+.cs-highlight-difference-callout {
+  background-color: rgba(var(--th-slide-contrast), 1);
+  padding: var(--dt-spacing-6) var(--dt-spacing-12);
+  color: rgba(var(--th-slide-primary), 1);
+  border-radius: var(--dt-radius-16);
+}
+
+.cs-highlight-difference-text {
+  font-weight: bold;
+}
+
+/* ============= Chart Highlight Difference Classes - End ============= */
+/* ============= Line Highlight Callout Style Class - Start ============= */
+.cs-line-highlight-callout {
+  stroke-width: var(--dt-size-4);
+  r: 24px;
+  fill: rgba(var(--th-slide-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  min-width: var(--dt-size-48);
+  min-height: var(--dt-size-48);
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-center);
+}
+
+.cs-line-highlight-callout-text {
+  color: rgba(var(--th-slide-primary), 1);
+  font-size: 22px !important;
+}
+
+/* ============= Line Highlight Callout Style Class - End ============= */
+/* Stacked bar Connector line style - start */
+.cs-chart-series-label-connector-style,
+.cs-stacked-bar-connector-line {
+  --connector-line-type: dashed;
+  stroke: rgba(var(--th-slide-tertiary), 1);
+  stroke-width: var(--dt-size-2);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 6px 6px;
+}
+
+/* Stacked bar Connector line classes - end */
+/* two series chart background color classes - start */
+.legendseries .cs-two-series-chart-bg-color,
+.cs-two-series-chart-bg-color .chartgraphic {
+  background-color: rgba(var(--th-slide-contrast), 0.25);
+}
+
+/* two series chart background color classes - end */
+/* chart secondary label style classes - start */
+.cs-chart-secondary-label-style {
+  color: rgba(var(--th-slide-secondary), 1);
+}
+
+/* chart secondary label style classes - end */
+/* Dumbbell chart style classes - start */
+.column .cs-dumbbell-intermediate-line-style,
+.line .cs-dumbbell-intermediate-line-style {
+  width: var(--dt-size-4);
+  background-color: rgba(var(--th-slide-secondary), 1);
+}
+
+.bar .cs-dumbbell-intermediate-line-style {
+  height: var(--dt-size-4);
+  background-color: rgba(var(--th-slide-secondary), 1);
+}
+
+.cs-dumbbell-shape-one-style {
+  background-color: rgba(var(--th-section-primary), 1);
+  width: var(--dt-size-24);
+  height: var(--dt-size-24);
+}
+
+.cs-dumbbell-shape-two-style {
+  background-color: rgba(var(--th-section-primary), 1);
+  width: var(--dt-size-24);
+  height: var(--dt-size-24);
+}
+
+/* Dumbbell chart style classes - end */
+/* ============= Chart Classes - END ============= */
+/* ============= Table Style Classes - Start ============= */
+.cs-table-element-alignment {
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  text-align: var(--dt-text-center);
+}
+
+.cs-table-primary-style {
+  border-collapse: var(--dt-border-separate);
+  color: rgba(var(--th-slide-contrast), 1);
+  border: var(--dt-keyword-unset);
+  -webkit-border-vertical-spacing: var(--dt-spacing-4);
+  -webkit-border-horizontal-spacing: var(--dt-spacing-0);
+}
+
+.cs-table-icon-color .ci-element-icon use {
+  fill: rgba(var(--th-section-primary), 1);
+  stroke: rgba(var(--th-section-primary), 1);
+  --icon-color-rgb: rgba(var(--th-section-primary), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-secondary), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-tertiary), 1);
+}
+
+.cs-table-primary-style tbody tr:nth-child(odd) td:not(:first-child) {
+  border-bottom: var(--dt-border-2) var(--dt-border-solid) rgba(var(--th-slide-contrast), 0.5);
+}
+
+.cs-table-primary-style tbody tr:nth-child(even) td:not(:first-child) {
+  border-bottom: var(--dt-border-2) var(--dt-border-solid) rgba(var(--th-slide-contrast), 0.5);
+}
+
+.cs-table-primary-style tbody tr:last-child td:not(:first-child) {
+  border-bottom: var(--dt-border-3) var(--dt-border-solid) rgba(var(--th-slide-contrast), 1);
+}
+
+.cs-table-primary-style tbody tr td:last-child {
+  -moz-border-radius: var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-0);
+  border-radius: var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-0);
+}
+
+.cs-table-primary-style tbody tr td:nth-child(2) {
+  -moz-border-radius: var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-0);
+  border-radius: var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-0);
+}
+
+/* Column Header Style */
+.cs-table-header-first-column tbody tr:first-child td:not(:first-child) {
+  color: rgba(var(--th-section-contrast), 1);
+  background-color: transparent;
+  border-bottom: unset;
+  position: var(--dt-position-relative);
+}
+
+.cs-table-header-first-column tbody tr:first-child td:not(:first-child)::before {
+  content: "";
+  width: calc(100% - 24px);
+  height: var(--dt-size-100p);
+  border-radius: var(--dt-radius-20);
+  position: var(--dt-position-absolute);
+  top: var(--dt-position-0);
+  left: var(--dt-position-0);
+  margin: 0 var(--dt-keyword-auto);
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+.cs-table-header-first-column tbody tr:first-child td:nth-child(2) {}
+
+.cs-table-header-first-column tbody tr:first-child td:last-child {}
+
+/* Row Header Style */
+.cs-table-primary-style.cs-table-header-first-row tbody tr td:nth-child(2) {
+  color: rgba(var(--th-section-contrast), 1);
+  background-color: transparent;
+  border-bottom: unset;
+  position: var(--dt-position-relative);
+}
+
+.cs-table-primary-style.cs-table-header-first-row tbody tr td:nth-child(2)::before {
+  content: "";
+  width: calc(100% - 24px);
+  height: var(--dt-size-100p);
+  border-radius: var(--dt-radius-20);
+  position: var(--dt-position-absolute);
+  top: var(--dt-position-0);
+  left: var(--dt-position-0);
+  margin: 0 var(--dt-keyword-auto);
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+.cs-table-primary-style.cs-table-header-first-row tbody tr td:nth-child(2) .cs-table-icon-color use,
+.cs-table-header-first-column tbody tr:first-child td:not(:first-child) .cs-table-icon-color use {
+  fill: rgba(var(--th-section-contrast), 1);
+  stroke: rgba(var(--th-section-contrast), 1);
+  --icon-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconquad-color-rgb: rgba(var(--th-section-contrast), 1);
+}
+
+.cs-table-primary-style.cs-table-header-first-row tbody tr:first-child td:nth-child(2) {
+  -moz-border-radius: var(--dt-radius-20);
+  border-radius: var(--dt-radius-20);
+}
+
+/* Column & Row Header Style */
+.cs-table-primary-style.cs-table-header-first-row.cs-table-header-first-column tbody tr:first-child td:nth-child(2) {
+  border-radius: var(--dt-radius-20) var(--dt-radius-0) var(--dt-radius-0) var(--dt-radius-20);
+  border-right: var(--dt-keyword-unset);
+}
+
+/* Highlight Classes For Row & Column */
+.cs-table-primary-style tbody tr td.ci-table-cell.cs-table-highlight-column {
+  background-color: rgba(var(--th-slide-contrast), 0.35);
+}
+
+.cs-table-primary-style tbody tr td.ci-table-cell.cs-table-highlight-row {
+  background-color: rgba(var(--th-slide-contrast), 0.35);
+}
+
+/* Added Header Style Classes For Row & Column */
+.cs-table-primary-style tbody tr td.ci-table-cell.cs-table-header-column-flexible {
+  color: rgba(var(--th-slide-contrast), 1);
+  background-color: rgba(var(--th-slide-secondary), 0.4);
+}
+
+.cs-table-primary-style tbody tr td.ci-table-cell.cs-table-header-row-flexible {
+  color: rgba(var(--th-slide-contrast), 1);
+  background-color: rgba(var(--th-slide-secondary), 0.4);
+}
+
+/* Table Donut Chart Node holder classes - Start */
+.cs-table-element-donut-holder,
+.cs-table-element-pie-holder {
+  width: var(--dt-size-160);
+  height: var(--dt-size-160);
+  min-width: var(--dt-size-160);
+  min-height: var(--dt-size-160);
+}
+
+/* Table Donut Chart Node holder classes - End */
+/* Table Progress Chart Node holder classes - Start */
+.cs-table-element-progress-bar-holder {
+  width: var(--dt-size-80p);
+  height: var(--dt-size-100p);
+  min-width: var(--dt-size-208);
+  min-height: var(--dt-size-96);
+}
+
+/* Table Progress Chart Node holder classes - End */
+/* ============= Table Style Classes - End ============= */
+/* ============= Special Image Gap Classes - Start ============= */
+.cf-image-gap-large {
+  gap: var(--dt-spacing-80);
+}
+
+.cf-image-gap-moderate {
+  gap: var(--dt-spacing-56);
+}
+
+.cf-image-gap-medium {
+  gap: var(--dt-spacing-48);
+}
+
+.cf-image-size-83p {
+  width: var(--dt-size-83p) !important;
+}
+
+/* ============= Special Image Gap Classes - End ============= */
+/* Text Box Style Classes - Start ============= */
+.cs-element-textbox-style {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  /* background-color: #ffdfb8; */
+  --paragraph-gap: var(--dt-spacing-28);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+.ci-accent-text-box-holder {
+  padding: var(--dt-spacing-36);
+}
+
+.ci-accent-text-box-holder .cs-element-textbox-style {
+  color: #ffffff;
+}
+
+.ci-accent-text-box-holder .cs-element-textbox-style .cs-element-bullet-style .ci-textbox-li-before::before {
+  background-color: #ffffff;
+}
+
+.cs-element-textbox-style ol li[data-list="bullet"] {
+  padding-left: calc(var(--element-bullet-size) + 20px);
+}
+
+.cs-element-textbox-style ol li[data-list="number"] {
+  padding-left: calc(var(--element-sequence-size) + 20px);
+}
+
+.cs-element-textbox-style ol li[data-list="checkbox"] {
+  padding-left: calc(var(--element-checkbox-size) + 20px);
+}
+
+/* Provide this value based on the bullet-size/sequence-size/checkbox-size whichever is higher by subtracting the default single line height value */
+.cs-element-textbox-style .ci-textbox-editor {
+  padding-top: 5px;
+}
+
+.cs-element-bullet-style .ci-textbox-li-before::before {
+  display: var(--dt-display-inline-block);
+  content: "";
+  background-color: rgba(var(--th-section-primary), 1);
+  height: var(--element-bullet-size);
+  width: var(--element-bullet-size);
+  border-radius: var(--dt-radius-full);
+  margin-left: calc(-1 * (var(--element-bullet-size) + 20px));
+  margin-top: calc((var(--live-single-line-height) - var(--element-bullet-size)) / 2);
+}
+
+.cs-node-element-bullet-style {
+  display: var(--dt-display-inline-block);
+  content: "";
+  background-color: rgba(var(--th-slide-tertiary), 1);
+  height: var(--element-bullet-size);
+  width: var(--element-bullet-size);
+  min-width: var(--element-bullet-size);
+  min-height: var(--element-bullet-size);
+  border-radius: var(--dt-radius-6);
+  margin-top: calc((var(--live-single-line-height) - var(--element-bullet-size)) / 2);
+}
+
+.cs-element-sequence-style .ci-textbox-li-before::before {
+  color: rgba(var(--th-section-contrast), 1);
+  background-color: rgba(var(--th-section-primary), 1);
+  border-radius: var(--dt-radius-full);
+  content: attr(data-index);
+  width: var(--element-sequence-size);
+  height: var(--element-sequence-size);
+  margin-left: calc(-1 * (var(--element-sequence-size) + 20px));
+  margin-top: calc((var(--live-single-line-height) - var(--element-sequence-size)) / 2);
+  font-size: var(--dt-size-24);
+  font-weight: bold;
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-center);
+  overflow: var(--dt-overflow-hidden);
+  text-overflow: var(--dt-text-overflow-ellipsis);
+  min-height: var(--dt-size-100p);
+  pointer-events: var(--dt-pointer-events-none);
+  text-align: var(--dt-text-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+}
+
+.ci-accent-text-box-holder .cs-element-textbox-style .cs-element-sequence-style .ci-textbox-li-before::before {
+  color: #ffffff;
+  background-color: #ffffff33;
+}
+
+.cs-element-checkbox-style .ci-textbox-li-before::before {
+  content: "";
+  border-radius: var(--dt-radius-6);
+  background-color: rgba(var(--th-slide-tertiary), 1);
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-center);
+  width: var(--element-checkbox-size);
+  height: var(--element-checkbox-size);
+  margin-left: calc(-1 * (var(--element-checkbox-size) + 20px));
+  margin-top: calc((var(--live-single-line-height) - var(--element-checkbox-size)) / 2);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  border: unset;
+}
+
+.cs-element-checkbox-style.checked .ci-textbox-li-before::before {
+  -webkit-mask-image: url(../../genericassets/shapes/checkedshape/tick_square.svg);
+  mask-image: url(../../genericassets/shapes/checkedshape/tick_square.svg);
+  background-color: rgba(var(--th-slide-contrast), 1);
+}
+
+.cs-node-element-checkbox-style {
+  content: "";
+  background-color: rgba(var(--th-slide-tertiary), 1);
+  border-radius: var(--dt-radius-6);
+  display: var(--dt-display-flex);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-center);
+  width: var(--element-checkbox-size);
+  height: var(--element-checkbox-size);
+  min-width: var(--element-checkbox-size);
+  min-height: var(--element-checkbox-size);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  border: unset;
+  margin-top: calc((var(--live-single-line-height) - var(--element-checkbox-size)) / 2);
+}
+
+.cs-node-element-checkbox-style.ci-checkbox-checked {
+  -webkit-mask-image: url(../../genericassets/shapes/checkedshape/tick_square.svg);
+  mask-image: url(../../genericassets/shapes/checkedshape/tick_square.svg);
+  background-color: rgba(var(--th-slide-contrast), 1);
+}
+
+.ci-accent-text-box-holder .cs-element-checkbox-style .ci-textbox-li-before::before {
+  background-color: #ffffff;
+}
+
+.ci-accent-text-box-holder .cs-element-checkbox-style.checked .ci-textbox-li-before::before {
+  background-color: #ffffff;
+}
+
+/* text box styles - End ============= */
+/* Node Emphasize Classes - Start */
+.ci-emphasize-enabled.cs-icon-node-card {
+  background-image: url(../../genericassets/images/default/moods/frosted/bg_10.jpg);
+}
+
+.ci-emphasize-enabled.cs-icon-node-card .cs-element-label,
+.ci-emphasize-enabled.cs-icon-node-card .cs-element-button {
+  background-color: rgba(var(--th-section-tertiary), 0.15);
+}
+
+.ci-emphasize-enabled.cs-icon-node-card .cs-element-heading,
+.ci-emphasize-enabled.cs-icon-node-card .cs-element-body,
+.ci-emphasize-enabled.cs-icon-node-card .ci-data-driven,
+.ci-emphasize-enabled.cs-icon-node-card .cs-element-subheading,
+.ci-emphasize-enabled.cs-icon-node-card .cs-element-label,
+.ci-emphasize-enabled.cs-icon-node-card .cs-element-button,
+.ci-emphasize-enabled.cs-icon-node-card .cs-element-sequence {
+  color: rgba(var(--th-slide-contrast), 1);
+
+  #spanPrefix,
+  #spanMainText,
+  #spanSuffix {
+    color: rgba(var(--th-slide-contrast), 1);
+  }
+}
+
+.ci-emphasize-enabled.cs-icon-node-card .ci-element-icon use {
+  fill: rgba(var(--th-slide-contrast), 1);
+  stroke: rgba(var(--th-slide-contrast), 1);
+  --icon-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-slide-contrast), 1);
+  --iconquad-color-rgb: rgba(var(--th-slide-contrast), 1);
+}
+
+/* .cs-image-node-card.ci-emphasize-enabled {
+} */
+.cs-image-node-card.ci-emphasize-disabled {
+  filter: grayscale(1);
+  opacity: var(--dt-opacity-50);
+}
+
+/* Node Emphasize Classes - End */
+/* Heading Text Highlight Classes - Start */
+.cs-heading-highlight-text-style {
+  font-weight: bold;
+}
+
+.cs-heading-highlight-text-style-disabled {}
+
+/* Heading Text Highlight Classes - End */
+/* Body Text Highlight Classes - Start */
+.cs-body-highlight-text-style {
+  font-weight: bold;
+}
+
+.cs-body-highlight-text-style-disabled {}
+
+/* Body Text Highlight Classes - End */
+/* Fixed logo sizes don't delete this class */
+.cf-element-logogrid-custom-size {
+  --logo-size: var(--dt-size-40);
+}
+
+.cf-element-logogrid-custom-size .ci-logo-item {
+  height: var(--logo-size);
+  min-width: var(--logo-size);
+  min-height: var(--logo-size);
+}
+
+.cf-element-logogrid-custom-size .ci-logogrid-container {
+  gap: var(--dt-spacing-32);
+}
+
+.cf-element-logogrid-full-width .ci-logo-item {
+  --logo-size: var(--dt-size-32);
+  height: var(--logo-size);
+  /* min-width: var(--dt-size-100p); */
+  min-height: var(--logo-size);
+  align-items: var(--dt-items-center);
+  justify-content: var(--dt-justify-center);
+  display: var(--dt-display-flex);
+}
+
+.cf-element-logogrid-moderate-full-width .ci-logo-item {
+  --logo-size: var(--dt-size-48);
+  height: var(--logo-size);
+  /* min-width: var(--dt-size-100p); */
+  min-height: var(--logo-size);
+  display: var(--dt-display-flex);
+}
+
+.cf-element-logogrid-moderate-full-width .ci-logogrid-container {
+  gap: var(--dt-spacing-56);
+}
+
+/* Fixed logo sizes don't delete this class - End */
+/* Fixed logo color classes - Start */
+.th-dark .ci-logo-contrast img,
+.cf-element-logogrid-fixed-color-white .ci-logo-item {
+  filter: invert(100%) grayscale(100%) brightness(200%);
+}
+
+.th-light .ci-logo-contrast img,
+.cf-element-logogrid-fixed-color-dark .ci-logo-item {
+  filter: grayscale(100%) contrast(1000%) brightness(0%);
+}
+
+/* Fixed logo color classes - End */
+.cf-gradient-color1 {
+  stop-color: rgba(var(--th-slide-color1), 1);
+}
+
+.cf-gradient-color2 {
+  stop-color: rgba(var(--th-slide-color2), 1);
+}
+
+/* meme text holder classes - start */
+.cs-element-meme-text-holder {
+  padding: var(--dt-spacing-16) var(--dt-spacing-32);
+  gap: var(--dt-spacing-8);
+  background-color: rgba(var(--th-slide-primary), 1);
+  color: rgba(var(--th-slide-contrast), 1);
+}
+
+/* meme text holder classes - end */
+/* separator classes - start */
+.ci-separator-horizontal {
+  width: var(--dt-size-1);
+  background-color: rgba(var(--th-slide-contrast), 0.5);
+}
+
+.ci-separator-vertical,
+.ci-separator-column-list {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-1);
+  min-height: var(--dt-size-1);
+  background-color: rgba(var(--th-slide-contrast), 0.5);
+}
+
+/* separator classes - end */
+/* multiple column list classes - start */
+.cs-multicolumn-point-gap {
+  gap: var(--dt-spacing-32);
+}
+
+.cs-multicolumn-header-holder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+  display: var(--dt-display-flex);
+  background-color: rgba(var(--th-section-primary), 1);
+  padding: var(--dt-spacing-24) var(--dt-spacing-32) var(--dt-spacing-24) var(--dt-spacing-32);
+  border-radius: var(--mood-card-border-radius) var(--mood-card-border-radius) var(--dt-radius-0) var(--dt-radius-0);
+}
+
+.cs-multicolumn-header-holder .ci-header {
+  color: rgba(var(--th-section-contrast), 1);
+}
+
+.cs-multicolumn-items-padding {
+  padding: var(--dt-spacing-32);
+}
+
+.cs-multicolumn-item-holder {
+  width: var(--dt-size-100p);
+  height: var(--dt-size-auto);
+}
+
+.cs-multicolumn-icon-size {
+  width: var(--dt-size-40);
+  height: var(--dt-size-40);
+  min-width: var(--dt-size-40);
+  min-height: var(--dt-size-40);
+}
+
+/* multiple column list classes - end */
+/* min-width-unset */
+.cf-min-width-unset {
+  min-width: var(--dt-keyword-unset);
+}
+
+/* Section Sequence Element Classes - Start */
+.cs-element-section-sequence {
+  white-space: var(--dt-whitespace-nowrap);
+  overflow: var(--dt-overflow-hidden);
+  text-overflow: var(--dt-text-overflow-ellipsis);
+  width: var(--dt-size-auto);
+  height: var(--dt-size-auto);
+  min-width: var(--dt-size-28);
+  min-height: var(--dt-size-100p);
+  pointer-events: var(--dt-pointer-events-all);
+  text-align: var(--dt-text-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  color: rgba(var(--th-slide-contrast), 1);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+}
+
+/* Section Sequence Element Classes - End */
+/* Mood Shape Element */
+.cf-icon-block-header {
+  background-color: rgba(var(--th-section-primary), 1);
+}
+
+.cs-element-horizontal-shape-holder {
+  display: var(--dt-display-none);
+}
+
+/* team member */
+.cf-team-responsive-image {
+  max-width: 446px !important;
+}
+
+.cs-team-profile-bg {
+  background-color: rgba(var(--th-section-primary), 0.85);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  border-radius: var(--dt-radius-40);
+}
+
+.cs-team-profile-bg-node {
+  padding: var(--dt-spacing-32);
+  width: calc(100% - 16px);
+  left: var(--dt-position-0);
+  right: var(--dt-position-0);
+  margin: 0 var(--dt-keyword-auto);
+  bottom: var(--dt-position-8);
+}
+
+.cf-color-section-contrast {
+  color: rgba(var(--th-section-contrast), 1);
+}
+
+/* Team Image Classes - Start */
+.cf-team-responsive-image {
+  max-width: 400px !important;
+  height: var(--dt-size-100p);
+  flex: 1;
+}
+
+/* Team Image Classes - End */
+/* Placeholder Classes - Start */
+.cs-placeholder-text-standalone {}
+
+.cs-placeholder-icon-standalone {
+  width: var(--dt-size-64);
+  height: var(--dt-size-64);
+  background-color: rgba(var(--th-section-primary), 1);
+  border-radius: var(--dt-radius-full);
+  display: var(--dt-display-flex);
+  justify-content: var(--dt-justify-center);
+  align-items: var(--dt-items-center);
+  flex-shrink: var(--dt-flex-shrink-0);
+  position: var(--dt-position-relative);
+}
+
+.cs-placeholder-icon-standalone .ci-element-icon {
+  width: var(--dt-size-40p);
+  height: var(--dt-size-40p);
+}
+
+
+.cs-placeholder-icon-standalone .ci-element-icon use {
+  fill: rgba(var(--th-section-contrast), 1);
+  stroke: rgba(var(--th-section-contrast), 1);
+  --icon-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconsec-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconter-color-rgb: rgba(var(--th-section-contrast), 1);
+  --iconquad-color-rgb: rgba(var(--th-section-tertiary), 1);
+}
+
+.cs-placeholder-data-driven-standalone {}
+
+/* Placeholder Classes - End */
+/* Placeholder Classes - End */
+.cs-element-horizontal-shape-holder {
+  height: var(--dt-size-1);
+  width: var(--dt-size-100p);
+  background-color: rgba(var(--th-slide-contrast), 0.4);
+}
+
+/* shape element gap */
+.cs-shape-element-gap {
+  gap: var(--dt-spacing-20);
+}
+
+.cf-color-fixed-white {
+  color: #ffffff;
+}
+
+.cf-color-fixed-white .ci-element-icon use {
+  fill: #ffffff;
+  stroke: #000000;
+  --icon-color-rgb: #ffffff;
+  --iconsec-color-rgb: #ffffff;
+  --iconter-color-rgb: #dedede;
+  --iconquad-color-rgb: #c3c3c3;
+}

@@ -1,0 +1,138 @@
+/* ========================================
+   DESIGN ELEMENTS
+   ======================================== */
+.cs-educational-design-overlay-shape {
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  background-image: linear-gradient(to bottom, #000000, #ffffff09);
+  left: var(--dt-position-0);
+  top: var(--dt-position-0);
+}
+
+.cs-educational-gradient-shape {
+  position: var(--dt-position-absolute);
+  width: 1760px;
+  height: 1080px;
+  left: var(--dt-position-80);
+  top: 540px;
+  background: radial-gradient(50% 50% at 50% 50%,
+      rgba(var(--th-slide-color1), 1) 0%,
+      rgba(var(--th-slide-color1), 0) 100%);
+}
+
+.bg-shapes-slide-container {
+  z-index: unset;
+}
+
+.cs-educational-background-gradient-shape {
+  position: var(--dt-position-absolute);
+  width: 1923px;
+  height: 1083px;
+  background: linear-gradient(50deg, rgba(var(--th-slide-alternate-primary), 1) 0%, rgba(var(--th-slide-primary), 1) 42%);
+  /* background: linear-gradient(72deg, rgba(var(--th-slide-alternate-primary), 1) 0%, rgba(var(--th-slide-primary), 1) 100%); */
+  left: var(--dt-position-0);
+  top: var(--dt-position-0);
+}
+
+.cs-educational-line-shape {
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-2);
+  background: rgba(var(--th-slide-contrast), 1);
+  left: var(--dt-position-0);
+  top: 78px;
+  z-index: var(--dt-z-4);
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Runtime only */
+.widgetView .mood:not([notransition]) .cs-educational-line-shape {
+  animation: cs-educational-line-draw var(--dt-duration-1000) cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation-delay: calc(0.5s + var(--transdelay));
+}
+
+@keyframes cs-educational-line-draw {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.cs-educational-cover-curve-line-shape {
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-90p);
+  left: 460px;
+  top: -80px;
+  z-index: var(--dt-z-3);
+}
+
+.cs-educational-logo-title-curve-line-shape {
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-90p);
+  left: 630px;
+  top: -330px;
+  z-index: var(--dt-z-3);
+}
+
+.cs-educational-logo-title-curve-line-shape use {
+  --slide-svg-color-rgb: rgba(var(--th-slide-color1), 1);
+  fill: rgba(var(--th-slide-color1), 1);
+  stroke: rgba(var(--th-slide-color1), 1);
+}
+
+.cs-educational-cover-curve-line-shape use {
+  --slide-svg-color-rgb: rgba(var(--th-slide-color1), 1);
+  fill: rgba(var(--th-slide-color1), 1);
+  stroke: rgba(var(--th-slide-color1), 1);
+}
+
+.cs-educational-cta-curve-line-shape {
+  position: var(--dt-position-absolute);
+  width: var(--dt-size-100p);
+  height: var(--dt-size-100p);
+  left: -660px;
+  top: var(--dt-position-0);
+  z-index: var(--dt-z-3);
+}
+
+.cs-educational-cta-curve-line-shape use {
+  --slide-svg-color-rgb: rgba(var(--th-slide-color1), 1);
+  fill: rgba(var(--th-slide-color1), 1);
+  stroke: rgba(var(--th-slide-color1), 1);
+}
+
+.widgetView .mood:not([notransition]) .cs-educational-cover-curve-line-shape path,
+.widgetView .mood:not([notransition]) #cs-educational-cover-curve-line-shape path,
+.widgetView .mood:not([notransition]) .cs-educational-logo-title-curve-line-shape path,
+.widgetView .mood:not([notransition]) #cs-educational-logo-title-curve-line-shape path,
+.widgetView .mood:not([notransition]).cs-educational-cta-curve-line-shape path,
+.widgetView .mood:not([notransition]) #cs-educational-cta-curve-line-shape path,
+.widgetView .mood:not([notransition]) .cs-educational-cover-curve-line-shape use,
+.widgetView .mood:not([notransition]) #cs-educational-cover-curve-line-shape use,
+.widgetView .mood:not([notransition]) .cs-educational-logo-title-curve-line-shape use,
+.widgetView .mood:not([notransition]) #cs-educational-logo-title-curve-line-shape use,
+.widgetView .mood:not([notransition]) .cs-educational-cta-curve-line-shape use,
+.widgetView .mood:not([notransition]) #cs-educational-cta-curve-line-shape use {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: cs-educational-curve-line-draw 2s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation-delay: calc(0.2s + var(--transdelay));
+}
+
+@keyframes cs-educational-curve-line-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+body:not(:has(.widgetView)) .cs-educational-curve-line-path {
+  animation: none;
+  stroke-dashoffset: 0;
+}

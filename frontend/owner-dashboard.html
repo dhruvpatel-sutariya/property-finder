@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard</title>
+    <link rel="stylesheet" href="tenant-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+        }
+
+        .dashboard-sidebar {
+            background-color: var(--surface-light);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            height: fit-content;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-role {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+            margin-top: 2rem;
+        }
+
+        .sidebar-link {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .dashboard-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--surface-light) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background-color: rgba(52, 152, 219, 0.2);
+            color: #3498db;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stat-info h4 {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-info p {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-light);
+        }
+
+        .card {
+            background-color: var(--surface-light);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .property-images {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .property-images img {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand" style="text-decoration: none; color: inherit;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="brand-icon">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <h2>Property Finder</h2>
+        </a>
+        <div class="nav-links">
+            <a href="owner-dashboard.html" class="nav-link active">Properties</a>
+            <a href="owner-chat.html" class="nav-link">Messages</a>
+            <a href="#" class="nav-link">Feedback and Review</a>
+        </div>
+        <div class="nav-auth">
+            <a href="owner-account.html" class="user-avatar"
+                style="display: block; width: 35px; height: 35px; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid var(--primary-color);">
+                <img id="nav-profile-image"
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+                    alt="Owner" style="width: 100%; height: 100%; object-fit: cover;">
+            </a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <a href="owner-account.html">
+                <img id="sidebar-profile-image"
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    alt="Owner Avatar" class="profile-avatar">
+            </a>
+            <h2 class="profile-name" id="display-name">Loading...</h2>
+            <div class="profile-role">Property Owner</div>
+
+            <div class="sidebar-links">
+                <a href="owner-dashboard.html" class="sidebar-link active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="owner-profile.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add Property
+                </a>
+                <a href="owner-tenants.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Bookings
+                </a>
+                <a href="owner-my-tenants.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    My Tenants
+                </a>
+                <a href="index.html" class="sidebar-link" style="color: #e74c3c; margin-top: 1rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Log Out
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content (Dashboard) -->
+        <main class="dashboard-main">
+            <h2 style="font-size: 1.8rem; font-weight: 600;">Overview</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background-color: rgba(52, 152, 219, 0.2); color: #3498db;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Total Properties</h4>
+                        <p id="total-properties-count">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Added Properties List -->
+            <div class="card" style="margin-top: 1rem;">
+                <div class="card-header">
+                    <h3>My Registered Properties</h3>
+                    <a href="owner-profile.html"
+                        style="background-color: var(--primary-color); color: white; padding: 0.6rem 1.2rem; border-radius: 6px; text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: background-color 0.2s;">+
+                        Add New</a>
+                </div>
+                <div id="my-properties-list" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- Dynamically populated by JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="edit-property-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+        <div
+            style="background: var(--surface-color); padding: 2rem; border-radius: 12px; width: 90%; max-width: 500px; border: 1px solid rgba(255,255,255,0.1);">
+            <h3 style="margin-top: 0; margin-bottom: 1.5rem; font-size: 1.25rem;">Edit Property Details</h3>
+            <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+                <div>
+                    <label
+                        style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Property
+                        Title</label>
+                    <input type="text" id="edit-title"
+                        style="width: 100%; padding: 0.8rem; background: var(--bg-dark); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label
+                        style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Address</label>
+                    <textarea id="edit-address" rows="2"
+                        style="width: 100%; padding: 0.8rem; background: var(--bg-dark); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; box-sizing: border-box;"></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Bedrooms</label>
+                        <input type="number" id="edit-bedrooms" min="1"
+                            style="width: 100%; padding: 0.8rem; background: var(--bg-dark); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; box-sizing: border-box;">
+                    </div>
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Price (₹)</label>
+                        <input type="number" id="edit-price" min="0"
+                            style="width: 100%; padding: 0.8rem; background: var(--bg-dark); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; box-sizing: border-box;">
+                    </div>
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">Description</label>
+                    <textarea id="edit-description" rows="3"
+                        style="width: 100%; padding: 0.8rem; background: var(--bg-dark); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; box-sizing: border-box;"></textarea>
+                </div>
+                <!-- Store prop index -->
+                <input type="hidden" id="edit-prop-index">
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+                    <button id="btn-cancel-edit"
+                        style="background: transparent; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; padding: 0.5rem 1rem; color: white; cursor: pointer;">Cancel</button>
+                    <button id="btn-save-edit"
+                        style="background: var(--primary-color); border: none; padding: 0.5rem 1.5rem; border-radius: 6px; color: white; cursor: pointer; font-weight: 500;">Save
+                        Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const displayName = localStorage.getItem('ownerName');
+            if (displayName) {
+                document.getElementById('display-name').innerText = displayName;
+            } else {
+                document.getElementById('display-name').innerText = "Vikas Patel";
+            }
+            const storedProfile = JSON.parse(localStorage.getItem('ownerProfile') || '{}');
+            if (storedProfile.profileImage) {
+                const navImg = document.getElementById('nav-profile-image');
+                if (navImg) navImg.src = storedProfile.profileImage;
+                const sideImg = document.getElementById('sidebar-profile-image');
+                if (sideImg) sideImg.src = storedProfile.profileImage;
+            }
+            renderProperties();
+        });
+
+        function renderProperties() {
+            const list = document.getElementById('my-properties-list');
+            const currentOwnerEmail = localStorage.getItem('ownerEmail') || 'oldOwner';
+            const allStored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+            const stored = allStored.filter(p => (p.ownerEmail || 'oldOwner') === currentOwnerEmail);
+
+            document.getElementById('total-properties-count').innerText = stored.length;
+
+            if (stored.length > 0) {
+                list.innerHTML = ''; // clear
+
+                stored.forEach((prop) => {
+                    const globalIndex = allStored.indexOf(prop);
+                    const el = document.createElement('div');
+                    el.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+                    el.style.borderRadius = '8px';
+                    el.style.padding = '1.2rem';
+                    el.style.display = 'flex';
+                    el.style.justifyContent = 'space-between';
+                    el.style.alignItems = 'center';
+                    el.style.backgroundColor = 'var(--surface-color)';
+
+                    const safeType = prop.type || 'Property';
+                    const typeCap = safeType.charAt(0).toUpperCase() + safeType.slice(1);
+                    const imagesArr = prop.images || (prop.image ? [prop.image] : ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80']);
+                    const mainImgSrc = imagesArr[0];
+                    const extraImagesHtml = imagesArr.slice(1).map(img => `<img src="${img}" alt="Property Thumbnail">`).join('');
+
+                    el.innerHTML = `
+                        <div style="display: flex; gap: 1.5rem; max-width: 75%;">
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <img src="${mainImgSrc}" alt="Property" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                                ${(imagesArr.length > 1) ? `<div class="property-images">${extraImagesHtml}</div>` : ''}
+                            </div>
+                            <div style="display: flex; flex-direction: column; justify-content: center; gap: 0.3rem;">
+                                <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                    <h4 style="margin: 0; font-size: 1.15rem; color: var(--text-light);">${prop.title || (prop.type ? prop.type.charAt(0).toUpperCase() + prop.type.slice(1) : 'Property')}</h4>
+                                    <span style="background: rgba(52, 152, 219, 0.2); color: #3498db; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500;">${typeCap}</span>
+                                </div>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.4;">${prop.address || 'Address not provided'}</p>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color: #f1c40f; display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.95rem; font-weight: 500; background: rgba(241, 196, 15, 0.1); padding: 0.4rem 0.8rem; border-radius: 6px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                Under Review
+                            </div>
+                            <div style="margin-top: 0.8rem;">
+                                <button onclick="window.openEditModal(${globalIndex})" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; cursor: pointer;">Edit</button>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(el);
+                });
+            } else {
+                list.innerHTML = '<p id="no-properties-msg" style="color: var(--text-muted); text-align: center; padding: 2rem 0;">No properties added yet.</p>';
+            }
+        }
+
+        // Edit Modal Logic
+        window.openEditModal = function (index) {
+            const stored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+            const prop = stored[index];
+            if (!prop) return;
+
+            document.getElementById('edit-prop-index').value = index;
+            document.getElementById('edit-title').value = prop.title || '';
+            document.getElementById('edit-address').value = prop.address || '';
+            document.getElementById('edit-bedrooms').value = prop.bedrooms || '';
+            document.getElementById('edit-price').value = prop.price || '';
+            document.getElementById('edit-description').value = prop.description || '';
+            document.getElementById('edit-property-modal').style.display = 'flex';
+        }
+
+        document.getElementById('btn-cancel-edit').addEventListener('click', () => {
+            document.getElementById('edit-property-modal').style.display = 'none';
+        });
+
+        document.getElementById('btn-save-edit').addEventListener('click', () => {
+            const index = document.getElementById('edit-prop-index').value;
+            const newTitle = document.getElementById('edit-title').value;
+            const newAddr = document.getElementById('edit-address').value;
+            const newBeds = document.getElementById('edit-bedrooms').value;
+            const newPrice = document.getElementById('edit-price').value;
+            const newDesc = document.getElementById('edit-description').value;
+
+            const stored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+            if (stored[index]) {
+                stored[index].title = newTitle;
+                stored[index].address = newAddr;
+                stored[index].bedrooms = newBeds;
+                stored[index].price = newPrice;
+                stored[index].description = newDesc;
+                localStorage.setItem('ownerProperties', JSON.stringify(stored));
+
+                document.getElementById('edit-property-modal').style.display = 'none';
+                renderProperties(); // re-render list
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Finder</title>
+    <link rel="stylesheet" href="tenant-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 2rem;
+        }
+
+        .dashboard-sidebar {
+            background-color: var(--surface-light);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            height: fit-content;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-role {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+            margin-top: 2rem;
+        }
+
+        .sidebar-link {
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .dashboard-main {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--surface-light);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .profile-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .detail-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .detail-group label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .detail-group p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin: 0;
+            padding: 1rem;
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .doc-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+            border-radius: 20px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="nav-brand" style="text-decoration: none; color: inherit;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="brand-icon">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <h2>Property Finder</h2>
+        </a>
+        <div class="nav-links">
+            <a href="owner-dashboard.html" class="nav-link">Properties</a>
+            <a href="owner-chat.html" class="nav-link">Messages</a>
+            <a href="#" class="nav-link">Feedback and Review</a>
+        </div>
+        <div class="nav-auth">
+            <a href="owner-account.html" class="user-avatar"
+                style="display: block; width: 35px; height: 35px; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid var(--primary-color);">
+                <img id="nav-profile-image"
+                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80"
+                    alt="Owner" style="width: 100%; height: 100%; object-fit: cover;">
+            </a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <img id="sidebar-profile-image"
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Owner Avatar" class="profile-avatar">
+            <h2 class="profile-name" id="sidebar-name">Loading...</h2>
+            <div class="profile-role">Property Owner</div>
+
+            <div class="sidebar-links">
+                <a href="owner-dashboard.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="owner-profile.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add Property
+                </a>
+                <a href="owner-tenants.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Bookings
+                </a>
+                <a href="owner-my-tenants.html" class="sidebar-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    My Tenants
+                </a>
+                <a href="index.html" class="sidebar-link" style="color: #e74c3c; margin-top: 1rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Log Out
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <div class="card">
+                <div class="card-header">
+                    <h3>My Account Details</h3>
+                    <button
+                        style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Edit
+                        Profile</button>
+                </div>
+
+                <div class="profile-details-grid">
+                    <div class="detail-group">
+                        <label>Full Name</label>
+                        <p id="detail-name">Loading...</p>
+                    </div>
+
+                    <div class="detail-group">
+                        <label>Email Address</label>
+                        <p id="detail-email">Loading...</p>
+                    </div>
+
+                    <div class="detail-group full-width">
+                        <label>Occupation</label>
+                        <p id="detail-occupation">Loading...</p>
+                    </div>
+
+                    <div class="detail-group full-width">
+                        <label>Current Address</label>
+                        <p id="detail-address">Loading...</p>
+                    </div>
+
+                    <div class="detail-group full-width">
+                        <label>Verification Documents</label>
+                        <div
+                            style="background-color: var(--surface-color); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                            <div class="doc-badge">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                                ID Proof Uploaded Successfully
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-group full-width" style="margin-top: 1rem;">
+                        <label>Tenant Ratings & Reviews</label>
+                        <div id="reviews-container"
+                            style="background-color: var(--surface-color); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; gap: 1rem;">
+                            <!-- Reviews will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const defaultM = {
+                name: localStorage.getItem('ownerName') || 'Owner Name',
+                email: localStorage.getItem('ownerEmail') || 'owner@example.com',
+                occupation: 'Not specified',
+                address: 'Not specified',
+                profileImage: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80'
+            };
+
+            const storedProfile = localStorage.getItem('ownerProfile');
+            const profile = storedProfile ? JSON.parse(storedProfile) : defaultM;
+
+            // Update UI elements
+            document.getElementById('sidebar-name').innerText = profile.name;
+            document.getElementById('detail-name').innerText = profile.name;
+            document.getElementById('detail-email').innerText = profile.email || defaultM.email;
+            document.getElementById('detail-occupation').innerText = profile.occupation || defaultM.occupation;
+            document.getElementById('detail-address').innerText = profile.address || defaultM.address;
+
+            if (profile.profileImage) {
+                document.getElementById('sidebar-profile-image').src = profile.profileImage;
+                document.getElementById('nav-profile-image').src = profile.profileImage;
+            }
+
+            // Load reviews
+            const reviewsContainer = document.getElementById('reviews-container');
+            const storedReviews = JSON.parse(localStorage.getItem('tenantReviews') || '[]');
+
+            // For demo purpose, you might want to filter by owner name
+            // const ownerName = profile.name;
+            // const myReviews = storedReviews.filter(r => r.ownerName === ownerName || r.ownerName === '');
+
+            const myReviews = storedReviews; // Display all reviews for now to make testing easier
+
+            if (myReviews.length === 0) {
+                // Seed an example review for demonstration
+                const dummyReview = {
+                    propertyName: "Cozy Vesu Apartment",
+                    ownerName: profile.name,
+                    tenantName: "Rahul Sharma",
+                    rating: 5,
+                    feedback: "Great owner, very responsive to maintenance requests. The apartment was delivered in excellent condition.",
+                    date: "2 days ago"
+                };
+                myReviews.push(dummyReview);
+                localStorage.setItem('tenantReviews', JSON.stringify(myReviews));
+            }
+
+            if (myReviews.length === 0) {
+                reviewsContainer.innerHTML = '<p style="color: var(--text-muted); margin: 0; text-align: center;">No reviews yet.</p>';
+            } else {
+                reviewsContainer.innerHTML = '';
+                myReviews.forEach(r => {
+                    let starsHtml = '';
+                    for (let i = 0; i < r.rating; i++) {
+                        starsHtml += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
+                    }
+
+                    const el = document.createElement('div');
+                    el.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                    el.style.paddingBottom = '1rem';
+
+                    el.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem;">
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                                    <h4 style="margin: 0; color: var(--text-light); font-size: 1.1rem;">${r.tenantName}</h4>
+                                    <div style="color: #f1c40f; display: flex; gap: 0.2rem;">${starsHtml}</div>
+                                </div>
+                                <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem;">Property: ${r.propertyName}</p>
+                            </div>
+                            <span style="font-size: 0.85rem; color: var(--text-muted);">${r.date}</span>
+                        </div>
+                        <p style="margin: 0; color: var(--text-light); line-height: 1.5; font-size: 0.95rem;">${r.feedback}</p>
+                    `;
+                    reviewsContainer.appendChild(el);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -431,7 +431,7 @@
             const chatMessagesContainer = document.getElementById('chat-messages');
 
             async function loadChats() {
-                const res = await fetch(`http://localhost:5000/api/chats/tenant/${tenantId}`, {
+                const res = await fetch(`https://property-finder-nia8.onrender.com/api/chats/tenant/${tenantId}`, {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
                 const data = await res.json();
@@ -542,7 +542,7 @@
                 if (text && currentChatId) {
                     const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                     const msg = { text, sender: 'user', time };
-                    await fetch(`http://localhost:5000/api/chat/${tenantId}/${currentChatId}/message`, {
+                    await fetch(`https://property-finder-nia8.onrender.com/api/chat/${tenantId}/${currentChatId}/message`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                         body: JSON.stringify(msg)
@@ -610,7 +610,7 @@
                 const tenantProfile = JSON.parse(localStorage.getItem('tenantProfile') || '{}');
 
                 // Save review to MongoDB
-                await fetch('http://localhost:5000/api/reviews', {
+                await fetch('https://property-finder-nia8.onrender.com/api/reviews', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                     body: JSON.stringify({
@@ -629,7 +629,7 @@
                     if (chatIndex !== -1) {
                         const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                         const msg = { text: `Feedback for ${currentFeedbackPropTitle}`, sender: 'user', time, type: 'feedback_response', ratingData: { stars: selectedStars, comments, propertyTitle: currentFeedbackPropTitle } };
-                        await fetch(`http://localhost:5000/api/chat/${tenantId}/${currentChatId}/message`, {
+                        await fetch(`https://property-finder-nia8.onrender.com/api/chat/${tenantId}/${currentChatId}/message`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                             body: JSON.stringify(msg)

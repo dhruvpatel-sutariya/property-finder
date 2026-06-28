@@ -263,7 +263,7 @@
             const token = localStorage.getItem('token');
             const list = document.getElementById('tenants-list');
 
-            const res = await fetch(`http://localhost:5000/api/bookings/owner/${ownerId}`, {
+            const res = await fetch(`https://property-finder-nia8.onrender.com/api/bookings/owner/${ownerId}`, {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
             const allBookings = await res.json();

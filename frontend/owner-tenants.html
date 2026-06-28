@@ -276,7 +276,7 @@
             const token = localStorage.getItem('token');
             const list = document.getElementById('tenants-list');
 
-            const res = await fetch(`http://localhost:5000/api/bookings/owner/${ownerId}`, {
+            const res = await fetch(`https://property-finder-nia8.onrender.com/api/bookings/owner/${ownerId}`, {
                 headers: { 'Authorization': 'Bearer ' + token }
             });
             const myBookings = await res.json();
@@ -372,7 +372,7 @@
             window.approveBooking = async function (index) {
                 const b = pendingBookings[index];
                 if (b) {
-                    await fetch(`http://localhost:5000/api/bookings/${b._id}`, {
+                    await fetch(`https://property-finder-nia8.onrender.com/api/bookings/${b._id}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                         body: JSON.stringify({ status: 'Pending Admin' })
@@ -386,7 +386,7 @@
                 if (confirm('Are you sure you want to reject this booking?')) {
                     const b = pendingBookings[index];
                     if (b) {
-                        await fetch(`http://localhost:5000/api/bookings/${b._id}`, {
+                        await fetch(`https://property-finder-nia8.onrender.com/api/bookings/${b._id}`, {
                             method: 'DELETE',
                             headers: { 'Authorization': 'Bearer ' + token }
                         });

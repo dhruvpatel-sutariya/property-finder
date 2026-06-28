@@ -1,4 +1,4 @@
-const API = 'http://localhost:5000/api';
+const API = 'https://property-finder-nia8.onrender.com/api';
 const token = localStorage.getItem('token');
 const headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token };
 

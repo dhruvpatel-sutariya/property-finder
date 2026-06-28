@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedRole = null;
 
     
-    fetch("http://localhost:5000/api/properties", {
+    fetch("https://property-finder-nia8.onrender.com/api/properties", {
         headers: {
             Authorization: "Bearer " + localStorage.getItem("token")
         }

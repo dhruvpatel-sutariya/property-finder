@@ -403,7 +403,7 @@
             const chatMessagesContainer = document.getElementById('chat-messages');
 
             async function loadChats() {
-                const res = await fetch(`http://localhost:5000/api/chats/owner/${ownerId}`, {
+                const res = await fetch(`https://property-finder-nia8.onrender.com/api/chats/owner/${ownerId}`, {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
                 const data = await res.json();
@@ -494,7 +494,7 @@
                 if (text && currentChat) {
                     const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                     const msg = { text, sender: 'owner', time };
-                    await fetch(`http://localhost:5000/api/chat/${currentChat.tenantId}/${ownerId}/message`, {
+                    await fetch(`https://property-finder-nia8.onrender.com/api/chat/${currentChat.tenantId}/${ownerId}/message`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                         body: JSON.stringify(msg)
@@ -553,7 +553,7 @@
                     type: 'feedback_request',
                     propertyData: { id: prop.id, title: prop.title, image: img }
                 };
-                fetch(`http://localhost:5000/api/chat/${currentChat.tenantId}/${ownerId}/message`, {
+                fetch(`https://property-finder-nia8.onrender.com/api/chat/${currentChat.tenantId}/${ownerId}/message`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                     body: JSON.stringify(msg)

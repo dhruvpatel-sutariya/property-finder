@@ -347,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Save to bookings via API
                 const tenantId = localStorage.getItem('tenantId');
                 const token = localStorage.getItem('token');
-                fetch('http://localhost:5000/api/bookings', {
+                fetch('https://property-finder-nia8.onrender.com/api/bookings', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                     body: JSON.stringify({

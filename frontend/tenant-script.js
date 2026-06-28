@@ -405,26 +405,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loc && (type === 'apartment' || type === 'pg' || type === 'house' || type === 'villa')) {
                 const cities = ['ahmedabad', 'surat', 'jamnagar', 'mehsana', 'gandhinagar', 'rajkot', 'bhavnagar'];
                 if (cities.includes(loc)) {
-                    const currentPath = window.location.pathname;
                     let targetFile = 'apartments.html';
                     if (type === 'pg') targetFile = 'pg.html';
                     if (type === 'house') targetFile = 'house.html';
                     if (type === 'villa') targetFile = 'villa.html';
-                    
-                    if (cities.some(c => currentPath.includes('/' + c + '/'))) {
-                         if (currentPath.includes('/' + loc + '/')) {
-                             window.location.href = targetFile;
-                         } else {
-                             window.location.href = '../' + loc + '/' + targetFile;
-                         }
-                    } else {
-                         window.location.href = loc + '/' + targetFile;
-                    }
+                    window.location.href = targetFile + '?city=' + loc;
                 } else {
                     alert('Location missing. Select a valid city.');
                 }
             } else {
-                alert('No properties found for this specific filter in this demo. Try Apartment, PG, House, or Villa.');
+                alert('Please select both a Location and Property Type.');
             }
         });
     }

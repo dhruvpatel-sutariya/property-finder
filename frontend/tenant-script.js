@@ -235,12 +235,22 @@ document.addEventListener('DOMContentLoaded', () => {
                             alt="User" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                 </a>
+                <button onclick="tenantLogout()" style="background:transparent;border:1px solid #e74c3c;color:#e74c3c;padding:0.4rem 0.8rem;border-radius:6px;cursor:pointer;font-size:0.85rem;margin-left:0.5rem;">Logout</button>
             `;
         } else {
             navAuthDiv.innerHTML = `
                 <button class="btn-outline auth-trigger" style="padding: 0.5rem 1rem; border-radius: 20px; font-weight: 500; font-size: 0.9rem;" onclick="window.location.href='${isSub ? '../tenant-login.html' : 'tenant-login.html'}'">Log In / Sign Up</button>
             `;
         }
+    }
+
+    function tenantLogout() {
+        localStorage.removeItem('tenantLoggedIn');
+        localStorage.removeItem('tenantEmail');
+        localStorage.removeItem('tenantId');
+        localStorage.removeItem('tenantProfile');
+        localStorage.removeItem('token');
+        window.location.href = isSub ? '../index.html' : 'index.html';
     }
 
     const viewButtons = document.querySelectorAll('.btn-outline');
@@ -314,26 +324,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 const propertyLoc = document.getElementById('modal-loc').textContent || 'Location';
                 const propertyImage = document.getElementById('modal-main-img').src;
 
-                // Save to bookings
-                let bookings = JSON.parse(localStorage.getItem('ownerBookings') || '[]');
-                bookings.push({
-                    id: 'REQ-' + Math.floor(1000 + Math.random() * 9000),
-                    ownerName: ownerName,
-                    propertyTitle: propertyTitle,
-                    propertyLoc: propertyLoc,
-                    propertyImage: propertyImage,
-                    tenantProfile: JSON.parse(localStorage.getItem('tenantProfile') || '{}'),
-                    date: new Date().toISOString(),
-                    status: 'Pending Owner'
+                // Save to bookings via API
+                const tenantId = localStorage.getItem('tenantId');
+                const token = localStorage.getItem('token');
+                fetch('http://localhost:5000/api/bookings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify({
+                        tenantId,
+                        ownerId: card.getAttribute('data-owner-id') || ownerId,
+                        propertyTitle,
+                        propertyLoc,
+                        propertyImage,
+                        ownerName,
+                        tenantProfile: JSON.parse(localStorage.getItem('tenantProfile') || '{}'),
+                        status: 'Pending Owner'
+                    })
+                }).then(() => {
+                    alert(`Booking request successfully sent to ${ownerName}! They will review it shortly.`);
+                    const modal = document.getElementById('property-modal');
+                    if (modal) modal.classList.add('hidden');
                 });
-                localStorage.setItem('ownerBookings', JSON.stringify(bookings));
-
-                alert(`Booking request successfully sent to ${ownerName}! They will review it shortly.`);
-
-                // Close modal
-                const modal = document.getElementById('property-modal');
-                if (modal) modal.classList.add('hidden');
-                return;
             } else if (btn.closest('.message-icon') || btn.classList.contains('message-icon')) {
                 const ownerName = document.querySelector('.owner-name').textContent || 'Property Owner';
                 const ownerAvatar = document.querySelector('.owner-avatar img').src;

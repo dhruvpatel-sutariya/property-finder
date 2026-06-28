@@ -4,7 +4,22 @@ const Property = require("../models_property");
 
 router.get("/properties", async (req, res) => {
   try {
-    const properties = await Property.find();
+    const filter = {};
+    if (req.query.city) filter.city = { $regex: req.query.city, $options: 'i' };
+    if (req.query.type) filter.type = { $regex: req.query.type, $options: 'i' };
+    if (req.query.minPrice || req.query.maxPrice) {
+      filter.price = {};
+      if (req.query.minPrice) filter.price.$gte = Number(req.query.minPrice);
+      if (req.query.maxPrice) filter.price.$lte = Number(req.query.maxPrice);
+    }
+    if (req.query.search) {
+      filter.$or = [
+        { title: { $regex: req.query.search, $options: 'i' } },
+        { city: { $regex: req.query.search, $options: 'i' } },
+        { description: { $regex: req.query.search, $options: 'i' } }
+      ];
+    }
+    const properties = await Property.find(filter);
     res.json(properties);
   } catch (error) {
     res.status(500).json({ message: error.message });

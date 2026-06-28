@@ -5,11 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedRole = null;
 
     
-    fetch("http://localhost:5000/api/properties")
+    fetch("http://localhost:5000/api/properties", {
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+        }
+    })
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            alert("Signup successful"); // works here ✅
         });
 
     cards.forEach(card => {

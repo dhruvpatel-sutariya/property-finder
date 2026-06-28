@@ -552,7 +552,7 @@
                             profileData.address = document.getElementById('edit-address').value;
                             const tenantId = localStorage.getItem('tenantId');
                             if (tenantId) {
-                                await fetch('http://localhost:5000/api/tenant/' + tenantId, {
+                                await fetch('https://property-finder-nia8.onrender.com/api/tenant/' + tenantId, {
                                     method: 'PUT',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify(profileData)
@@ -579,7 +579,7 @@
                             profileData.budget = document.getElementById('edit-budget').value;
                             const tenantId = localStorage.getItem('tenantId');
                             if (tenantId) {
-                                await fetch('http://localhost:5000/api/tenant/' + tenantId, {
+                                await fetch('https://property-finder-nia8.onrender.com/api/tenant/' + tenantId, {
                                     method: 'PUT',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify(profileData)

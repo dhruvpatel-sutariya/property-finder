@@ -243,7 +243,7 @@
                     </svg>
                     My Tenants
                 </a>
-                <a href="index.html" class="sidebar-link" style="color: #e74c3c; margin-top: 1rem;">
+                <a href="#" onclick="ownerLogout()" class="sidebar-link" style="color: #e74c3c; margin-top: 1rem;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -340,6 +340,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('ownerLoggedIn') !== 'true') {
+                window.location.href = 'owner-login.html';
+                return;
+            }
             const displayName = localStorage.getItem('ownerName');
             if (displayName) {
                 document.getElementById('display-name').innerText = displayName;
@@ -433,6 +437,16 @@
         document.getElementById('btn-cancel-edit').addEventListener('click', () => {
             document.getElementById('edit-property-modal').style.display = 'none';
         });
+
+        function ownerLogout() {
+            localStorage.removeItem('ownerLoggedIn');
+            localStorage.removeItem('ownerEmail');
+            localStorage.removeItem('ownerName');
+            localStorage.removeItem('ownerId');
+            localStorage.removeItem('ownerProfile');
+            localStorage.removeItem('token');
+            window.location.href = 'index.html';
+        }
 
         document.getElementById('btn-save-edit').addEventListener('click', () => {
             const index = document.getElementById('edit-prop-index').value;

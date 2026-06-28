@@ -390,68 +390,61 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const ownerName = localStorage.getItem('ownerName');
-            if (!ownerName) {
-                window.location.href = 'owner-auth.html';
-                return;
-            }
+            if (!ownerName) { window.location.href = 'owner-auth.html'; return; }
 
-            const activeOwnerId = ownerName.replace(/\s+/g, '-').toLowerCase();
-
-            // Load Tenant Details
-            let tenantName = 'Tenant User';
-            let tenantAvatar = 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80';
-            const profileDataStr = localStorage.getItem('tenantProfile');
-            if (profileDataStr) {
-                try {
-                    const profileData = JSON.parse(profileDataStr);
-                    if (profileData.name) tenantName = profileData.name;
-                    if (profileData.avatar) tenantAvatar = profileData.avatar;
-                } catch (e) { }
-            }
-
-            // Load global chats and filter out chats for this specific owner
-            let globalChats = JSON.parse(localStorage.getItem('tenantChats') || '[]');
-
-            // For this owner, the 'chat.id' should match activeOwnerId
-            let ownerChat = globalChats.find(c => c.id === activeOwnerId);
+            const ownerId = localStorage.getItem('ownerId');
+            const token = localStorage.getItem('token');
+            let chats = [];
+            let currentChat = null;
 
             const contactList = document.getElementById('contact-list');
             const activeChatContent = document.getElementById('active-chat-content');
             const emptyChatState = document.getElementById('empty-chat-state');
             const chatMessagesContainer = document.getElementById('chat-messages');
 
+            async function loadChats() {
+                const res = await fetch(`http://localhost:5000/api/chats/owner/${ownerId}`, {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const data = await res.json();
+                chats = data.map(c => ({
+                    tenantId: c.tenantId._id,
+                    name: c.tenantId.name,
+                    avatar: c.tenantId.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+                    messages: c.messages,
+                    _chatId: c._id
+                }));
+                renderContacts();
+            }
+            loadChats();
+
             function renderContacts() {
                 contactList.innerHTML = '';
-                if (!ownerChat) return;
-
-                const li = document.createElement('li');
-                li.className = 'contact-item active';
-
-                const lastMsg = ownerChat.messages.length > 0 ? ownerChat.messages[ownerChat.messages.length - 1].text : 'No messages yet';
-
-                li.innerHTML = `
-                    <img src="${tenantAvatar}" alt="${tenantName}" class="contact-avatar">
-                    <div class="contact-info">
-                        <div class="contact-name">${tenantName}</div>
-                        <div class="contact-preview">${lastMsg}</div>
-                    </div>
-                `;
-                li.addEventListener('click', () => openChat());
-                contactList.appendChild(li);
+                chats.forEach(chat => {
+                    const li = document.createElement('li');
+                    li.className = `contact-item ${currentChat && currentChat.tenantId === chat.tenantId ? 'active' : ''}`;
+                    const lastMsg = chat.messages.length > 0 ? chat.messages[chat.messages.length - 1].text : 'No messages yet';
+                    li.innerHTML = `
+                        <img src="${chat.avatar}" alt="${chat.name}" class="contact-avatar">
+                        <div class="contact-info">
+                            <div class="contact-name">${chat.name}</div>
+                            <div class="contact-preview">${lastMsg}</div>
+                        </div>
+                    `;
+                    li.addEventListener('click', () => openChat(chat));
+                    contactList.appendChild(li);
+                });
             }
 
-            function openChat() {
-                if (!ownerChat) return;
-
+            function openChat(chat) {
+                currentChat = chat;
                 emptyChatState.style.display = 'none';
                 activeChatContent.style.display = 'flex';
                 activeChatContent.classList.remove('hidden');
-
-                document.getElementById('active-chat-name').textContent = tenantName;
-                document.getElementById('active-chat-avatar').src = tenantAvatar;
+                document.getElementById('active-chat-name').textContent = chat.name;
+                document.getElementById('active-chat-avatar').src = chat.avatar;
                 document.getElementById('req-feedback-btn').style.display = 'inline-block';
-
-                renderMessages(ownerChat);
+                renderMessages(chat);
             }
 
             function renderMessages(chat) {
@@ -494,31 +487,27 @@
                 chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
             }
 
-            document.getElementById('chat-form').addEventListener('submit', (e) => {
+            document.getElementById('chat-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const input = document.getElementById('chat-input');
                 const text = input.value.trim();
-
-                if (text && ownerChat) {
-                    const chatIndex = globalChats.findIndex(c => c.id === activeOwnerId);
-                    if (chatIndex !== -1) {
-                        // Insert Owners reply
-                        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                        globalChats[chatIndex].messages.push({ text, sender: "owner", time });
-
-                        input.value = '';
-                        localStorage.setItem('tenantChats', JSON.stringify(globalChats));
-
-                        // Re-fetch from context
-                        ownerChat = globalChats[chatIndex];
-                        renderMessages(ownerChat);
-                        renderContacts();
-                    }
+                if (text && currentChat) {
+                    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    const msg = { text, sender: 'owner', time };
+                    await fetch(`http://localhost:5000/api/chat/${currentChat.tenantId}/${ownerId}/message`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                        body: JSON.stringify(msg)
+                    });
+                    currentChat.messages.push(msg);
+                    input.value = '';
+                    renderMessages(currentChat);
+                    renderContacts();
                 }
             });
 
             renderContacts();
-            
+
             // Handle Feedback Request Modal
             document.getElementById('req-feedback-btn').addEventListener('click', () => {
                 const ownerProps = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
@@ -554,27 +543,25 @@
             });
             
             function sendFeedbackRequest(prop) {
-                if (!ownerChat) return;
-                const chatIndex = globalChats.findIndex(c => c.id === activeOwnerId);
-                if (chatIndex !== -1) {
-                    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    const img = prop.images && prop.images[0] ? prop.images[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-                    
-                    globalChats[chatIndex].messages.push({
-                        text: `Please leave your feedback for the property.`,
-                        sender: "owner",
-                        time,
-                        type: 'feedback_request',
-                        propertyData: { id: prop.id, title: prop.title, image: img }
-                    });
-
-                    localStorage.setItem('tenantChats', JSON.stringify(globalChats));
-
-                    // Re-fetch and re-render
-                    ownerChat = globalChats[chatIndex];
-                    renderMessages(ownerChat);
+                if (!currentChat) return;
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const img = prop.images && prop.images[0] ? prop.images[0] : 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+                const msg = {
+                    text: `Please leave your feedback for the property.`,
+                    sender: 'owner',
+                    time,
+                    type: 'feedback_request',
+                    propertyData: { id: prop.id, title: prop.title, image: img }
+                };
+                fetch(`http://localhost:5000/api/chat/${currentChat.tenantId}/${ownerId}/message`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                    body: JSON.stringify(msg)
+                }).then(() => {
+                    currentChat.messages.push(msg);
+                    renderMessages(currentChat);
                     renderContacts();
-                }
+                });
             }
         });
     </script>

@@ -255,12 +255,19 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const ownerName = localStorage.getItem('ownerName') || 'Vikas Patel';
             document.getElementById('display-name').innerText = ownerName;
 
+            const ownerId = localStorage.getItem('ownerId');
+            const token = localStorage.getItem('token');
             const list = document.getElementById('tenants-list');
-            const myTenants = JSON.parse(localStorage.getItem('approvedTenants') || '[]');
+
+            const res = await fetch(`http://localhost:5000/api/bookings/owner/${ownerId}`, {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            const allBookings = await res.json();
+            const myTenants = allBookings.filter(b => b.status === 'Verified');
 
             if (myTenants.length === 0) {
                 list.innerHTML = `

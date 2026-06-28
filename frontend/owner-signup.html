@@ -376,7 +376,7 @@
                 profileImage: profileImgUrl
             };
 
-            fetch('http://localhost:5000/api/owner/signup', {
+            fetch('https://property-finder-nia8.onrender.com/api/owner/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(ownerProfile)
@@ -386,6 +386,7 @@
                 if (data.message && data.message !== 'Owner registered successfully') {
                     alert(data.message); return;
                 }
+                localStorage.setItem('token', data.token);
                 window.location.href = 'owner-login.html?registered=true';
             })
             .catch(() => alert('Could not connect to server. Please try again.'));

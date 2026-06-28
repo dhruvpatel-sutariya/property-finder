@@ -208,6 +208,9 @@
             <div class="login-link">
                 Don't have an account? <a href="owner-signup.html">Sign Up</a>
             </div>
+            <div class="login-link" style="margin-top:0.5rem;">
+                <a href="owner-forgot-password.html">Forgot Password?</a>
+            </div>
         </form>
     </div>
 
@@ -226,7 +229,7 @@
             const password = document.getElementById('password').value;
 
             try {
-                const res = await fetch('http://localhost:5000/api/owner/login', {
+                const res = await fetch('https://property-finder-nia8.onrender.com/api/owner/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -239,6 +242,7 @@
                 localStorage.setItem('ownerName', data.owner.name);
                 localStorage.setItem('ownerProfile', JSON.stringify(data.owner));
                 localStorage.setItem('ownerId', data.owner._id);
+                localStorage.setItem('token', data.token);
 
                 window.location.href = 'owner-dashboard.html';
             } catch (err) {

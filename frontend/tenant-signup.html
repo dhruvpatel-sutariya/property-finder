@@ -442,13 +442,14 @@
             };
 
             try {
-                const res = await fetch('http://localhost:5000/api/tenant/signup', {
+                const res = await fetch('https://property-finder-nia8.onrender.com/api/tenant/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(profileData)
                 });
                 const data = await res.json();
                 if (!res.ok) { alert(data.message); return; }
+                localStorage.setItem('token', data.token);
                 window.location.href = 'tenant-login.html?registered=true';
             } catch (err) {
                 alert('Could not connect to server. Please try again.');

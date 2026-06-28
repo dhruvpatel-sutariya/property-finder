@@ -1,4 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Read city from URL query param and update page
+    const urlParams = new URLSearchParams(window.location.search);
+    const cityParam = urlParams.get('city');
+    if (cityParam) {
+        const cityCapitalized = cityParam.charAt(0).toUpperCase() + cityParam.slice(1);
+        // Update location dropdown
+        const locSelect = document.getElementById('location');
+        if (locSelect) locSelect.value = cityParam;
+        // Update all headings and titles with city name
+        document.querySelectorAll('h1, h2.section-title').forEach(el => {
+            el.textContent = el.textContent.replace('Bhavnagar', cityCapitalized);
+        });
+        // Update page title
+        document.title = document.title.replace('Bhavnagar', cityCapitalized);
+        // Update property location text in cards
+        document.querySelectorAll('.property-card .location').forEach(el => {
+            el.textContent = el.textContent.replace('Bhavnagar', cityCapitalized);
+        });
+    }
+
     const propertiesGrid = document.querySelector('.properties-grid');
 
     // Inject owner properties from localStorage

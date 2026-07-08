@@ -21,60 +21,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const propertiesGrid = document.querySelector('.properties-grid');
 
-    // Inject owner properties from localStorage
+    // Load approved properties from backend API
     if (propertiesGrid) {
-        const storedOwnerProps = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
-        const ownerProfile = JSON.parse(localStorage.getItem('ownerProfile') || '{}');
-        const isOwnerApproved = ownerProfile.isVerified === true && ownerProfile.isBlocked !== true;
-        const displayOwnerName = localStorage.getItem('ownerName') || 'Property Owner';
-        
         const typeSelect = document.getElementById('property-type');
         const currentType = (typeSelect && typeSelect.value) ? typeSelect.value.toLowerCase() : '';
-
         const locSelect = document.getElementById('location');
         const currentLoc = (locSelect && locSelect.value) ? locSelect.value.toLowerCase() : '';
 
-        storedOwnerProps.forEach(prop => {
-            const propApproved = prop.isApproved === true || (prop.approvalStatus || '').toLowerCase() === 'active';
-            if (!isOwnerApproved || !propApproved) {
-                return;
-            }
-            if (currentType && prop.type && prop.type.toLowerCase() !== currentType) {
-                return;
-            }
-            if (currentLoc && prop.address && !prop.address.toLowerCase().includes(currentLoc)) {
-                return;
-            }
-            const card = document.createElement('div');
-            card.className = 'property-card';
-            card.setAttribute('data-owner-name', displayOwnerName);
-            card.setAttribute('data-owner-avatar', 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80');
+        const token = localStorage.getItem('token');
+        let apiUrl = 'https://property-finder-nia8.onrender.com/api/properties?';
+        if (currentType) apiUrl += 'type=' + currentType + '&';
+        if (currentLoc) apiUrl += 'city=' + currentLoc + '&';
 
-            const imagesArr = prop.images || (prop.image ? [prop.image] : ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80']);
-            const mainImgSrc = imagesArr[0];
+        fetch(apiUrl, { headers: { 'Authorization': 'Bearer ' + (token || '') } })
+            .then(r => r.json())
+            .then(props => {
+                props.forEach(prop => {
+                    const propApproved = prop.isApproved === true || (prop.approvalStatus || '').toLowerCase() === 'active';
+                    if (!propApproved) return;
 
-            const listingSuffix = (prop.listingType === 'sell' || prop.type === 'house') ? '' : '<span>/mo</span>';
-            const defaultSuffix = (prop.listingType === 'sell' || prop.type === 'house') ? ' for Sale' : ' for Rent';
-            
-            card.innerHTML = `
-                <div class="property-image" style="background-image: url('${mainImgSrc}');">
-                    <span class="badge" style="background-color: var(--primary-color);">New</span>
-                </div>
-                <div class="property-details">
-                    <div class="price">₹${prop.price ? Number(prop.price).toLocaleString('en-IN') : Math.floor(Math.random() * 20 + 10) + ',000'}${listingSuffix}</div>
-                    <h3>${prop.title || (prop.type ? prop.type.charAt(0).toUpperCase() + prop.type.slice(1) + defaultSuffix : 'Premium Property')}</h3>
-                    <p class="location">${prop.address || 'Address not provided'}</p>
-                    <div class="amenities">
-                        <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> ${(prop.type || '').toLowerCase() === 'pg' ? '1 Bed' : '2 BHK'}</span>
-                        <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21H3V3h18v18z"></path><path d="M8 8h8v8H8z"></path></svg> 1 Bath</span>
-                        <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg> 800 sqft</span>
-                    </div>
-                    <button class="btn-outline">View Contact</button>
-                    <div class="extra-images" style="display:none;">${imagesArr.join(',')}</div>
-                </div>
-            `;
-            propertiesGrid.insertBefore(card, propertiesGrid.firstChild);
-        });
+                    const card = document.createElement('div');
+                    card.className = 'property-card';
+                    card.setAttribute('data-owner-name', prop.ownerName || 'Property Owner');
+                    card.setAttribute('data-owner-avatar', 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80');
+
+                    const imagesArr = prop.images || ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'];
+                    const mainImgSrc = imagesArr[0];
+                    const listingSuffix = (prop.listingType === 'sell') ? '' : '<span>/mo</span>';
+
+                    card.innerHTML = `
+                        <div class="property-image" style="background-image: url('${mainImgSrc}');">
+                            <span class="badge" style="background-color: var(--primary-color);">New</span>
+                        </div>
+                        <div class="property-details">
+                            <div class="price">₹${prop.price ? Number(prop.price).toLocaleString('en-IN') : '—'}${listingSuffix}</div>
+                            <h3>${prop.title || 'Property'}</h3>
+                            <p class="location">${prop.address || 'Address not provided'}</p>
+                            <div class="amenities">
+                                <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> ${prop.bedrooms || '2'} BHK</span>
+                                <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg> ${prop.type || 'Property'}</span>
+                            </div>
+                            <button class="btn-outline">View Contact</button>
+                        </div>
+                    `;
+                    propertiesGrid.insertBefore(card, propertiesGrid.firstChild);
+                });
+            })
+            .catch(err => console.error('Failed to load properties:', err));
     }
 
     const propertyImages = document.querySelectorAll('.property-image');

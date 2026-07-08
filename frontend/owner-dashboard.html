@@ -360,11 +360,24 @@
             renderProperties();
         });
 
-        function renderProperties() {
+        async function renderProperties() {
             const list = document.getElementById('my-properties-list');
-            const currentOwnerEmail = localStorage.getItem('ownerEmail') || 'oldOwner';
-            const allStored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
-            const stored = allStored.filter(p => (p.ownerEmail || 'oldOwner') === currentOwnerEmail);
+            const token = localStorage.getItem('token');
+            const currentOwnerEmail = localStorage.getItem('ownerEmail') || '';
+
+            let stored = [];
+            try {
+                const res = await fetch('https://property-finder-nia8.onrender.com/api/properties', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                const all = await res.json();
+                stored = all.filter(p => p.ownerEmail === currentOwnerEmail);
+                // sync to localStorage for tenant-script use
+                localStorage.setItem('ownerProperties', JSON.stringify(stored));
+            } catch(e) {
+                stored = JSON.parse(localStorage.getItem('ownerProperties') || '[]')
+                    .filter(p => (p.ownerEmail || 'oldOwner') === currentOwnerEmail);
+            }
 
             document.getElementById('total-properties-count').innerText = stored.length;
 

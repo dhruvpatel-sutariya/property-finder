@@ -678,12 +678,10 @@
             `;
             btn.style.backgroundColor = '#2ecc71';
 
-            const proceedSave = (imgUrls) => {
+            const proceedSave = async (imgUrls) => {
                 const currentOwnerEmail = localStorage.getItem('ownerEmail') || 'oldOwner';
-                const stored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
-                const propertyId = 'OWN-' + Date.now();
-                stored.push({
-                    id: propertyId,
+                const token = localStorage.getItem('token');
+                const propertyData = {
                     title,
                     type,
                     listingType,
@@ -692,34 +690,27 @@
                     price,
                     description,
                     images: imgUrls,
-                    date: new Date().toISOString(),
                     ownerEmail: currentOwnerEmail,
+                    ownerId: localStorage.getItem('ownerId'),
+                    ownerName: localStorage.getItem('ownerName'),
                     approvalStatus: 'pending',
                     isApproved: false
-                });
+                };
 
+                // Save to backend MongoDB
                 try {
-                    localStorage.setItem('ownerProperties', JSON.stringify(stored));
-                } catch (err) {
-                    console.log('Local storage quota exceeded, creating property without image data URL.');
-                    alert('Images are too large. Property saved with default placeholder images.');
-                    stored.pop();
-                    stored.push({
-                        id: propertyId,
-                        title,
-                        type,
-                        listingType,
-                        address,
-                        bedrooms,
-                        price,
-                        description,
-                        images: ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'],
-                        date: new Date().toISOString(),
-                        ownerEmail: currentOwnerEmail,
-                        approvalStatus: 'pending',
-                        isApproved: false
+                    const res = await fetch('https://property-finder-nia8.onrender.com/api/properties', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                        body: JSON.stringify(propertyData)
                     });
-                    localStorage.setItem('ownerProperties', JSON.stringify(stored));
+                    const data = await res.json();
+                    // Also save to localStorage for owner dashboard display
+                    const stored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+                    stored.push({ ...propertyData, id: data.property?._id || 'OWN-' + Date.now() });
+                    try { localStorage.setItem('ownerProperties', JSON.stringify(stored)); } catch(e) {}
+                } catch (err) {
+                    console.error('API save failed:', err);
                 }
 
                 setTimeout(() => {

@@ -43,7 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     const card = document.createElement('div');
                     card.className = 'property-card';
                     card.setAttribute('data-owner-name', prop.ownerName || 'Property Owner');
+                    card.setAttribute('data-owner-id', prop.ownerId || '');
                     card.setAttribute('data-owner-avatar', 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80');
+                    card.setAttribute('data-description', prop.description || '');
+                    card.setAttribute('data-bedrooms', prop.bedrooms || '2');
+                    card.setAttribute('data-listing-type', prop.listingType || 'rent');
 
                     const imagesArr = prop.images || ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'];
                     const mainImgSrc = imagesArr[0];
@@ -61,10 +65,46 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg> ${prop.bedrooms || '2'} BHK</span>
                                 <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg> ${prop.type || 'Property'}</span>
                             </div>
-                            <button class="btn-outline">View Contact</button>
+                            <button class="btn-outline view-btn">View Contact</button>
                         </div>
                     `;
                     propertiesGrid.insertBefore(card, propertiesGrid.firstChild);
+
+                    // attach save button
+                    const imgContainer = card.querySelector('.property-image');
+                    const saveBtn = document.createElement('button');
+                    saveBtn.className = 'save-btn';
+                    saveBtn.setAttribute('aria-label', 'Save property');
+                    saveBtn.innerHTML = heartSvg;
+                    imgContainer.appendChild(saveBtn);
+                    saveBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const isSaved = saveBtn.classList.toggle('saved');
+                        card.classList.toggle('has-saved', isSaved);
+                        savedCount += isSaved ? 1 : -1;
+                        updateSavedBadge();
+                        if (isShowingSaved && !isSaved) card.style.display = 'none';
+                        saveBtn.style.transform = 'scale(1.2)';
+                        setTimeout(() => { saveBtn.style.transform = ''; }, 150);
+                    });
+
+                    // attach modal open
+                    card.querySelector('.view-btn').addEventListener('click', (e) => {
+                        e.preventDefault();
+                        document.getElementById('modal-title').textContent = prop.title || 'Property';
+                        document.getElementById('modal-loc').textContent = prop.address || 'Address not provided';
+                        document.getElementById('modal-main-img').src = mainImgSrc;
+                        document.querySelector('.owner-name').textContent = prop.ownerName || 'Property Owner';
+                        document.querySelector('.owner-avatar img').src = card.getAttribute('data-owner-avatar');
+                        const modalListingType = document.getElementById('modal-listing-type');
+                        if (modalListingType) {
+                            const isRent = (prop.listingType || 'rent') !== 'sell';
+                            modalListingType.textContent = isRent ? 'For Rent' : 'For Sale';
+                            modalListingType.style.backgroundColor = isRent ? 'rgba(52,152,219,0.2)' : 'rgba(46,204,113,0.2)';
+                            modalListingType.style.color = isRent ? '#3498db' : '#2ecc71';
+                        }
+                        propertyModal.classList.remove('hidden');
+                    });
                 });
             })
             .catch(err => console.error('Failed to load properties:', err));

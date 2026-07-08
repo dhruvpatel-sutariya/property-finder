@@ -177,7 +177,7 @@ function renderAdminProperties(list) {
         return;
     }
     list.forEach(p => {
-        const status = p.approvalStatus || 'Pending';
+        const status = (p.approvalStatus || 'pending').toLowerCase();
         const badge = status === 'active' ? '<span class="badge active">Active</span>' : status === 'blocked' ? '<span class="badge blocked">Blocked</span>' : '<span class="badge pending">Pending</span>';
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -207,6 +207,7 @@ function openPropertyModal(id) {
     currentPropertyId = id;
     document.getElementById('property-modal-title').textContent = p.title || 'Property Details';
     document.getElementById('property-modal-body').innerHTML = `
+        <div><strong>Owner:</strong> ${p.ownerName || p.ownerEmail || '—'}</div>
         <div><strong>Type:</strong> ${p.type || '—'}</div>
         <div><strong>City:</strong> ${p.city || p.address || '—'}</div>
         <div><strong>Price:</strong> ₹${p.price ? Number(p.price).toLocaleString('en-IN') : '—'}</div>

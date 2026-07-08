@@ -503,55 +503,70 @@
             renderProperties();
         });
 
-        function renderProperties() {
+        async function renderProperties() {
             const list = document.getElementById('my-properties-list');
-            const noMsg = document.getElementById('no-properties-msg');
-            const currentOwnerEmail = localStorage.getItem('ownerEmail') || 'oldOwner';
-            const allStored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
-            const stored = allStored.filter(p => (p.ownerEmail || 'oldOwner') === currentOwnerEmail);
+            const token = localStorage.getItem('token');
+            const ownerEmail = (localStorage.getItem('ownerEmail') || '').trim().toLowerCase();
+            const ownerId = (localStorage.getItem('ownerId') || '').trim();
 
-            if (stored.length > 0) {
-                if (noMsg) noMsg.style.display = 'none';
+            list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:1rem 0;">Loading...</p>';
 
-                // Keep only the "no properties msg" in the DOM and append others
-                list.innerHTML = '<p id="no-properties-msg" style="color: var(--text-muted); text-align: center; padding: 2rem 0; display: none;">No properties added yet.</p>';
-
-                stored.forEach(prop => {
-                    const el = document.createElement('div');
-                    el.style.border = '1px solid rgba(255, 255, 255, 0.1)';
-                    el.style.borderRadius = '8px';
-                    el.style.padding = '1.2rem';
-                    el.style.display = 'flex';
-                    el.style.justifyContent = 'space-between';
-                    el.style.alignItems = 'center';
-                    el.style.backgroundColor = 'var(--surface-color)';
-
-                    const safeType = prop.type || 'Property';
-                    const typeCap = safeType.charAt(0).toUpperCase() + safeType.slice(1);
-                    const imagesArr = prop.images || (prop.image ? [prop.image] : ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80']);
-                    const imgSrc = imagesArr[0];
-                    const extraImagesHtml = imagesArr.slice(1).map(img => `<img src="${img}" alt="Property" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2);">`).join('');
-
-                    el.innerHTML = `
-                        <div style="display: flex; gap: 1rem; align-items: center; max-width: 70%;">
-                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                <img src="${imgSrc}" alt="Property" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
-                                ${(imagesArr.length > 1) ? `<div style="display: flex; gap: 0.3rem;">${extraImagesHtml}</div>` : ''}
-                            </div>
-                            <div>
-                                <h4 style="margin: 0 0 0.5rem 0; font-size: 1.1rem; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${prop.title || (prop.type ? prop.type.charAt(0).toUpperCase() + prop.type.slice(1) : 'Property')}</h4>
-                                <p style="margin: 0 0 0.5rem 0; color: var(--text-muted); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${prop.address || 'Address not provided'}</p>
-                                <span style="display: inline-block; background: rgba(52, 152, 219, 0.2); color: #3498db; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 500;">${typeCap}</span>
-                            </div>
-                        </div>
-                        <div style="color: #f1c40f; display: flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; font-weight: 500;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            Under Review
-                        </div>
-                    `;
-                    list.appendChild(el);
+            let props = [];
+            try {
+                const res = await fetch('https://property-finder-nia8.onrender.com/api/properties', {
+                    headers: { 'Authorization': 'Bearer ' + token }
                 });
+                if (!res.ok) throw new Error();
+                const all = await res.json();
+                props = all.filter(p =>
+                    (p.ownerEmail && p.ownerEmail.trim().toLowerCase() === ownerEmail) ||
+                    (p.ownerId && p.ownerId.trim() === ownerId)
+                );
+                // merge local images
+                const cached = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+                props = props.map(p => {
+                    const c = cached.find(x => x._id === p._id);
+                    return c ? { ...p, images: c.images || [] } : p;
+                });
+                localStorage.setItem('ownerProperties', JSON.stringify(props));
+            } catch(e) {
+                props = JSON.parse(localStorage.getItem('ownerProperties') || '[]')
+                    .filter(p =>
+                        (p.ownerEmail || '').trim().toLowerCase() === ownerEmail ||
+                        (p.ownerId || '').trim() === ownerId
+                    );
             }
+
+            if (props.length === 0) {
+                list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem 0;">No properties added yet.</p>';
+                return;
+            }
+
+            list.innerHTML = '';
+            props.forEach(prop => {
+                const isApproved = (prop.approvalStatus || '').toLowerCase() === 'active' || prop.isApproved === true;
+                const statusColor = isApproved ? '#2ecc71' : '#f1c40f';
+                const statusBg = isApproved ? 'rgba(46,204,113,0.1)' : 'rgba(241,196,15,0.1)';
+                const statusText = isApproved ? 'Approved' : 'Under Review';
+                const typeCap = (prop.type || 'Property').charAt(0).toUpperCase() + (prop.type || 'property').slice(1);
+                const imgSrc = (prop.images && prop.images[0]) || prop.image || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+
+                const el = document.createElement('div');
+                el.style.cssText = 'border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:1.2rem;display:flex;justify-content:space-between;align-items:center;background:var(--surface-color);';
+                el.innerHTML = `
+                    <div style="display:flex;gap:1rem;align-items:center;">
+                        <img src="${imgSrc}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;">
+                        <div>
+                            <h4 style="margin:0 0 0.3rem;color:var(--text-light);">${prop.title || typeCap}</h4>
+                            <p style="margin:0 0 0.3rem;color:var(--text-muted);font-size:0.9rem;">${prop.address || 'Address not provided'}</p>
+                            <span style="background:rgba(52,152,219,0.2);color:#3498db;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.8rem;">${typeCap}</span>
+                        </div>
+                    </div>
+                    <div style="color:${statusColor};background:${statusBg};padding:0.4rem 0.8rem;border-radius:6px;font-size:0.9rem;font-weight:500;">
+                        ${statusText}
+                    </div>`;
+                list.appendChild(el);
+            });
         }
 
         // Initialize file upload listeners to show selected file names
@@ -679,25 +694,25 @@
             btn.style.backgroundColor = '#2ecc71';
 
             const proceedSave = async (imgUrls) => {
-                const currentOwnerEmail = localStorage.getItem('ownerEmail') || 'oldOwner';
+                const currentOwnerEmail = localStorage.getItem('ownerEmail') || '';
                 const token = localStorage.getItem('token');
+                const ownerIdVal = localStorage.getItem('ownerId') || '';
+
                 const propertyData = {
                     title,
                     type,
                     listingType,
                     address,
-                    bedrooms,
-                    price,
+                    bedrooms: Number(bedrooms),
+                    price: Number(price),
                     description,
-                    images: imgUrls,
                     ownerEmail: currentOwnerEmail,
-                    ownerId: localStorage.getItem('ownerId'),
-                    ownerName: localStorage.getItem('ownerName'),
+                    ownerId: ownerIdVal,
+                    ownerName: localStorage.getItem('ownerName') || '',
                     approvalStatus: 'pending',
                     isApproved: false
                 };
 
-                // Save to backend MongoDB
                 try {
                     const res = await fetch('https://property-finder-nia8.onrender.com/api/properties', {
                         method: 'POST',
@@ -705,35 +720,21 @@
                         body: JSON.stringify(propertyData)
                     });
                     const data = await res.json();
-                    // Also save to localStorage for owner dashboard display
+                    if (!res.ok) throw new Error(data.message || 'Save failed');
+
+                    // Save with images to localStorage (images stay local only)
+                    const localProp = { ...propertyData, _id: data.property?._id, images: imgUrls };
                     const stored = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
-                    stored.push({ ...propertyData, id: data.property?._id || 'OWN-' + Date.now() });
+                    stored.push(localProp);
                     try { localStorage.setItem('ownerProperties', JSON.stringify(stored)); } catch(e) {}
+
+                    alert('Property submitted for review!');
+                    window.location.href = 'owner-dashboard.html';
                 } catch (err) {
-                    console.error('API save failed:', err);
-                }
-
-                setTimeout(() => {
-                    alert("Property details and documents have been securely uploaded for review!");
-                    this.reset();
-
-                    // Clear the selected file text
-                    fileInputs.forEach(item => {
-                        const displayEl = document.getElementById(item.nameDisplay);
-                        if (displayEl) displayEl.innerText = '';
-                    });
-
-                    const previewContainer = document.getElementById('photo-preview-container');
-                    if (previewContainer) previewContainer.innerHTML = '';
-                    const linkContainer = document.getElementById('photo-link-container');
-                    if (linkContainer) linkContainer.innerHTML = '';
-
+                    alert('Failed to save property: ' + err.message);
                     btn.innerHTML = 'Submit Property for Review';
                     btn.style.backgroundColor = '';
-
-                    // Update UI right away
-                    renderProperties();
-                }, 1000);
+                }
             };
 
             const files = Array.from(photoEl.files);

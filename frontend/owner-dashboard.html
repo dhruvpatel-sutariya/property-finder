@@ -360,76 +360,86 @@
             renderProperties();
         });
 
+        // If redirected from add-property, retry after 3s in case backend was waking up
+        if (document.referrer.includes('owner-profile.html')) {
+            setTimeout(renderProperties, 3000);
+        }
+
         async function renderProperties() {
             const list = document.getElementById('my-properties-list');
             const token = localStorage.getItem('token');
-            const currentOwnerEmail = localStorage.getItem('ownerEmail') || '';
+            const ownerEmail = (localStorage.getItem('ownerEmail') || '').trim().toLowerCase();
+            const ownerId = (localStorage.getItem('ownerId') || '').trim();
 
-            let stored = [];
+            list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:1rem 0;">Loading...</p>';
+
+            let props = [];
             try {
                 const res = await fetch('https://property-finder-nia8.onrender.com/api/properties', {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
                 const all = await res.json();
-                stored = all.filter(p => p.ownerEmail === currentOwnerEmail);
-                // sync to localStorage for tenant-script use
-                localStorage.setItem('ownerProperties', JSON.stringify(stored));
-            } catch(e) {
-                stored = JSON.parse(localStorage.getItem('ownerProperties') || '[]')
-                    .filter(p => (p.ownerEmail || 'oldOwner') === currentOwnerEmail);
-            }
-
-            document.getElementById('total-properties-count').innerText = stored.length;
-
-            if (stored.length > 0) {
-                list.innerHTML = ''; // clear
-
-                stored.forEach((prop) => {
-                    const globalIndex = allStored.indexOf(prop);
-                    const el = document.createElement('div');
-                    el.style.border = '1px solid rgba(255, 255, 255, 0.1)';
-                    el.style.borderRadius = '8px';
-                    el.style.padding = '1.2rem';
-                    el.style.display = 'flex';
-                    el.style.justifyContent = 'space-between';
-                    el.style.alignItems = 'center';
-                    el.style.backgroundColor = 'var(--surface-color)';
-
-                    const safeType = prop.type || 'Property';
-                    const typeCap = safeType.charAt(0).toUpperCase() + safeType.slice(1);
-                    const imagesArr = prop.images || (prop.image ? [prop.image] : ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80']);
-                    const mainImgSrc = imagesArr[0];
-                    const extraImagesHtml = imagesArr.slice(1).map(img => `<img src="${img}" alt="Property Thumbnail">`).join('');
-
-                    el.innerHTML = `
-                        <div style="display: flex; gap: 1.5rem; max-width: 75%;">
-                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                                <img src="${mainImgSrc}" alt="Property" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
-                                ${(imagesArr.length > 1) ? `<div class="property-images">${extraImagesHtml}</div>` : ''}
-                            </div>
-                            <div style="display: flex; flex-direction: column; justify-content: center; gap: 0.3rem;">
-                                <div style="display: flex; align-items: center; gap: 0.6rem;">
-                                    <h4 style="margin: 0; font-size: 1.15rem; color: var(--text-light);">${prop.title || (prop.type ? prop.type.charAt(0).toUpperCase() + prop.type.slice(1) : 'Property')}</h4>
-                                    <span style="background: rgba(52, 152, 219, 0.2); color: #3498db; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500;">${typeCap}</span>
-                                </div>
-                                <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; line-height: 1.4;">${prop.address || 'Address not provided'}</p>
-                            </div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="color: #f1c40f; display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.95rem; font-weight: 500; background: rgba(241, 196, 15, 0.1); padding: 0.4rem 0.8rem; border-radius: 6px;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                Under Review
-                            </div>
-                            <div style="margin-top: 0.8rem;">
-                                <button onclick="window.openEditModal(${globalIndex})" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-light); padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; cursor: pointer;">Edit</button>
-                            </div>
-                        </div>
-                    `;
-                    list.appendChild(el);
+                console.log('API returned', all.length, 'properties');
+                console.log('Filtering by ownerEmail:', ownerEmail, '| ownerId:', ownerId);
+                props = all.filter(p =>
+                    (p.ownerEmail && p.ownerEmail.trim().toLowerCase() === ownerEmail) ||
+                    (p.ownerId && p.ownerId.trim() === ownerId)
+                );
+                console.log('Matched props:', props.length);
+                const cached = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+                props = props.map(p => {
+                    const c = cached.find(x => x._id === p._id);
+                    return c ? { ...p, images: c.images || [] } : p;
                 });
-            } else {
-                list.innerHTML = '<p id="no-properties-msg" style="color: var(--text-muted); text-align: center; padding: 2rem 0;">No properties added yet.</p>';
+                localStorage.setItem('ownerProperties', JSON.stringify(props));
+            } catch(e) {
+                console.error('API fetch failed:', e.message);
+                const all = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+                props = all.filter(p =>
+                    (p.ownerEmail || '').trim().toLowerCase() === ownerEmail ||
+                    (p.ownerId || '').trim() === ownerId
+                );
+                console.log('localStorage fallback props:', props.length);
             }
+
+            document.getElementById('total-properties-count').innerText = props.length;
+
+            if (props.length === 0) {
+                list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem 0;">No properties added yet.</p>';
+                return;
+            }
+
+            list.innerHTML = '';
+            props.forEach((prop, idx) => {
+                const isApproved = (prop.approvalStatus || '').toLowerCase() === 'active' || prop.isApproved === true;
+                const statusColor = isApproved ? '#2ecc71' : '#f1c40f';
+                const statusBg = isApproved ? 'rgba(46,204,113,0.1)' : 'rgba(241,196,15,0.1)';
+                const statusText = isApproved ? 'Approved' : 'Under Review';
+                const typeCap = (prop.type || 'Property').charAt(0).toUpperCase() + (prop.type || 'property').slice(1);
+                const imgSrc = (prop.images && prop.images[0]) || prop.image || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+
+                const el = document.createElement('div');
+                el.style.cssText = 'border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:1.2rem;display:flex;justify-content:space-between;align-items:center;background:var(--surface-color);';
+                el.innerHTML = `
+                    <div style="display:flex;gap:1rem;align-items:center;">
+                        <img src="${imgSrc}" style="width:100px;height:100px;object-fit:cover;border-radius:8px;">
+                        <div>
+                            <h4 style="margin:0 0 0.3rem;color:var(--text-light);">${prop.title || typeCap}</h4>
+                            <p style="margin:0 0 0.3rem;color:var(--text-muted);font-size:0.95rem;">${prop.address || 'Address not provided'}</p>
+                            <span style="background:rgba(52,152,219,0.2);color:#3498db;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.75rem;">${typeCap}</span>
+                        </div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="color:${statusColor};background:${statusBg};padding:0.4rem 0.8rem;border-radius:6px;font-size:0.9rem;font-weight:500;display:inline-block;">
+                            ${statusText}
+                        </div>
+                        <div style="margin-top:0.8rem;">
+                            <button onclick="window.openEditModal(${idx})" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--text-light);padding:0.4rem 0.8rem;border-radius:4px;font-size:0.85rem;cursor:pointer;">Edit</button>
+                        </div>
+                    </div>`;
+                list.appendChild(el);
+            });
         }
 
         // Edit Modal Logic

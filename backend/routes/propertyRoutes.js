@@ -19,6 +19,8 @@ router.get("/properties", async (req, res) => {
         { description: { $regex: req.query.search, $options: 'i' } }
       ];
     }
+    if (req.query.ownerEmail) filter.ownerEmail = req.query.ownerEmail;
+    if (req.query.ownerId) filter.ownerId = req.query.ownerId;
     const properties = await Property.find(filter);
     res.json(properties);
   } catch (error) {

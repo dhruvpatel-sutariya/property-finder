@@ -431,21 +431,49 @@
             const chatMessagesContainer = document.getElementById('chat-messages');
 
             async function loadChats() {
-                const res = await fetch(`https://property-finder-nia8.onrender.com/api/chats/tenant/${tenantId}`, {
-                    headers: { 'Authorization': 'Bearer ' + token }
+                try {
+                    const res = await fetch(`https://property-finder-nia8.onrender.com/api/chats/tenant/${tenantId}`, {
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    });
+                    const data = await res.json();
+                    chats = Array.isArray(data) ? data.map(c => ({
+                        id: c.ownerId._id || c.ownerId,
+                        name: c.ownerId.name || c.ownerName || 'Property Owner',
+                        avatar: c.ownerId.profileImage || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+                        messages: c.messages || [],
+                        _chatId: c._id
+                    })) : [];
+                } catch(e) {
+                    chats = [];
+                }
+
+                // merge any localStorage chats not yet in DB
+                const localChats = JSON.parse(localStorage.getItem('tenantChats') || '[]');
+                localChats.forEach(lc => {
+                    if (!chats.find(c => c.id === lc.id)) {
+                        chats.push({ id: lc.id, name: lc.name, avatar: lc.avatar, messages: lc.messages || [], _chatId: null });
+                    }
                 });
-                const data = await res.json();
-                chats = data.map(c => ({
-                    id: c.ownerId._id,
-                    name: c.ownerId.name,
-                    avatar: c.ownerId.profileImage || 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
-                    messages: c.messages,
-                    _chatId: c._id
-                }));
+
                 renderContacts();
+
                 const urlParams = new URLSearchParams(window.location.search);
                 const targetOwnerId = urlParams.get('owner');
-                if (targetOwnerId) openChat(targetOwnerId);
+                if (targetOwnerId) {
+                    // if chat doesn't exist yet, create it from localStorage info
+                    if (!chats.find(c => c.id === targetOwnerId)) {
+                        const lc = localChats.find(c => c.id === targetOwnerId);
+                        chats.push({
+                            id: targetOwnerId,
+                            name: lc ? lc.name : 'Property Owner',
+                            avatar: lc ? lc.avatar : 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+                            messages: [],
+                            _chatId: null
+                        });
+                        renderContacts();
+                    }
+                    openChat(targetOwnerId);
+                }
             }
             loadChats();
 
@@ -539,29 +567,37 @@
                 e.preventDefault();
                 const input = document.getElementById('chat-input');
                 const text = input.value.trim();
-                if (text && currentChatId) {
-                    const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    const msg = { text, sender: 'user', time };
+                if (!text || !currentChatId) return;
+
+                const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                const msg = { text, sender: 'user', time };
+                const chatIndex = chats.findIndex(c => c.id === currentChatId);
+                if (chatIndex === -1) return;
+
+                // optimistic UI update
+                chats[chatIndex].messages.push(msg);
+                input.value = '';
+                renderMessages(chats[chatIndex]);
+                renderContacts();
+
+                // save to localStorage
+                const localChats = JSON.parse(localStorage.getItem('tenantChats') || '[]');
+                const li = localChats.findIndex(c => c.id === currentChatId);
+                if (li !== -1) localChats[li].messages = chats[chatIndex].messages;
+                else localChats.push({ id: currentChatId, name: chats[chatIndex].name, avatar: chats[chatIndex].avatar, messages: chats[chatIndex].messages });
+                localStorage.setItem('tenantChats', JSON.stringify(localChats));
+
+                // try save to API
+                try {
                     await fetch(`https://property-finder-nia8.onrender.com/api/chat/${tenantId}/${currentChatId}/message`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                         body: JSON.stringify(msg)
                     });
-                    const chatIndex = chats.findIndex(c => c.id === currentChatId);
-                    if (chatIndex !== -1) {
-                        chats[chatIndex].messages.push(msg);
-                        input.value = '';
-                        renderMessages(chats[chatIndex]);
-                        renderContacts();
-                    }
-                }
+                } catch(e) {}
             });
 
-            // Check if arriving from a specific owner referral
-            const urlParams = new URLSearchParams(window.location.search);
-            const targetOwnerId = urlParams.get('owner');
-
-            renderContacts();
+            loadChats();
             
             // Global Function to open feedback modal
             let currentFeedbackPropId = null;

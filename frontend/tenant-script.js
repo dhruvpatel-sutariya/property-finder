@@ -49,7 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.setAttribute('data-bedrooms', prop.bedrooms || '2');
                     card.setAttribute('data-listing-type', prop.listingType || 'rent');
 
-                    const imagesArr = prop.images || ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'];
+                    // merge localStorage images by _id
+                    const cachedProps = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
+                    const cachedProp = cachedProps.find(x => x._id === prop._id);
+                    const imagesArr = (cachedProp && cachedProp.images && cachedProp.images.length)
+                        ? cachedProp.images
+                        : (prop.images && prop.images.length ? prop.images : ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80']);
                     const mainImgSrc = imagesArr[0];
                     const listingSuffix = (prop.listingType === 'sell') ? '' : '<span>/mo</span>';
 
@@ -96,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById('modal-main-img').src = mainImgSrc;
                         document.querySelector('.owner-name').textContent = prop.ownerName || 'Property Owner';
                         document.querySelector('.owner-avatar img').src = card.getAttribute('data-owner-avatar');
+                        // store real ownerId on modal for chat
+                        document.getElementById('property-modal').setAttribute('data-owner-id', prop.ownerId || '');
                         const modalListingType = document.getElementById('modal-listing-type');
                         if (modalListingType) {
                             const isRent = (prop.listingType || 'rent') !== 'sell';
@@ -401,26 +408,19 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (btn.closest('.message-icon') || btn.classList.contains('message-icon')) {
                 const ownerName = document.querySelector('.owner-name').textContent || 'Property Owner';
                 const ownerAvatar = document.querySelector('.owner-avatar img').src;
-                const ownerId = ownerName.replace(/\s+/g, '-').toLowerCase();
+                // use real ownerId stored in modal dataset, fallback to name-slug
+                const chatOwnerId = (document.getElementById('property-modal').getAttribute('data-owner-id')) ||
+                    ownerName.replace(/\s+/g, '-').toLowerCase();
 
-                // Save to local storage for chat
                 let chats = JSON.parse(localStorage.getItem('tenantChats') || '[]');
-
-                // Only push if not already exists
-                if (!chats.find(c => c.id === ownerId)) {
-                    chats.push({
-                        id: ownerId,
-                        name: ownerName,
-                        avatar: ownerAvatar,
-                        messages: []
-                    });
+                if (!chats.find(c => c.id === chatOwnerId)) {
+                    chats.push({ id: chatOwnerId, name: ownerName, avatar: ownerAvatar, messages: [] });
                     localStorage.setItem('tenantChats', JSON.stringify(chats));
                 }
 
-                // Redirect to chat
                 const citiesList = ['ahmedabad', 'surat', 'jamnagar', 'mehsana', 'gandhinagar', 'rajkot', 'bhavnagar'];
                 const isSubdir = citiesList.some(c => window.location.pathname.includes('/' + c + '/'));
-                window.location.href = isSubdir ? `../tenant-chat.html?owner=${ownerId}` : `tenant-chat.html?owner=${ownerId}`;
+                window.location.href = isSubdir ? `../tenant-chat.html?owner=${chatOwnerId}` : `tenant-chat.html?owner=${chatOwnerId}`;
                 return;
             }
         }

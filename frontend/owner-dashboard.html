@@ -371,38 +371,39 @@
             const ownerEmail = (localStorage.getItem('ownerEmail') || '').trim().toLowerCase();
             const ownerId = (localStorage.getItem('ownerId') || '').trim();
 
-            list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:1rem 0;">Loading...</p>';
+            // Always show localStorage first immediately
+            let props = JSON.parse(localStorage.getItem('ownerProperties') || '[]').filter(p =>
+                (p.ownerEmail || '').trim().toLowerCase() === ownerEmail ||
+                (p.ownerId || '').trim() === ownerId
+            );
+            renderList(props);
 
-            let props = [];
+            // Then try API in background to get latest data
             try {
                 const res = await fetch('https://property-finder-nia8.onrender.com/api/properties', {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
-                if (!res.ok) throw new Error('HTTP ' + res.status);
+                if (!res.ok) throw new Error();
                 const all = await res.json();
-                console.log('API returned', all.length, 'properties');
-                console.log('Filtering by ownerEmail:', ownerEmail, '| ownerId:', ownerId);
-                props = all.filter(p =>
+                const apiProps = all.filter(p =>
                     (p.ownerEmail && p.ownerEmail.trim().toLowerCase() === ownerEmail) ||
                     (p.ownerId && p.ownerId.trim() === ownerId)
                 );
-                console.log('Matched props:', props.length);
+                // merge images from localStorage cache
                 const cached = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
-                props = props.map(p => {
+                props = apiProps.map(p => {
                     const c = cached.find(x => x._id === p._id);
                     return c ? { ...p, images: c.images || [] } : p;
                 });
                 localStorage.setItem('ownerProperties', JSON.stringify(props));
+                renderList(props);
             } catch(e) {
-                console.error('API fetch failed:', e.message);
-                const all = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
-                props = all.filter(p =>
-                    (p.ownerEmail || '').trim().toLowerCase() === ownerEmail ||
-                    (p.ownerId || '').trim() === ownerId
-                );
-                console.log('localStorage fallback props:', props.length);
+                // keep showing localStorage data, no change needed
             }
+        }
 
+        function renderList(props) {
+            const list = document.getElementById('my-properties-list');
             document.getElementById('total-properties-count').innerText = props.length;
 
             if (props.length === 0) {

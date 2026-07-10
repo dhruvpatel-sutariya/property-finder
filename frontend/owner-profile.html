@@ -509,64 +509,67 @@
             const ownerEmail = (localStorage.getItem('ownerEmail') || '').trim().toLowerCase();
             const ownerId = (localStorage.getItem('ownerId') || '').trim();
 
-            list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:1rem 0;">Loading...</p>';
+            // Show localStorage immediately
+            let props = JSON.parse(localStorage.getItem('ownerProperties') || '[]').filter(p =>
+                (p.ownerEmail || '').trim().toLowerCase() === ownerEmail ||
+                (p.ownerId || '').trim() === ownerId
+            );
 
-            let props = [];
+            if (props.length === 0) {
+                list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem 0;">No properties added yet.</p>';
+            } else {
+                list.innerHTML = '';
+                props.forEach(prop => renderPropCard(list, prop));
+            }
+
+            // Refresh from API in background
             try {
                 const res = await fetch('https://property-finder-nia8.onrender.com/api/properties', {
                     headers: { 'Authorization': 'Bearer ' + token }
                 });
                 if (!res.ok) throw new Error();
                 const all = await res.json();
-                props = all.filter(p =>
+                const apiProps = all.filter(p =>
                     (p.ownerEmail && p.ownerEmail.trim().toLowerCase() === ownerEmail) ||
                     (p.ownerId && p.ownerId.trim() === ownerId)
                 );
-                // merge local images
                 const cached = JSON.parse(localStorage.getItem('ownerProperties') || '[]');
-                props = props.map(p => {
+                props = apiProps.map(p => {
                     const c = cached.find(x => x._id === p._id);
                     return c ? { ...p, images: c.images || [] } : p;
                 });
                 localStorage.setItem('ownerProperties', JSON.stringify(props));
-            } catch(e) {
-                props = JSON.parse(localStorage.getItem('ownerProperties') || '[]')
-                    .filter(p =>
-                        (p.ownerEmail || '').trim().toLowerCase() === ownerEmail ||
-                        (p.ownerId || '').trim() === ownerId
-                    );
-            }
+                if (props.length === 0) {
+                    list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem 0;">No properties added yet.</p>';
+                } else {
+                    list.innerHTML = '';
+                    props.forEach(prop => renderPropCard(list, prop));
+                }
+            } catch(e) {}
+        }
 
-            if (props.length === 0) {
-                list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem 0;">No properties added yet.</p>';
-                return;
-            }
-
-            list.innerHTML = '';
-            props.forEach(prop => {
-                const isApproved = (prop.approvalStatus || '').toLowerCase() === 'active' || prop.isApproved === true;
-                const statusColor = isApproved ? '#2ecc71' : '#f1c40f';
-                const statusBg = isApproved ? 'rgba(46,204,113,0.1)' : 'rgba(241,196,15,0.1)';
-                const statusText = isApproved ? 'Approved' : 'Under Review';
-                const typeCap = (prop.type || 'Property').charAt(0).toUpperCase() + (prop.type || 'property').slice(1);
-                const imgSrc = (prop.images && prop.images[0]) || prop.image || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-
-                const el = document.createElement('div');
-                el.style.cssText = 'border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:1.2rem;display:flex;justify-content:space-between;align-items:center;background:var(--surface-color);';
-                el.innerHTML = `
-                    <div style="display:flex;gap:1rem;align-items:center;">
-                        <img src="${imgSrc}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;">
-                        <div>
-                            <h4 style="margin:0 0 0.3rem;color:var(--text-light);">${prop.title || typeCap}</h4>
-                            <p style="margin:0 0 0.3rem;color:var(--text-muted);font-size:0.9rem;">${prop.address || 'Address not provided'}</p>
-                            <span style="background:rgba(52,152,219,0.2);color:#3498db;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.8rem;">${typeCap}</span>
-                        </div>
+        function renderPropCard(list, prop) {
+            const isApproved = (prop.approvalStatus || '').toLowerCase() === 'active' || prop.isApproved === true;
+            const statusColor = isApproved ? '#2ecc71' : '#f1c40f';
+            const statusBg = isApproved ? 'rgba(46,204,113,0.1)' : 'rgba(241,196,15,0.1)';
+            const statusText = isApproved ? 'Approved' : 'Under Review';
+            const typeCap = (prop.type || 'Property').charAt(0).toUpperCase() + (prop.type || 'property').slice(1);
+            const imgSrc = (prop.images && prop.images[0]) || prop.image || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+            const el = document.createElement('div');
+            el.style.cssText = 'border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:1.2rem;display:flex;justify-content:space-between;align-items:center;background:var(--surface-color);';
+            el.innerHTML = `
+                <div style="display:flex;gap:1rem;align-items:center;">
+                    <img src="${imgSrc}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;">
+                    <div>
+                        <h4 style="margin:0 0 0.3rem;color:var(--text-light);">${prop.title || typeCap}</h4>
+                        <p style="margin:0 0 0.3rem;color:var(--text-muted);font-size:0.9rem;">${prop.address || 'Address not provided'}</p>
+                        <span style="background:rgba(52,152,219,0.2);color:#3498db;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.8rem;">${typeCap}</span>
                     </div>
-                    <div style="color:${statusColor};background:${statusBg};padding:0.4rem 0.8rem;border-radius:6px;font-size:0.9rem;font-weight:500;">
-                        ${statusText}
-                    </div>`;
-                list.appendChild(el);
-            });
+                </div>
+                <div style="color:${statusColor};background:${statusBg};padding:0.4rem 0.8rem;border-radius:6px;font-size:0.9rem;font-weight:500;">
+                    ${statusText}
+                </div>`;
+            list.appendChild(el);
         }
 
         // Initialize file upload listeners to show selected file names

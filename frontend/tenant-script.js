@@ -390,6 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isLoggedIn) {
             const btn = e.currentTarget;
+            const isMessageBtn = btn.classList.contains('message-icon') || !!btn.closest('.message-icon');
             if (btn.classList.contains('btn-book')) {
                 const ownerName = document.querySelector('.owner-name').textContent || 'the property owner';
                 const propertyTitle = document.getElementById('modal-title').textContent || 'Property';
@@ -404,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
                     body: JSON.stringify({
                         tenantId,
-                        ownerId: card.getAttribute('data-owner-id') || ownerId,
+                        ownerId: document.getElementById('property-modal').getAttribute('data-owner-id') || '',
                         propertyTitle,
                         propertyLoc,
                         propertyImage,
@@ -417,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const modal = document.getElementById('property-modal');
                     if (modal) modal.classList.add('hidden');
                 });
-            } else if (btn.closest('.message-icon') || btn.classList.contains('message-icon')) {
+            } else if (isMessageBtn) {
                 const ownerName = document.querySelector('.owner-name').textContent || 'Property Owner';
                 const ownerAvatar = document.querySelector('.owner-avatar img').src;
                 // use real ownerId stored in modal dataset, fallback to name-slug

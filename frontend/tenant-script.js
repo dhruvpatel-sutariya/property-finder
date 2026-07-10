@@ -45,6 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.setAttribute('data-owner-name', prop.ownerName || 'Property Owner');
                     card.setAttribute('data-owner-id', prop.ownerId || '');
                     card.setAttribute('data-owner-avatar', 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80');
+
+                    // fetch owner avatar from DB in background
+                    if (prop.ownerId) {
+                        fetch(`https://property-finder-nia8.onrender.com/api/owners`, {
+                            headers: { 'Authorization': 'Bearer ' + (token || '') }
+                        }).then(r => r.json()).then(owners => {
+                            const owner = owners.find(o => o._id === prop.ownerId);
+                            if (owner && owner.profileImage) {
+                                card.setAttribute('data-owner-avatar', owner.profileImage);
+                            }
+                        }).catch(() => {});
+                    }
                     card.setAttribute('data-description', prop.description || '');
                     card.setAttribute('data-bedrooms', prop.bedrooms || '2');
                     card.setAttribute('data-listing-type', prop.listingType || 'rent');

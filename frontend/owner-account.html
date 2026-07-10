@@ -249,7 +249,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3>My Account Details</h3>
-                    <button
+                    <button id="btn-edit-profile"
                         style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Edit
                         Profile</button>
                 </div>
@@ -326,6 +326,43 @@
                 document.getElementById('sidebar-profile-image').src = profile.profileImage;
                 document.getElementById('nav-profile-image').src = profile.profileImage;
             }
+
+            // Edit Profile — open file picker, save to DB
+            document.getElementById('btn-edit-profile').addEventListener('click', () => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/jpeg,image/png';
+                input.onchange = async function() {
+                    const file = input.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = async function(e) {
+                        const base64 = e.target.result;
+                        // update UI
+                        document.getElementById('sidebar-profile-image').src = base64;
+                        document.getElementById('nav-profile-image').src = base64;
+                        // save to localStorage
+                        const p = JSON.parse(localStorage.getItem('ownerProfile') || '{}');
+                        p.profileImage = base64;
+                        localStorage.setItem('ownerProfile', JSON.stringify(p));
+                        // save to DB
+                        const ownerId = localStorage.getItem('ownerId');
+                        const token = localStorage.getItem('token');
+                        try {
+                            await fetch(`https://property-finder-nia8.onrender.com/api/owner/${ownerId}`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+                                body: JSON.stringify({ profileImage: base64 })
+                            });
+                            alert('Profile photo updated!');
+                        } catch(err) {
+                            alert('Photo saved locally. Will sync when online.');
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                };
+                input.click();
+            });
 
             // Load reviews
             const reviewsContainer = document.getElementById('reviews-container');

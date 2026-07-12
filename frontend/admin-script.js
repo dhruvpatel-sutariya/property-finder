@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadProperties();
     loadBookings();
     loadReviews();
+    loadActivityLog();
 });
 
 // ─── Stats ────────────────────────────────────────────────────────
@@ -307,6 +308,88 @@ async function approveBooking() {
 function closeBookingModal() {
     document.getElementById('booking-modal').classList.add('hidden');
     currentBookingId = null;
+}
+
+// ─── Activity Log ─────────────────────────────────────────────────
+async function loadActivityLog() {
+    const ul = document.getElementById('activity-log');
+    const events = [];
+
+    try {
+        const [properties, bookings, tenants, owners] = await Promise.all([
+            fetch(`${API}/properties`, { headers }).then(r => r.json()),
+            fetch(`${API}/bookings`, { headers }).then(r => r.json()),
+            fetch(`${API}/tenants`, { headers }).then(r => r.json()),
+            fetch(`${API}/owners`, { headers }).then(r => r.json())
+        ]);
+
+        // approved properties
+        properties.filter(p => p.isApproved || (p.approvalStatus || '').toLowerCase() === 'active')
+            .slice(-5).forEach(p => events.push({
+                color: 'var(--success-color)',
+                icon: '<polyline points="20 6 9 17 4 12"></polyline>',
+                text: `Property Approved: <strong>${p.title || p.type || 'Property'}</strong> by ${p.ownerName || p.ownerEmail || 'Owner'}`,
+                sub: `City: ${p.city || p.address || '—'}`
+            }));
+
+        // pending properties
+        properties.filter(p => !p.isApproved && (p.approvalStatus || 'pending').toLowerCase() === 'pending')
+            .slice(-3).forEach(p => events.push({
+                color: 'var(--warning-color)',
+                icon: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>',
+                text: `Pending Approval: <strong>${p.title || p.type || 'Property'}</strong>`,
+                sub: `Owner: ${p.ownerName || p.ownerEmail || '—'}`
+            }));
+
+        // bookings
+        bookings.slice(-5).forEach(b => {
+            const isVerified = b.status === 'Verified';
+            events.push({
+                color: isVerified ? 'var(--success-color)' : 'var(--warning-color)',
+                icon: isVerified
+                    ? '<polyline points="20 6 9 17 4 12"></polyline>'
+                    : '<rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>',
+                text: `Booking <strong>#${b._id.slice(-6).toUpperCase()}</strong> — ${b.propertyTitle || '—'}`,
+                sub: `Tenant: ${b.tenantProfile?.name || '—'} • Status: ${b.status}`
+            });
+        });
+
+        // new tenants
+        tenants.slice(-3).forEach(t => events.push({
+            color: 'var(--primary-color)',
+            icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle>',
+            text: `New Tenant Registered: <strong>${t.name || t.email}</strong>`,
+            sub: `Email: ${t.email}`
+        }));
+
+        // new owners
+        owners.slice(-3).forEach(o => events.push({
+            color: '#9b59b6',
+            icon: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>',
+            text: `New Owner Registered: <strong>${o.name || o.email}</strong>`,
+            sub: `Email: ${o.email}`
+        }));
+
+    } catch(e) {
+        ul.innerHTML = '<li style="color:var(--text-muted);">Could not load activity. Backend may be sleeping.</li>';
+        return;
+    }
+
+    if (events.length === 0) {
+        ul.innerHTML = '<li style="color:var(--text-muted);">No recent activity found.</li>';
+        return;
+    }
+
+    ul.innerHTML = events.map(ev => `
+        <li style="display:flex;gap:1rem;align-items:flex-start;">
+            <div style="background:var(--surface-light);padding:0.5rem;border-radius:50%;color:${ev.color};flex-shrink:0;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${ev.icon}</svg>
+            </div>
+            <div>
+                <p style="margin:0 0 0.3rem 0;">${ev.text}</p>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${ev.sub}</span>
+            </div>
+        </li>`).join('');
 }
 
 // ─── Reviews ──────────────────────────────────────────────────────

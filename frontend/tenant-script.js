@@ -418,6 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const modal = document.getElementById('property-modal');
                     if (modal) modal.classList.add('hidden');
                 });
+                return;
             } else if (isMessageBtn) {
                 const ownerName = document.querySelector('.owner-name').textContent || 'Property Owner';
                 const ownerAvatar = document.querySelector('.owner-avatar img').src;
@@ -443,8 +444,10 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = isSubdir ? '../tenant-login.html' : 'tenant-login.html';
     };
 
-    authTriggers.forEach(btn => btn.addEventListener('click', openAuthModal));
-    navAuthButtons.forEach(btn => btn.addEventListener('click', openAuthModal));
+    authTriggers.forEach(btn => {
+        if (!btn.classList.contains('nav-auth') && btn.id !== 'nav-auth-container')
+            btn.addEventListener('click', openAuthModal);
+    });
 
     // Close property modal if user clicks outside
     window.addEventListener('click', (e) => {
